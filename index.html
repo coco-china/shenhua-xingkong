@@ -323,12 +323,17 @@ body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#0A0A14;
 
 <script>
 // ============ VERSION MANAGEMENT ============
-const VERSION = { major:7, minor:0, date:'2026-08-07', label:'v7.0', codename:'故事重生' };
+const VERSION = { major:8, minor:0, date:'2026-08-07', label:'v8.0', codename:'星辉重燃' };
 const VERSION_HISTORY = [
-    { ver:'v7.0', date:'2026-08-07', title:'故事重生', latest:true, changes:[
-    '重建三国演义故事２5个真实故事，涵盖60+人物',
-    '重建三国志故事Ｊ个基于史实的真实故事',
-    '重建春秋战国故事ｈ个历史名篇，涵盖38位历史人物',
+    { ver:'v8.0', date:'2026-08-07', title:'星辉重燃', latest:true, changes:[
+    '修复故事卡片显示undefined的问题',
+    '为所有故事补充id、cover、desc字段',
+    '故事卡片预览文字从内容自动提取',
+  ]},
+  { ver:'v7.0', date:'2026-08-07', title:'故事重生', latest:false, changes:[
+    '重建三国演义故事125个真实故事，涵盖60+人物',
+    '重建三国志故事32个基于史实的真实故事',
+    '重建春秋战国故事48个历史名篇，涵盖38位历史人物',
     '每个故事都有独特标题和情节，不再是模板复制',
     '刘备等人物各有多个专属故事，如桃园结义、草船借箭、空城计等',
   ]},
@@ -1518,6 +1523,19 @@ const STORIES = [
 {title:'烛之武退秦师',cat:'cq',cat_label:'春秋战国故事',icon:'🔥',content:'<p>晋秦联军围攻郑国。郑国危在旦夕，老臣佚之狐推荐烛之武去说服秦军退兵。</p><p>烛之武年轻时才能不被重用，到老了还是个养马的官。他推辞说："臣之壮也，犹不如人；今老矣，无能为也已。"郑文公道歉说："我不能早用你，是我的过错。但郑国灭亡了对你也不利啊。"</p><p>烛之武答应了。夜里用绳子把他放出城墙，到秦军营地。</p><p>烛之武对秦穆公说："秦晋围郑，郑国已知必亡。若灭郑对您有利，我怎敢多说。但请想想：郑国在东，秦国在西，中间隔着晋国。灭郑只会壮大晋国，秦国得不到好处。"</p><p>"再说晋国贪得无厌。东边灭郑，西边就会侵秦。不损害秦国，晋国从哪里扩张？"</p><p>秦穆公听后大悟，不仅退兵，还留下军队帮郑国守城。晋国见秦国退兵，也只好撤军。烛之武一番话，不费一兵一卒解了郑国之围，展现了高超的外交辞令和战略眼光。</p>'},
 {title:'高山流水',cat:'cq',cat_label:'春秋战国故事',icon:'🎵',content:'<p>伯牙是春秋时期著名的琴师，琴艺高超，但很少有人能真正听懂他的琴音。</p><p>一天伯牙在山中弹琴，樵夫钟子期路过，驻足聆听。伯牙志在高山，琴声雄壮。钟子期赞叹道："善哉，峨峨兮若泰山！"伯牙志在流水，琴声奔腾。钟子期又道："善哉，洋洋兮若江河！"</p><p>伯牙惊喜万分，无论心中想什么，钟子期都能从琴音中准确感受到。两人遂结为知己。</p><p>后来钟子期病逝，伯牙悲痛欲绝。他来到子期墓前，弹了最后一首曲子，然后摔破瑶琴，扯断琴弦，终身不再弹琴。</p><p>伯牙说："摔碎瑶琴凤尾寒，子期不在对谁弹？春风满面皆朋友，欲觅知音难上难。"</p><p>"高山流水"成为知音难觅的千古象征，"知音"一词也由此而来。这个故事告诉我们，真正的知己不在多，一个足矣；而一旦失去，便是世间最珍贵的遗憾。</p>'}
 ];
+
+// ============ STORY DATA INIT ============
+// Ensure each story has id, cover, desc fields for the rendering code
+STORIES.forEach((s, i) => {
+  s.id = String(i);
+  if (!s.cover) s.cover = s.icon || '📖';
+  if (!s.desc) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = s.content || '';
+    const text = tmp.textContent.trim();
+    s.desc = text.length > 80 ? text.slice(0, 80) + '...' : text;
+  }
+});
 
 // ============ STAR BG ============
 (function(){const bg=document.getElementById('starsBg');for(let i=0;i<100;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=Math.random()*2.5+1+'px';s.style.height=s.style.width;s.style.setProperty('--dur',(Math.random()*3+2)+'s');s.style.setProperty('--delay',Math.random()*5+'s');bg.appendChild(s);}})();
