@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绁炶瘽鏄熺┖ - 姣忓ぉ涓€涓璇濇晠浜?/title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  background: #0A0A14; color: #E8E8F5; overflow-x: hidden; line-height: 1.6;
+}
+.stars-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.star { position: absolute; background: #FFD700; border-radius: 50%; animation: twinkle var(--dur) ease-in-out infinite; animation-delay: var(--delay); opacity: 0; }
+@keyframes twinkle { 0%,100%{opacity:0.2} 50%{opacity:1} }
+
+.header { position: sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 80px; height:72px; background:rgba(10,10,20,0.85); backdrop-filter:blur(20px); border-bottom:1px solid rgba(74,134,232,0.1); }
+.logo { display:flex; align-items:center; gap:12px; cursor:pointer; }
+.logo-icon { width:36px; height:36px; }
+.logo-text { font-family:'Noto Serif SC','SimSun',serif; font-size:22px; font-weight:700; }
+.nav { display:flex; gap:32px; align-items:center; }
+.nav-item { font-size:16px; font-weight:500; color:#9B9BB5; cursor:pointer; transition:color 0.3s; background:none; border:none; position:relative; }
+.nav-item:hover,.nav-item.active { color:#E8E8F5; }
+.nav-item.active::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:20px; height:3px; background:#4A86E8; border-radius:2px; }
+.search-btn { width:40px; height:40px; border-radius:50%; background:rgba(74,134,232,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; border:none; transition:background 0.3s; }
+.search-btn:hover { background:rgba(74,134,232,0.25); }
+
+.hero { position:relative; z-index:1; display:flex; align-items:center; padding:100px 80px; gap:80px; min-height:680px; background:linear-gradient(180deg,#020210 0%,#0A0A20 40%,#0F0F2A 70%,#0A0A14 100%); }
+.hero-content { flex:1; display:flex; flex-direction:column; gap:24px; }
+.badge { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:20px; background:rgba(255,215,0,0.1); width:fit-content; }
+.badge-dot { width:8px; height:8px; border-radius:50%; background:#7ED4A0; }
+.badge-text { font-size:14px; font-weight:600; color:#FFD700; }
+.hero-title { font-family:'Noto Serif SC','SimSun',serif; font-size:64px; font-weight:700; line-height:1.25; }
+.hero-subtitle { font-size:20px; color:#9B9BB5; max-width:420px; }
+.cta-btn { display:inline-flex; align-items:center; gap:8px; padding:16px 36px; border-radius:32px; font-size:18px; font-weight:600; color:#FFF; cursor:pointer; border:none; background:linear-gradient(135deg,#4A86E8,#A055FF); width:fit-content; transition:transform 0.3s,box-shadow 0.3s; }
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(160,85,255,0.4); }
+.hero-visual { width:480px; height:480px; border-radius:40px; background:radial-gradient(circle at center,#261460 0%,#0F0F2E 70%,#050510 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:0 0 60px rgba(160,85,255,0.3); }
+.hero-visual-content { text-align:center; z-index:2; }
+.hero-visual-content .big-star { font-size:120px; animation:floatStar 3s ease-in-out infinite; }
+@keyframes floatStar { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.hero-visual::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 50%); animation:rotateSlow 20s linear infinite; }
+@keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+.section { position:relative; z-index:1; padding:80px; }
+.section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
+.section-title { font-family:'Noto Serif SC','SimSun',serif; font-size:36px; font-weight:700; }
+.section-more { font-size:16px; color:#4A86E8; cursor:pointer; background:none; border:none; transition:opacity 0.3s; }
+.section-more:hover { opacity:0.8; }
+
+.featured-card { display:flex; gap:48px; border-radius:32px; background:#0F0F22; overflow:hidden; align-items:center; box-shadow:0 8px 32px rgba(74,134,232,0.12); cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
+.featured-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(74,134,232,0.2); }
+.featured-cover { width:320px; min-height:360px; flex-shrink:0; background:radial-gradient(circle,#1A3060,#0A0A20); display:flex; align-items:center; justify-content:center; border-radius:24px; }
+.featured-cover-content { text-align:center; }
+.featured-cover-content .temple-icon { font-size:100px; }
+.featured-info { flex:1; padding:20px 20px 20px 0; display:flex; flex-direction:column; gap:16px; }
+.tag { display:inline-flex; padding:6px 14px; border-radius:16px; font-size:13px; font-weight:600; width:fit-content; }
+.tag-blue { background:rgba(74,134,232,0.15); color:#4A86E8; }
+.tag-gold { background:rgba(255,215,0,0.12); color:#FFD700; }
+.tag-teal { background:rgba(92,201,208,0.12); color:#5CC9D0; }
+.story-title { font-family:'Noto Serif SC','SimSun',serif; font-size:28px; font-weight:700; }
+.story-desc { font-size:16px; color:#9B9BB5; line-height:1.75; }
+.story-meta { display:flex; gap:24px; font-size:14px; color:#7B8BA0; }
+.read-btn { display:inline-flex; align-items:center; gap:6px; padding:14px 28px; border-radius:28px; background:#4A86E8; color:#FFF; font-size:16px; font-weight:600; cursor:pointer; border:none; width:fit-content; transition:background 0.3s,transform 0.3s; }
+.read-btn:hover { background:#5C96F5; transform:translateY(-2px); }
+
+.cat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.cat-card { border-radius:32px; background:#0F0F22; overflow:hidden; cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
+.cat-card:hover { transform:translateY(-4px); }
+.cat-card:nth-child(1):hover { box-shadow:0 8px 24px rgba(255,215,0,0.15); }
+.cat-card:nth-child(2):hover { box-shadow:0 8px 24px rgba(74,134,232,0.15); }
+.cat-card:nth-child(3):hover { box-shadow:0 8px 24px rgba(92,201,208,0.15); }
+.cat-cover { height:200px; display:flex; align-items:center; justify-content:center; border-radius:24px; font-size:80px; }
+.cat-cover.cn { background:linear-gradient(135deg,rgba(200,50,50,0.5),rgba(200,150,25,0.3)); }
+.cat-cover.gr { background:linear-gradient(135deg,rgba(38,102,204,0.5),rgba(102,153,255,0.3)); }
+.cat-cover.no { background:linear-gradient(135deg,rgba(25,153,153,0.5),rgba(76,204,230,0.3)); }
+.cat-info { padding:0 20px 20px; display:flex; flex-direction:column; gap:8px; }
+.cat-info h3 { font-family:'Noto Serif SC','SimSun',serif; font-size:24px; font-weight:700; }
+.cat-info span { font-size:14px; color:#9B9BB5; }
+
+.cal-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.cal-card { border-radius:24px; background:#0F0F22; padding:20px; display:flex; flex-direction:column; align-items:center; gap:12px; transition:transform 0.3s,background 0.3s; }
+.cal-card:hover { transform:translateY(-2px); }
+.cal-card.today { background:linear-gradient(135deg,rgba(74,134,232,0.2),rgba(160,85,255,0.15)); border:1px solid rgba(74,134,232,0.3); }
+.cal-dot { width:12px; height:12px; border-radius:50%; }
+.cal-dot.done { background:#7ED4A0; }
+.cal-dot.pending { background:#7B8BA0; }
+.cal-date { font-size:18px; font-weight:700; }
+.cal-story { font-size:14px; font-weight:500; }
+.cal-card.today .cal-story { color:#FFD700; }
+.cal-card:not(.today) .cal-story { color:#9B9BB5; }
+.cal-tag { font-size:12px; color:#7B8BA0; }
+
+.filter-row { display:flex; gap:12px; }
+.filter-item { font-size:15px; font-weight:500; color:#9B9BB5; cursor:pointer; background:none; border:none; transition:color 0.3s; }
+.filter-item.active,.filter-item:hover { color:#4A86E8; font-weight:600; }
+.story-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.story-card { border-radius:24px; background:#0F0F22; overflow:hidden; cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
+.story-card:hover { transform:translateY(-4px); }
+.story-card[data-cat="gr"]:hover { box-shadow:0 6px 20px rgba(74,134,232,0.15); }
+.story-card[data-cat="cn"]:hover { box-shadow:0 6px 20px rgba(255,215,0,0.15); }
+.story-card[data-cat="no"]:hover { box-shadow:0 6px 20px rgba(92,201,208,0.15); }
+.story-cover { height:200px; display:flex; align-items:center; justify-content:center; font-size:80px; border-radius:16px; }
+.story-cover.gr { background:linear-gradient(135deg,rgba(38,76,153,0.6),rgba(76,140,242,0.4)); }
+.story-cover.cn { background:linear-gradient(135deg,rgba(200,50,50,0.5),rgba(230,150,25,0.4)); }
+.story-cover.no { background:linear-gradient(135deg,rgba(25,128,128,0.5),rgba(76,200,204,0.4)); }
+.story-info { padding:14px 18px 18px; display:flex; flex-direction:column; gap:6px; }
+.story-info h4 { font-family:'Noto Serif SC','SimSun',serif; font-size:18px; font-weight:700; }
+.story-info p { font-size:13px; color:#9B9BB5; line-height:1.5; }
+
+/* ===== TTS 鏈楄鎸夐挳 ===== */
+.tts-bar { display:flex; gap:10px; margin:16px 0; align-items:center; flex-wrap:wrap; }
+.tts-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:12px 22px; border-radius:24px; font-size:15px; font-weight:600;
+  cursor:pointer; border:none; transition:all 0.3s;
+}
+.tts-play { background:linear-gradient(135deg,#FF6B9D,#C44DFF); color:#FFF; }
+.tts-play:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(196,77,255,0.4); }
+.tts-pause { background:rgba(255,215,0,0.2); color:#FFD700; border:1px solid rgba(255,215,0,0.3); }
+.tts-resume { background:rgba(72,199,142,0.2); color:#48C78E; border:1px solid rgba(72,199,142,0.3); }
+.tts-stop { background:rgba(255,255,255,0.08); color:#9B9BB5; border:1px solid rgba(255,255,255,0.1); }
+.tts-speed { display:flex; gap:4px; margin-left:8px; }
+.tts-speed button {
+  width:36px; height:36px; border-radius:50%; font-size:13px; font-weight:600;
+  cursor:pointer; border:1px solid rgba(255,255,255,0.15); background:transparent;
+  color:#9B9BB5; transition:all 0.2s;
+}
+.tts-speed button.active { background:rgba(74,134,232,0.3); border-color:#4A86E8; color:#FFF; }
+.tts-speed button:hover { border-color:#4A86E8; }
+.tts-status { font-size:13px; color:#7ED4A0; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.tts-dot-pulse { width:8px; height:8px; border-radius:50%; background:#7ED4A0; animation:pulse 1s infinite; flex-shrink:0; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+/* 鏈楄杩涘害鏉?*/
+.tts-progress-wrap { display:flex; align-items:center; gap:12px; margin:8px 0 16px; }
+.tts-progress-bar {
+  flex:1; height:6px; border-radius:3px;
+  background:rgba(255,255,255,0.08); overflow:hidden;
+}
+.tts-progress-fill {
+  height:100%; border-radius:3px; width:0%;
+  background:linear-gradient(90deg,#FF6B9D,#C44DFF,#4A86E8);
+  transition:width 0.4s ease;
+}
+.tts-progress-text { font-size:12px; color:#9B9BB5; white-space:nowrap; min-width:70px; }
+.tts-engine-label { font-size:11px; color:#FFD700; margin-top:2px; }
+
+/* 闊宠皟鎸夐挳澶嶇敤 tts-speed 鏍峰紡 */
+.tts-pitch button { width:auto; padding:0 10px; }
+
+/* 鏁呬簨璇︽儏寮圭獥 */
+.modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(5,5,15,0.9); backdrop-filter:blur(10px); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s; }
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal { background:#0F0F22; border-radius:32px; padding:48px; max-width:820px; width:92%; max-height:88vh; overflow-y:auto; position:relative; box-shadow:0 0 80px rgba(160,85,255,0.3); }
+.modal-close { position:absolute; top:20px; right:24px; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.08); border:none; color:#FFF; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.3s; }
+.modal-close:hover { background:rgba(255,255,255,0.15); }
+.modal h2 { font-family:'Noto Serif SC','SimSun',serif; font-size:32px; margin-bottom:8px; }
+.modal-meta { color:#7B8BA0; font-size:14px; margin-bottom:8px; }
+.modal-cover-placeholder { width:100%; height:200px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:80px; margin-bottom:16px; }
+.modal-body { font-size:16px; color:#C8C8DD; line-height:2.1; }
+.modal-body p { margin-bottom:14px; }
+
+.footer { background:#070712; padding:60px 80px; position:relative; z-index:1; }
+.footer-top { display:flex; gap:80px; margin-bottom:40px; }
+.footer-brand { width:300px; display:flex; flex-direction:column; gap:16px; }
+.footer-logo-group { display:flex; align-items:center; gap:10px; }
+.footer-logo-group span { font-family:'Noto Serif SC','SimSun',serif; font-size:20px; font-weight:700; }
+.footer-brand-desc { font-size:14px; color:#7B8BA0; line-height:1.7; }
+.footer-links { display:flex; flex-direction:column; gap:14px; }
+.footer-links h4 { font-size:16px; font-weight:600; }
+.footer-links a { font-size:14px; color:#7B8BA0; cursor:pointer; transition:color 0.3s; text-decoration:none; }
+.footer-links a:hover { color:#4A86E8; }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid rgba(255,255,255,0.06); }
+.footer-bottom span { font-size:13px; color:#7B8BA0; }
+.footer-bottom .blessing { color:#FFD700; font-family:'Noto Serif SC','SimSun',serif; }
+
+/* 鍔犺浇鏇村鎸夐挳 */
+.load-more-wrap { text-align:center; margin-top:32px; }
+.load-more-btn {
+  padding:14px 40px; border-radius:28px; font-size:16px; font-weight:600;
+  background:rgba(74,134,232,0.12); color:#4A86E8; border:1px solid rgba(74,134,232,0.25);
+  cursor:pointer; transition:all 0.3s;
+}
+.load-more-btn:hover { background:rgba(74,134,232,0.25); transform:translateY(-2px); }
+
+@media(max-width:1200px){
+  .hero{flex-direction:column;padding:60px 40px}
+  .hero-visual{width:100%;height:360px}
+  .featured-card{flex-direction:column}
+  .featured-cover{width:100%;min-height:240px}
+  .cat-grid,.story-grid{grid-template-columns:repeat(2,1fr)}
+  .cal-row{grid-template-columns:repeat(2,1fr)}
+  .header{padding:0 40px}
+  .section{padding:60px 40px}
+}
+@media(max-width:768px){
+  .nav{display:none}
+  .hero-title{font-size:40px}
+  .cat-grid,.story-grid{grid-template-columns:1fr}
+  .cal-row{grid-template-columns:1fr 1fr}
+  .story-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="stars-bg" id="starsBg"></div>
+
+<header class="header">
+  <div class="logo" onclick="scrollToTop()">
+    <svg class="logo-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" fill="#FFD700" opacity="0.2"/><path d="M18 4L20 14L18 18L16 14L18 4Z" fill="#FFD700"/><path d="M28 18L18 16L18 18L18 20L28 18Z" fill="#FFD700"/><path d="M18 32L16 22L18 18L20 22L18 32Z" fill="#FFD700"/><path d="M8 18L18 20L18 18L18 16L8 18Z" fill="#FFD700"/><circle cx="18" cy="18" r="3" fill="#FFD700"/></svg>
+    <span class="logo-text">绁炶瘽鏄熺┖</span>
+  </div>
+  <nav class="nav">
+    <button class="nav-item active" data-cat="all">鍏ㄩ儴鏁呬簨</button>
+    <button class="nav-item" data-cat="cn">涓浗绁炶瘽</button>
+    <button class="nav-item" data-cat="gr">甯岃厞绁炶瘽</button>
+    <button class="nav-item" data-cat="no">鍖楁绁炶瘽</button>
+  </nav>
+  <button class="search-btn" onclick="alert('馃攳 鎼滅储鏁呬簨鍔熻兘鍗冲皢涓婄嚎锛?)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#4A86E8" stroke-width="2"/><path d="M13.5 13.5L18 18" stroke="#4A86E8" stroke-width="2" stroke-linecap="round"/></svg></button>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="badge"><div class="badge-dot"></div><span class="badge-text">浠婃棩宸叉洿鏂?/span></div>
+    <h1 class="hero-title">娆㈣繋鏉ュ埌<br>绁炶瘽鏄熺┖</h1>
+    <p class="hero-subtitle">姣忓ぉ涓€涓璇濇晠浜嬶紝绌胯秺涓浗銆佸笇鑵娿€佸寳娆х殑绁炲涓栫晫銆傜偣鍑绘晠浜嬪氨鑳芥湕璇诲摝锛?/p>
+    <button class="cta-btn" onclick="openStory('nezha')">鈿?寮€濮嬩粖澶╃殑鍐掗櫓</button>
+  </div>
+  <div class="hero-visual"><div class="hero-visual-content"><div class="big-star">馃寣</div></div></div>
+</section>
+
+<section class="section" id="featured">
+  <div class="section-header"><h2 class="section-title">猸?浠婃棩鎺ㄨ崘鏁呬簨</h2></div>
+  <div class="featured-card" onclick="openStory('nezha')">
+    <div class="featured-cover"><div class="featured-cover-content"><div class="temple-icon">馃敟</div></div></div>
+    <div class="featured-info">
+      <div class="tag tag-gold">涓浗绁炶瘽</div>
+      <h3 class="story-title">鍝悞闂规捣</h3>
+      <p class="story-desc">闄堝鍏虫€诲叺鏉庨潠鐨勭涓変釜鍎垮瓙鍝悞锛岃剼韪╅鐏疆銆佹墜鎸佷咕鍧ゅ湀锛屽湪涓滄捣榫欏鎺€璧锋粩澶╁法娴紒浠栦负浠€涔堣澶ч椆涓滄捣锛熼緳鐜嬩笁澶瓙涓轰綍鎵句笂闂ㄦ潵锛?/p>
+      <div class="story-meta"><span>馃摉 绾?0鍒嗛挓</span><span>馃攰 鏀寔鏈楄</span></div>
+      <button class="read-btn">馃摉 寮€濮嬮槄璇?/button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="categories">
+  <h2 class="section-title" style="margin-bottom:40px">馃彴 鎺㈢储绁炶瘽鐜嬪浗</h2>
+  <div class="cat-grid">
+    <div class="cat-card" onclick="filterStories('cn')"><div class="cat-cover cn">馃悏</div><div class="cat-info"><h3>涓浗绁炶瘽</h3><span>10涓晠浜?路 鍏ㄩ儴鍙湕璇?/span></div></div>
+    <div class="cat-card" onclick="filterStories('gr')"><div class="cat-cover gr">鈿?/div><div class="cat-info"><h3>甯岃厞绁炶瘽</h3><span>10涓晠浜?路 鍏ㄩ儴鍙湕璇?/span></div></div>
+    <div class="cat-card" onclick="filterStories('no')"><div class="cat-cover no">鉂勶笍</div><div class="cat-info"><h3>鍖楁绁炶瘽</h3><span>10涓晠浜?路 鍏ㄩ儴鍙湕璇?/span></div></div>
+  </div>
+</section>
+
+<section class="section" id="stories">
+  <div class="section-header">
+    <h2 class="section-title">馃摎 鏁呬簨瀹濊棌鏋?<span style="font-size:16px;color:#9B9BB5;font-weight:400">锛堝叡30涓晠浜嬶級</span></h2>
+    <div class="filter-row">
+      <button class="filter-item active" onclick="filterStories('all')">鍏ㄩ儴</button>
+      <button class="filter-item" onclick="filterStories('cn')">涓浗</button>
+      <button class="filter-item" onclick="filterStories('gr')">甯岃厞</button>
+      <button class="filter-item" onclick="filterStories('no')">鍖楁</button>
+    </div>
+  </div>
+  <div class="story-grid" id="storyGrid"></div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-group"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="#FFD700" opacity="0.2"/><path d="M14 3L15.5 11L14 14L12.5 11L14 3Z" fill="#FFD700"/><path d="M22 14L14 12.5L14 14L14 15.5L22 14Z" fill="#FFD700"/><path d="M14 25L12.5 17L14 14L15.5 17L14 25Z" fill="#FFD700"/><path d="M6 14L14 15.5L14 14L14 12.5L6 14Z" fill="#FFD700"/></svg><span>绁炶瘽鏄熺┖</span></div>
+      <p class="footer-brand-desc">姣忓ぉ涓€涓璇濇晠浜嬶紝姣忎釜鏁呬簨閮借兘鐐瑰嚮鏈楄銆備负涓浗銆佸笇鑵娿€佸寳娆х璇濈埍濂借€呮墦閫犵殑涓撳睘闃呰绌洪棿銆?/p>
+    </div>
+    <div class="footer-links"><h4>绁炶瘽涓栫晫</h4><a onclick="filterStories('cn')">涓浗绁炶瘽</a><a onclick="filterStories('gr')">甯岃厞绁炶瘽</a><a onclick="filterStories('no')">鍖楁绁炶瘽</a></div>
+    <div class="footer-links"><h4>鍏充簬鎴戜滑</h4><a>鍏充簬绁炶瘽鏄熺┖</a><a>鑱旂郴鎴戜滑</a><a>闅愮鏀跨瓥</a></div>
+  </div>
+  <div class="footer-bottom"><span>漏 2026 绁炶瘽鏄熺┖ 路 涓虹埍鍚晠浜嬬殑灏忔湅鍙嬫墦閫?/span><span class="blessing">鉁?鐢ㄧ埍涓庨瓟娉曠紪缁囨瘡涓€涓晠浜?/span></div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal"><button class="modal-close" onclick="closeModal()">鉁?/button><div id="modalContent"></div></div>
+</div>
+
+<script>
+// ============ 鏄熺┖鑳屾櫙 ============
+(function(){const bg=document.getElementById('starsBg');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=Math.random()*3+1+'px';s.style.height=s.style.width;s.style.setProperty('--dur',(Math.random()*3+2)+'s');s.style.setProperty('--delay',Math.random()*4+'s');bg.appendChild(s);}})();
+
+// ============ 鏁呬簨鏁版嵁搴擄細鍏?0涓?============
+const stories = {
+
+// === 涓浗绁炶瘽 10涓?===
+nezha:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?0鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃敟',coverClass:'cn',title:'鍝悞闂规捣',desc:'鑴氳俯椋庣伀杞€佹墜鎸佷咕鍧ゅ湀锛屼笁澶瓙闂圭炕涓滄捣榫欏锛?,content:`<p>鍦ㄥ緢涔呭緢涔呬互鍓嶇殑鍟嗘湞锛屾湁涓€搴у煄甯傚彨闄堝鍏筹紝杩欓噷鐨勬€诲叺鍚嶅彨鏉庨潠銆傛潕闈栫殑澶汉鎬€鑳庝笁骞撮浂鍏釜鏈堬紝鐢熶笅浜嗕竴涓渾鍦嗙殑澶ц倝鐞冦€?/p><p>鏉庨潠浠ヤ负鏄鎬紝鎷斿墤灏辩爫锛佽倝鐞冭寮€锛屼竴涓櫧鐧借儢鑳栫殑灏忕敺瀛╄烦浜嗗嚭鏉ワ紝鎵嬭厱涓婂鐫€涓€涓噾鍦堬紝韬笂缂犵潃涓€鍧楃孩缁糕€斺€旇繖灏辨槸鍝悞銆?/p><p>鍝悞澶╃敓绁炲姏锛屼竷宀侀偅骞村澶╋紝澶╂皵鐗瑰埆鐑€傚摢鍚掕窇鍒颁笢娴疯竟娲楁尽锛屼粬鎷夸笅韬笂鐨勬贩澶╃猾鍦ㄦ按閲屼竴鎼呪€斺€斾笉寰椾簡锛佹暣涓笢娴烽兘鏅冨姩璧锋潵锛岄緳瀹噷鐨勮€侀緳鐜嬪樊鐐逛粠瀹濆骇涓婃憯涓嬫潵锛?/p><p>榫欑帇娲惧贰娴峰鍙変笂鍘荤湅鐪嬫€庝箞鍥炰簨銆傚鍙夋诞鍑烘按闈紝瀵圭潃鍝悞澶у惣澶у彨銆傚摢鍚掓渶璁ㄥ帉鍒汉鍑朵粬锛屾嬁璧蜂咕鍧ゅ湀涓€鎵斺€斺€?鐮?鐨勪竴澹帮紝澶滃弶琚墦鍥炰簡娴峰簳銆?/p><p>榫欑帇澶ф€掞紝鍙堟淳涓夊お瀛愭晼涓欎笂鍘汇€傛晼涓欓獞鐫€閬挎按鍏斤紝濞侀鍑涘嚊锛?浣犳槸璋佸鐨勫皬瀛╋紵鏁㈡潵涓滄捣鎹ｄ贡锛?鍝悞涓€鐪嬫潵鑰呮槸榫欑帇鐨勫効瀛愶紝涔熶笉瀹虫€曪細"澶╃儹娲楁尽锛岀鐫€璋佷簡锛?涓や汉鎵撲簡璧锋潵锛屽摢鍚掑姏澶ф棤绌凤紝绔熺劧鎵撹触浜嗕笁澶瓙锛?/p><p>榫欑帇鎮叉劋浜ゅ姞锛屼笂澶╁涵鍘诲憡鐘躲€傚摢鍚掔煡閬撹嚜宸遍棷浜嗗ぇ绁革紝涓轰簡涓嶈繛绱埗姣嶅拰鐧惧锛屼粬鍋氬嚭浜嗕竴涓媷鏁㈢殑鍐冲畾鈥斺€旂敤鑷繁鐨勭敓鍛藉钩鎭簡杩欏満椋庢尝銆傚悗鏉ワ紝鍦ㄥ笀鐖跺お涔欑湡浜虹殑甯姪涓嬶紝鍝悞鐢ㄨ幉鑺遍噸鐢燂紝鎴愪负浜嗘洿寮哄ぇ鐨勮嫳闆勩€?/p><p style="text-align:center;color:#FFD700;font-size:18px">鉁?鍕囨皵涓庢媴褰擄紝鍦ㄥ摢鍚掕韩涓婇棯闂彂鍏?鉁?/p>`},
+
+change:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?8鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃寵',coverClass:'cn',title:'瀚﹀ē濂旀湀',desc:'纰ф捣闈掑ぉ澶滃蹇冿紝鏈堜寒涓婁綇鐫€涓€浣嶇編涓界殑浠欏コ',content:`<p>寰堜箙浠ュ墠锛屽ぉ涓婃浘缁忔湁鍗佷釜澶槼锛岀儰寰楀ぇ鍦板共瑁傘€佹渤姘存柇娴併€傜绠墜鍚庣究鐧讳笂鏄嗕粦灞遍《锛屾媺寮€绁炲紦锛屼竴鍙ｆ皵灏勪笅浜嗕節涓お闃筹紝鍙暀涓嬩竴涓俯鏆栦汉闂淬€?/p><p>浜轰滑鎰熻阿鍚庣究锛岀О浠栦负澶ц嫳闆勩€傜帇姣嶅濞樹篃璧忕粰鍚庣究涓€棰椾笉姝讳粰涓光€斺€斿彧瑕佸悆浜嗗畠锛屽氨鑳介暱鐢熶笉鑰侊紝椋炲崌鎴愪粰銆?/p><p>浣嗗悗缇挎繁鐖卞瀛愬濞ワ紝鑸嶄笉寰楁姏涓嬪ス涓€涓汉鎴愪粰锛屽氨鎶婁粰涓逛氦缁欏濞ヤ繚绠°€?/p><p>鍚庣究鏈変竴涓緬寮熷彨閫勮挋锛屽績鏈笉姝ｃ€備粬瓒佸悗缇垮鍑烘墦鐚庯紝闂繘瀚﹀ē鐨勬埧闂达紝閫煎ス浜ゅ嚭浠欎腹銆傚濞ヤ笉鎯宠鍧忎汉寰楅€烇紝鎯呮€ヤ箣涓嬶紝涓€鍙ｅ悶涓嬩簡浠欎腹銆?/p><p>浠欎腹鍏ヨ吂锛屽濞ョ殑韬綋鍙樺緱姣旂窘姣涜繕杞伙紝鍙岃剼绂诲紑浜嗗湴闈紝绌胯繃绐楁埛锛岄鍚戜簡澶╃┖鈥︹€﹀ス瓒婇瓒婇珮锛岃秺椋樿秺杩滐紝涓€鐩撮鍒颁簡鏈堜寒涓娿€?/p><p>鍚庣究鍥炴潵鍚庯紝鍙戠幇濡诲瓙涓嶈浜嗭紝杩藉嚭闂ㄥ锛屽彧鐪嬪埌鏈堜寒涓婂浜嗕竴涓編涓界殑韬奖銆備粠姝わ紝姣忓勾鍏湀鍗佷簲鏈堝渾涔嬪锛屽悗缇块兘浼氭憜涓婂濞ユ渶鐖卞悆鐨勬湀楗煎拰姘存灉锛岄仴鏈涙槑鏈堬紝鎬濆康濡诲瓙銆?/p><p style="text-align:center;color:#FFD700">杩欏氨鏄腑绉嬭妭鎷滄湀銆佸悆鏈堥ゼ鐨勭敱鏉ャ€?/p>`},
+
+houyi:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃徆',coverClass:'cn',title:'鍚庣究灏勬棩',desc:'澶╀笂鍗佷釜澶槼鐑ょ劍澶у湴锛岀绠墜鍚庣究鎸鸿韩鑰屽嚭',content:`<p>杩滃彜鏃朵唬锛屼笢鏂瑰ぉ甯濇湁鍗佷釜鍎垮瓙锛屼粬浠氨鏄崄涓お闃炽€傛瘡澶╋紝鍙湁涓€涓お闃充細椹剧潃閲戣溅浠庝笢鏂瑰崌璧枫€佽タ鏂硅惤涓嬶紝缁欎汉闂村甫鏉ュ厜鏄庡拰娓╂殩銆?/p><p>鍙槸鏈変竴澶╋紝鍗佷釜澶槼瑙夊緱涓€涓汉鍑鸿澶棤鑱婁簡锛屽氨鍟嗛噺鐫€涓€璧疯窇鍒板ぉ涓婂幓鐜┿€傝繖涓€涓嬪彲涓嶅緱浜嗏€斺€斿崄涓お闃冲悓鏃舵寕鍦ㄥぉ绌猴紝澶у湴琚儰寰楀儚鐏倝涓€鏍凤紒</p><p>搴勭鏋浜嗭紝娌虫祦骞叉陡浜嗭紝閲庡吔浠庢．鏋楅噷璺戝嚭鏉ュ埌澶勪激浜恒€傝€佺櫨濮撹嫤涓嶅牚瑷€锛岀悍绾峰悜澶╁笣绁堢シ姹傛晳銆?/p><p>澶╁笣娲炬潵绁炵鎵嬪悗缇裤€傚悗缇垮甫鐫€涓€鎶婄孩鑹茬殑绁炲紦鍜屽崄鏀櫧鑹茬殑绁炵锛岀櫥涓婃渶楂樼殑鏄嗕粦灞便€備粬瀵瑰噯澶╀笂鐨勫お闃筹紝鎷夋弧寮撳鸡鈥斺€?鍡?锛佷竴鏀灏勪笅涓€涓お闃炽€?/p><p>鍚庣究涓€杩炲皠涓嬪叓涓お闃筹紝姝ｈ瀵圭涔濅釜鎷夊紦鏃讹紝浜轰滑鍠婇亾锛?鐣欎竴涓惂锛佹病鏈夊お闃筹紝涓栫晫浼氶櫡鍏ユ案杩滅殑榛戞殫锛?</p><p>浜庢槸锛屽ぉ涓婂彧鍓╀笅涓€涓お闃筹紝姣忓ぉ鎸夋椂鍗囪捣钀戒笅銆傚ぇ鍦版仮澶嶄簡鐢熸満锛屽簞绋奸噸鏂扮敓闀匡紝娌虫按鍐嶆娴佹穼銆傚悗缇挎垚涓轰簡涓囨皯鏁话鐨勫ぇ鑻遍泟銆?/p>`},
+
+nvwa:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?7鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃',coverClass:'cn',title:'濂冲ú琛ュぉ',desc:'澶╁浜嗕竴涓ぇ绐熺锛屽コ濞茬偧浜旇壊鐭宠ˉ澶╂晳鑻嶇敓',content:`<p>鍦ㄥぉ鍦板垰鍒氬舰鎴愪笉涔呯殑鏃跺€欙紝姘寸鍏卞伐鍜岀伀绁炵铻嶆墦浜嗕竴鍦烘儕澶╁姩鍦扮殑澶т粭銆傚叡宸ユ墦杈撲簡锛屼竴鎬掍箣涓嬫挒鍚戜笉鍛ㄥ北鈥斺€旇繖搴у北鏄敮鎾戝ぉ绌虹殑宸ㄦ煴涔嬩竴銆?/p><p>"杞伴殕鈥斺€?澶╂煴鏂簡锛屽ぉ绌鸿寮€涓€涓ぇ绐熺锛屽ぉ娌崇殑姘村摋鍝楀湴寰€涓嬬亴銆傚ぇ鍦拌寮€娣辨矡锛岀伀鐒颁粠鍦扮紳閲屽柗鍑烘潵锛屾椽姘存饭娌′簡鏉戝簞锛岀寷鍏藉洓澶勫悆浜恒€?/p><p>浜虹被鐨勫コ绁炩€斺€斿コ濞插濞樼湅鍒拌繖涓€鍒囷紝蹇冪柤鏋佷簡銆傚ス鍐冲畾瑕佹妸澶╄ˉ濂斤紝鎷晳濂瑰垱閫犵殑瀛愭皯銆?/p><p>濂冲ú璧伴亶灞卞窛锛屾寫閫変簡浜旂棰滆壊鐨勭煶澶粹€斺€旂孩銆侀粍銆佽摑銆佺櫧銆侀粦锛屽爢鎴愪竴搴у皬灞便€傚ス鐢ㄧ鐏妸杩欎簺鐭冲ご鐐间簡涓冧竷鍥涘崄涔濆ぉ锛岀偧鎴愪簡闂棯鍙戝厜鐨勪簲鑹茬煶娴嗐€?/p><p>濂冲ú椋炲埌澶╃┖鐨勮缂濆锛屼竴鍧椾竴鍧楀湴鎶婁簲鑹茬煶琛ヤ笂鍘汇€傝ˉ鍟婅ˉ鍟婏紝澶╂渤涓嶅啀婕忔按浜嗭紒鏈€鍚庤繕鍓╀竴鍧楀皬鐭冲ご锛屽コ濞查殢鎵嬩竴鎵旓紝钀藉湪浜嗗ぇ鑽掑北鈥斺€旀嵁璇达紝閭ｅ氨鏄悗鏉ヨ淳瀹濈帀鍑虹敓鐨勯偅鍧楅€氱伒瀹濈帀鍛€?/p><p>澶╄ˉ濂戒簡锛屽コ濞插張鐮嶄笅涓€鍙ぇ榫熺殑鍥涙潯鑵匡紝浠ｆ浛澶╂煴鎾戣捣鍥涙瀬銆傚ス鐑ц姦鑻囩伆鍫典綇浜嗘椽姘达紝璧惰蛋浜嗙寷鍏姐€備汉绫荤殑涓栫晫缁堜簬鎭㈠浜嗗钩闈欍€?/p>`},
+
+dayu:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?9鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃寠',coverClass:'cn',title:'澶х娌绘按',desc:'涓夎繃瀹堕棬鑰屼笉鍏ワ紝澶х鐢ㄥ崄涓夊勾娌诲ソ浜嗗ぉ涓嬫椽姘?,content:`<p>灏у笣鏃舵湡锛屼腑鍘熷ぇ鍦扮垎鍙戜簡鍙叉棤鍓嶄緥鐨勫ぇ娲按銆傛渤姘存硾婊ワ紝娣规病浜嗙敯鍦版潙搴勶紝鐧惧娴佺澶辨墍锛屽彧鑳借窇鍒板北涓婂幓浣忋€?/p><p>灏у笣娲鹃钵鍘绘不姘淬€傞钵鐢ㄤ簡涔濆勾鏃堕棿鍒板绛戝牑鍫垫按锛屽彲鏄椽姘磋秺鍫佃秺楂橈紝鏈€鍚庡牑鍧濆穿婧冿紝鐏炬儏鍙嶈€屾洿涓ラ噸浜嗐€傞钵鍥犳琚不浜嗙姜銆?/p><p>椴х殑鍎垮瓙绂圭户鎵夸簡鐖朵翰鐨勪娇鍛姐€傜娌℃湁鍍忕埗浜查偅鏍蜂竴鍛冲牭姘达紝鑰屾槸璧伴亶澶╀笅锛岃瀵熷北宸濇渤娴佺殑璧板悜銆備粬鍙戠幇锛氭椽姘翠笢娴侊紝鏈€缁堥兘姹囧叆澶ф捣鈥斺€斾笌鍏跺牭浣忓畠浠紝涓嶅缁欐椽姘存寲涓€鏉¤矾锛岃瀹冧滑涔栦箹鍦版祦鍚戝ぇ娴凤紒</p><p>澶х甯︾潃鐧惧浠寲娌冲紑娓狅紝椋庨噷鏉ラ洦閲屽幓锛屾墜涓婄（鍑轰簡鍘氬帤鐨勮€佽導锛岃剼瓒剧敳閮芥场鎺変簡銆備粬鏇剧粡涓夋璺繃鑷繁鐨勫闂ㄥ彛锛屽惉瑙佸眿閲屼紶鏉ュ瀛愬拰瀛╁瓙鐨勮璇濆０锛屼絾浠栧挰鍜墮锛岀户缁刀璺€斺€旀椽姘磋繕娌℃不濂斤紝鍝湁鏃堕棿鍥炲鍛紵</p><p>灏辫繖鏍凤紝澶х鑺变簡鏁存暣鍗佷笁骞达紝缁堜簬璁╅粍娌炽€侀暱姹熷拰鍏朵粬娌虫祦閮戒箹涔栧湴娴佽繘浜嗗ぇ娴枫€傜櫨濮撳洖鍒颁簡骞冲師涓婇噸鏂拌€曠锛屼腑鍘熷ぇ鍦版仮澶嶄簡鐢熸満銆?/p><p>鑸滃笣琚ぇ绂圭殑绮剧鎰熷姩锛屾妸鐜嬩綅绂呰缁欎簡浠栥€傚ぇ绂瑰缓绔嬬殑澶忔湞锛屼篃鏄腑鍥藉巻鍙蹭笂绗竴涓笘琚帇鏈濄€?/p>`},
+
+kuafu:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?4鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃弮',coverClass:'cn',title:'澶哥埗杩芥棩',desc:'涓€涓法浜轰负浜嗚拷閫愬お闃筹紝璺戣繃鍗冨北涓囨按锛屾渶缁堝寲浣滄鏋?,content:`<p>鍦ㄥ寳鏂圭殑澶ц崚鍘熶笂锛屼綇鐫€涓€涓彨澶哥埗鐨勫法浜恒€備粬韬潗楂樺ぇ锛屽姏澶ф棤绌凤紝鑰充笂鎸傜潃涓ゆ潯榛勮泧锛屾墜閲屾彙鐫€涓ゆ潯榛勮泧锛岀湅璧锋潵濞侀鍑涘嚊銆?/p><p>鏈変竴澶╋紝澶哥埗鐪嬬潃瑗挎矇鐨勫お闃筹紝蹇界劧璧蜂簡蹇靛ご锛?澶槼璺戝緱鍙湡蹇晩锛佸鏋滄垜杩戒笂鍘伙紝鎶婂畠鎹変綇锛岃瀹冩案杩滄寕鍦ㄥぉ涓婏紝鏅氫笂澶у灏变笉鐢ㄦ懜榛戣蛋璺簡锛?</p><p>璇村共灏卞共锛佸じ鐖惰繄寮€澶ф锛屾湞鐫€澶槼椋炲鑰屽幓銆備粬璺戣繃浜嗕竴搴у張涓€搴у北锛岃法杩囦簡涓€鏉″張涓€鏉℃渤锛屽ぇ鍦板湪浠栬剼涓嬮渿鍔紝椋為笩琚粬鐢╁湪韬悗銆?/p><p>鍙槸澶槼瀹炲湪澶儹浜嗭紒澶哥埗璺戝埌鍗婅矾锛屽彛骞茶垖鐕ワ紝姹楁按鍍忎笅闆ㄤ竴鏍锋淮鍦ㄥ湴涓娿€備粬璺戝埌榛勬渤杈癸紝涓€鍙ｆ皵鍠濆共浜嗛粍娌崇殑姘达紱鍙堣窇鍒版腑娌宠竟锛屽枬骞蹭簡娓渤銆傚彲杩樻槸涓嶈В娓达紒</p><p>澶哥埗鎯冲幓鍖楁柟鐨勫ぇ娉藉枬姘达紝鍙繕娌″埌閭ｅ効锛屽氨娓村緱鍊掍笅浜嗐€備粬鐢ㄥ敖鏈€鍚庡姏姘旀妸鎵嬫潠鎵斾簡鍑哄幓鈥斺€旀墜鏉栬惤鍦扮殑鍦版柟锛岄暱鍑轰簡涓€澶х墖妗冩灄銆?/p><p>杩欑墖妗冩灄鍚庢潵鎴愪簡琛屼汉姝囪剼涔樺噳鐨勫ソ鍘诲锛屾爲涓婄粨婊′簡椴滅敎鐨勬瀛愩€備汉浠锛岄偅鏄じ鐖剁暀缁欏悗浜虹殑绀肩墿鈥斺€斿嵆浣胯拷涓嶅埌澶槼锛屼粬鐨勫績鎰夸粛鐒跺寲浣滀簡鐢樼敎銆?/p>`},
+
+pangu:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃',coverClass:'cn',title:'鐩樺彜寮€澶╄緹鍦?,desc:'宸ㄥぇ鐨勭洏鍙や粠娣锋矊涓啋鏉ワ紝鍔堝紑浜嗗ぉ涓庡湴',content:`<p>寰堜箙寰堜箙浠ュ墠锛屾病鏈夊ぉ锛屾病鏈夊湴锛屾病鏈夊厜浜紝娌℃湁澹伴煶鈥斺€旀暣涓笘鐣屽氨鍍忎竴涓法澶ф棤姣旂殑楦¤泲锛岄噷闈竴鐗囨贩娌屻€傚湪杩欎釜"楦¤泲"閲岋紝鐫＄潃涓€浣嶅法浜衡€斺€旂洏鍙ゃ€?/p><p>鐩樺彜鐫′簡鏁存暣涓€涓囧叓鍗冨勾銆傜粓浜庢湁涓€澶╋紝浠栭啋浜嗐€傜溂鍓嶄粈涔堜篃鐪嬩笉瑙侊紝娴戣韩琚椃寰楅毦鍙楁瀬浜嗐€傜洏鍙や竴鎬掍箣涓嬶紝鎶¤捣涓€鎶婂法鏂р€斺€?鍜斿殦锛?</p><p>鍙惉寰椾竴澹板法鍝嶏紝娣锋矊琚妶鎴愪簡涓ゅ崐锛佽交鑰屾竻鐨勪笢瑗跨紦缂撲笂鍗囷紝鍙樻垚浜嗗ぉ锛涢噸鑰屾祳鐨勪笢瑗挎參鎱笅娌夛紝鍙樻垚浜嗗湴銆?/p><p>鐩樺彜鎬曞ぉ鍦板啀鍚堟嫝锛屽氨澶撮《澶┿€佽剼韪忓湴锛岀珯鍦ㄥぉ鍦颁箣闂淬€備粬姣忓ぉ闀块珮涓€涓堬紝澶╁氨鍗囬珮涓€涓堬紝鍦板氨鍔犲帤涓€涓堛€傚氨杩欐牱鍙堣繃浜嗕竴涓囧叓鍗冨勾锛屽ぉ鍙樺緱鏋侀珮锛屽湴鍙樺緱鏋佸帤锛岀洏鍙や篃鍙樻垚浜嗛《澶╃珛鍦扮殑宸ㄤ汉銆?/p><p>鐩樺彜澶疮浜嗭紝缁堜簬鍊掍笅浜嗐€備粬鍛煎嚭鐨勬渶鍚庝竴鍙ｆ皵鍙樻垚浜嗛鍜屼簯锛涗粬鐨勫乏鐪煎彉鎴愪簡澶槼锛屽彸鐪煎彉鎴愪簡鏈堜寒锛涗粬鐨勮韩浣撳彉鎴愪簡楂樺北锛岃娑插彉鎴愪簡姹熸渤锛屽ご鍙戝彉鎴愪簡鏄熸槦鈥︹€?/p><p>鐩樺彜鐢ㄤ粬鐨勬暣涓韩浣擄紝鍒涢€犲嚭浜嗘垜浠繖涓笘鐣屻€?/p>`},
+
+baishe:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?2鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃悕',coverClass:'cn',title:'鐧借泧浼?,desc:'瑗挎箹鏂ˉ杈癸紝鐧藉瀛愪笌璁镐粰鐨勫崈骞翠箣鎭?,content:`<p>娓呮槑鏃惰妭锛屾澀宸炶タ婀栬竟涓嬬潃钂欒挋缁嗛洦銆傛柇妗ヤ箣涓婏紝涓€涓功鐢熸拺鐫€娌圭焊浼炩€斺€斾粬鍙浠欙紝鏄釜鍠勮壇鐨勮嵂閾轰紮璁°€傝繖鏃讹紝涓や綅缇庝附鐨勫コ瀛愪篃鍦ㄦˉ杈归伩闆紝涓€浣嶇┛鐧借。锛屼竴浣嶇┛闈掕。銆?/p><p>璁镐粰鎶婅嚜宸辩殑浼炲€熺粰浜嗙櫧琛ｅコ瀛愩€傜櫧琛ｅコ瀛愭姮澶寸湅浜嗕粬涓€鐪硷紝寰井涓€绗戔€斺€旇繖涓€绗戯紝璁╄浠欑殑蹇冪牥鐮扮洿璺炽€備粬鍝噷鐭ラ亾锛岃繖浣嶇櫧琛ｅコ瀛愬叾瀹炴槸涓€鏉′慨鐐间簡鍗冨勾鐨勭櫧铔囷紝鍚嶅彨鐧界礌璐烇紱闈掕。鐨勬槸濂圭殑濡瑰灏忛潚锛屾槸涓€鏉￠潚铔囥€?/p><p>鐧界礌璐炲崈骞翠慨琛岋紝鍙负鏉ヤ汉闂存姤绛旇浠欏墠涓栫殑涓€涓仼鎯呫€備粬浠浉鐖变簡锛岀粨涓哄か濡伙紝鍦ㄩ晣姹熷紑浜嗕竴瀹惰嵂閾衡€斺€?淇濆拰鍫?銆傜櫧濞樺瓙鍖绘湳楂樻槑锛屾偓澹舵祹涓栵紝鏁戞不浜嗘棤鏁扮┓鑻︾櫨濮撱€?/p><p>鍙槸閲戝北瀵虹殑娉曟捣鍜屽皻鐪嬬┛浜嗙櫧濞樺瓙鐨勮韩浠姐€備粬璁や负浜哄涓嶈兘鐩告亱锛岀敤璁℃妸璁镐粰楠楀埌閲戝北瀵哄叧浜嗚捣鏉ャ€傜櫧濞樺瓙涓烘晳涓堝か锛屼笌灏忛潚涓€璧锋按婕噾灞憋紝寮曞彂浜嗕竴鍦烘儕澶╁姩鍦扮殑澶ф垬銆?/p><p>鏈€缁堬紝鐧藉瀛愯鍘嬪湪闆峰嘲濉斾笅銆備絾濂圭殑鐪熸儏鎰熷姩浜嗗ぉ鍦帮紝澶氬勾鍚庯紝灏忛潚淇偧鎴愬姛锛屽妶寮€闆峰嘲濉旓紝鏁戝嚭浜嗙櫧濞樺瓙銆傞浄宄板鍊掞紝瑗挎箹姘村共鈥斺€旂櫧铔囦笌璁镐粰锛岀粓浜庡洟鍦嗐€?/p>`},
+
+niulang:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃専',coverClass:'cn',title:'鐗涢儙缁囧コ',desc:'閾舵渤涓ゅ哺锛岀墰閮庣粐濂虫瘡骞翠竷澶曢箠妗ョ浉浼?,content:`<p>澶╀笂鏈変竷浣嶄粰濂筹紝鏈€灏忕殑鍙粐濂筹紝濂硅礋璐ｅ湪澶╀笂缁囧嚭缇庝附鐨勪簯褰┿€傚湴涓婃湁涓斁鐗涚殑灏戝勾鍙墰閮庯紝浠栧嫟鍔冲杽鑹紝鍜屼竴澶磋€侀粍鐗涚浉渚濅负鍛姐€?/p><p>鑰侀粍鐗涘叾瀹炴槸涓€澶寸鐗涖€傚畠鍛婅瘔鐗涢儙锛氫竷浠欏コ瑕佸埌灞变笅鐨勬箹閲屾礂婢★紝浣犳嬁璧版渶灏忕殑閭ｄ欢浠欒。锛岀粐濂冲氨浼氭垚涓轰綘鐨勫瀛愩€傜墰閮庣収鍋氫簡锛岀粐濂虫灉鐒剁暀鍦ㄤ簡浜洪棿锛屽拰浠栫粨鎴愪簡澶銆?/p><p>浠栦滑鐢疯€曞コ缁囷紝鏃ュ瓙鍗佸垎骞哥锛岃繕鐢熶簡涓€鍎夸竴濂炽€傚彲鏄ソ鏅笉闀库€斺€旂帇姣嶅濞樺彂鐜扮粐濂崇鑷笅鍑★紝鍕冪劧澶ф€掞紝娲惧ぉ鍏靛ぉ灏嗘妸缁囧コ鎶撳洖浜嗗ぉ搴€?/p><p>鐗涢儙鎬ヤ簡锛岀敤鎵佹媴鎸戣捣涓や釜瀛╁瓙灏卞幓杩借刀銆傜溂鐪嬪揩瑕佽拷涓婁簡锛岀帇姣嶅濞樻嫈涓嬪ご涓婄殑閲戠蔼锛屽湪浠栦滑涔嬮棿涓€鍒掆€斺€斾竴閬撳闃旂殑閾舵渤椤挎椂鍑虹幇锛屾妸鐗涢儙鍜岀粐濂冲垎闅斾袱宀搞€?/p><p>缁囧コ鍦ㄥぉ涓婂摥锛岀墰閮庡湪鍦颁笂鍝紝涓や釜瀛╁瓙鍠婄潃濡堝銆傚枩楣婁滑琚劅鍔ㄤ簡锛屾瘡骞翠竷鏈堝垵涓冿紝鍗冧竾鍙枩楣婇涓婇摱娌筹紝鐢ㄨ韩浣撴惌鎴愪竴搴ч箠妗ワ紝璁╃墰閮庣粐濂冲湪妗ヤ笂鐩镐細銆?/p><p style="text-align:center;color:#FFD700">杩欏氨鏄竷澶曡妭鐨勭敱鏉ャ€傛嵁璇撮偅澶╄翰鍦ㄨ憽钀勬灦涓嬶紝杩樿兘鍚埌鐗涢儙缁囧コ璇存倓鎮勮瘽鍛紒</p>`},
+
+zhongkui:{tag:'涓浗绁炶瘽',tagClass:'tag-gold',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'鈿旓笍',coverClass:'cn',title:'閽熼鎹夐',desc:'鐩歌矊涓戦檵鍗村績鍦版涔夛紝閽熼鏄鎬渶鎬曠殑绁?,content:`<p>鍞愭湞鏃舵湁涓涔︿汉鍙挓棣楋紝鎵嶅崕妯孩锛屾弧鑵圭粡绾躲€備粬杩涗含璧惰€冿紝鏂囩珷鍐欏緱鏋佸ソ锛岃鑰冨畼璇勪负绗竴鍚嶃€?/p><p>鍙槸鐨囧笣鍦ㄩ噾娈块潰璇曟椂锛岀湅鍒伴挓棣楅暱寰楀張榛戝張涓戯紝蹇冮噷灏变笉楂樺叴浜嗐€傝櫧鐒舵璧忎粬鐨勬墠鍗庯紝鍗村洜涓虹浉璨岃€屾嫆缁濈偣浠栦负鐘跺厓銆傞挓棣楁偛鎰や箣涓嬶紝涓€澶存挒鍚戞煴瀛愨€︹€?/p><p>閽熼姝诲悗鍒颁簡闃撮棿锛岄槑鐜嬬埛鏁僵浠栫殑鎵嶅崕鍜岄姘旓紝灏佷粬涓?椹遍瓟澶х"锛岃祼浠栦竴鎶婃柀楝煎墤锛屼笓闂ㄦ崏鎷夸汉闂翠綔鎭剁殑楝兼€€?/p><p>鏈変竴娆★紝鍞愮巹瀹楃敓鐥呬簡锛屾ⅵ瑙佷竴涓皬楝煎湪娈夸笂鎹ｄ贡銆傛鐫€鎬ユ椂锛屼竴涓┛鐫€缁胯銆佹弧鑴歌儭椤汇€侀潰鐩▉涓ョ殑澶ф眽璺充簡鍑烘潵锛屼竴鎶婃姄浣忓皬楝硷紝涓夊彛涓ゅ彛鎶婂畠鍚冩帀浜嗭紒</p><p>鍞愮巹瀹楅棶锛?浣犳槸璋侊紵"澶ф眽鍥炵瓟锛?鑷ｆ槸閽熼锛屾効涓洪櫅涓嬮櫎灏藉ぉ涓嬪瀛斤紒"鍞愮巹瀹楅啋鏉ュ悗锛岀梾灏卞ソ浜嗐€備粬鍙潵鐢诲笀鍚撮亾瀛愶紝鎶婃ⅵ涓殑閽熼鐢讳簡涓嬫潵銆?/p><p>浠庢锛岄挓棣楁垚浜嗘崏楝间箣绁炪€傛瘡骞磋繃骞达紝瀹跺鎴锋埛閮戒細璐撮挓棣楃殑鐢诲儚锛屼繚浣戝叏瀹跺钩瀹夈€?/p>`},
+
+// === 甯岃厞绁炶瘽 10涓?===
+athena:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃彌锔?,coverClass:'gr',title:'闆呭吀濞滅殑鏅烘収涔嬬浘',desc:'鏅烘収濂崇鍙戠幇鐩剧墝涓婄殑鍙よ€侀瑷€锛岃笍涓婂啋闄╀箣鏃?,content:`<p>鍦ㄥゥ鏋楀尮鏂北宸咃紝閲戣壊鐨勯槼鍏夌┛閫忎簯灞傦紝鐓ц€€鐫€浼楃鐨勫娈裤€傛櫤鎱уコ绁為泤鍏稿绔欏湪濂圭殑绁炴鍓嶏紝鎵嬩腑鎻＄潃閭ｉ潰闂棯鍙戝厜鐨勭浘鐗屸€斺€斿焹鐧告柉銆?/p><p>杩欓潰鐩剧墝鏄畽鏂€佺粰濂圭殑绀肩墿锛屼笂闈㈤暥宓岀潃缇庢潨鑾庣殑澶撮銆備絾浠婂ぉ锛岄泤鍏稿鍙戠幇浜嗕竴浠跺鎬殑浜嬫儏鈥斺€旂浘鐗岀殑杈圭紭锛屽嚭鐜颁簡涓€琛屽ス浠庢病瑙佽繃鐨勬枃瀛楋紝閭ｆ槸鍙よ€佺殑棰勮█銆?/p><p>"褰撴槦杈版帓鍒楁垚涓夎褰紝琚仐蹇樼殑鏅烘収灏嗗湪绗竷涓弧鏈堜箣澶滆嫃閱掆€︹€?</p><p>闆呭吀濞滅毐璧风湁澶淬€傚ス鍐冲畾鍘讳汉闂村鎵剧瓟妗堛€傚ス鍖栦綔涓€涓€佸浜烘潵鍒颁簡闆呭吀鍩庯紝閬囧埌浜嗕竴涓仾鏄庣殑灏忓コ瀛┿€傚皬濂冲铏界劧鐪嬩笉瑙佸コ绁烇紝浣嗗ス鐨勮瘽璇嵈甯姪闆呭吀濞滆В寮€浜嗚皽棰樷€斺€斿師鏉ワ紝鐪熸鐨勬櫤鎱т笉鏄姏閲忥紝鑰屾槸鍒嗕韩銆?/p><p>闆呭吀濞滃洖鍒颁簡濂ユ灄鍖规柉锛屽ス鏄庣櫧浜嗭細鐩剧墝涓婄殑棰勮█璇寸殑鏄紝浼楃搴旇鎶婃櫤鎱у垎浜粰浜虹被锛岃€屼笉鏄嫭鑷弽钘忋€傚ス鏁欎細浜嗛泤鍏镐汉绾虹粐銆佹暟瀛﹀拰娉曞緥銆?/p>`},
+
+heracles:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?0鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃挭',coverClass:'gr',title:'澶у姏绁炶但鎷夊厠鍕掓柉',desc:'瀹屾垚鍗佷簩椤逛笉鍙兘鐨勪换鍔★紝甯岃厞鏈€浼熷ぇ鐨勮嫳闆?,content:`<p>璧媺鍏嬪嫆鏂槸瀹欐柉鍜屽嚒浜哄コ瀛愰樋灏斿厠澧ㄦ秴鐨勫効瀛愩€備粬杩樺湪鎽囩閲岀殑鏃跺€欙紝澶╁悗璧媺娲句簡涓ゆ潯姣掕泧鏉ュ浠栤€斺€斿彲鏄皬璧媺鍏嬪嫆鏂瑧鍢诲樆鍦扮敤涓ゅ彧灏忔墜鎹忔浜嗘瘨铔囷紒澶у杩欐墠鐭ラ亾锛氳繖瀛╁瓙涓嶆槸鍑′汉銆?/p><p>璧媺鍏嬪嫆鏂暱澶у悗鍔涘ぇ鏃犵┓銆備絾璧媺璁╀粬鍙戜簡鐤紝鍦ㄧ柉鐙備腑鍋氫簡涓€浠朵护鑷繁鎮旀仺缁堢敓鐨勪簨銆備负浜嗚祹缃紝浠栧繀椤讳负杩堥敗灏煎浗鐜嬪畬鎴愬崄浜岄」涓嶅彲鑳藉畬鎴愮殑浠诲姟銆?/p><p>绗竴椤癸細鏉€姝诲垁鏋笉鍏ョ殑灏肩背浜氱寷鐙€傝但鎷夊厠鍕掓柉鍙戠幇鐙瓙鐨瘺澶‖锛岀灏勪笉绌匡紝浜庢槸浠栧緬鎵嬪嫆姝讳簡鐙瓙锛屽苟鐢ㄧ嫯瀛愯嚜宸辩殑鐖瓙鍓ヤ笅浜嗙嫯鐨紝鍋氭垚閾犵敳銆?/p><p>绗簩椤癸細鏉€姝讳節澶磋泧璁稿痉鎷夈€傛瘡鐮嶆帀涓€涓ご锛屽張闀垮嚭涓や釜锛佽但鎷夊厠鍕掓柉鐏垫満涓€鍔紝鍙緞瀛愮敤鐏儳浼ゅ彛锛岀粓浜庡皢铔囧ご鍏ㄩ儴娑堢伃銆?/p><p>浠栦竴浠朵欢鍦板畬鎴愪换鍔♀€斺€旀崟鎹夐噾瑙掗箍銆佹椿鎹夊ぇ閲庣尓銆佹竻鎵ゥ鏍奸樋鏂殑鐗涙銆佽刀璧版€笩銆侀┋鏈嶇柉鐗涖€佸ず鍙栧悆浜洪┈銆佸伔鍙栦簹椹€婂コ鐜嬬殑鑵板甫銆佺壍鍥炲法浜虹殑鐗涚兢銆佹憳鍙栭噾鑻规灉銆佸甫鍥炲湴鐙变笁澶寸姮鈥︹€﹀崄浜屽勾鍚庯紝浠栫粓浜庡畬鎴愪簡鍏ㄩ儴鎸戞垬锛岃幏寰椾簡鑷敱鍜岃崳鑰€銆?/p>`},
+
+pandora:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃摝',coverClass:'gr',title:'娼樺鎷夌殑榄旂洅',desc:'浼楃閫佺粰濂逛竴涓洅瀛愶紝涓婇潰鍐欑潃"鍗冧竾涓嶈鎵撳紑"',content:`<p>鏅綏绫充慨鏂粠澶╀笂鍋风伀缁欎汉绫讳箣鍚庯紝瀹欐柉闈炲父鐢熸皵銆備粬鎯虫儵缃氫汉绫伙紝浜庢槸鎯冲嚭浜嗕竴涓簿濡欑殑璁″垝銆?/p><p>瀹欐柉鍛戒护鐏鎵撻€犱簡涓€涓編涓界殑濂冲瓙锛屽彇鍚嶆綐澶氭媺锛屾剰鎬濇槸"鎷ユ湁涓€鍒囩ぜ鐗╃殑濂充汉"銆傛瘡涓€浣嶇閮介€佺粰濂逛竴浠界ぜ鐗╋細闃夸經娲涚媱蹇掔粰浜嗗ス缇庤矊锛岄泤鍏稿缁欎簡濂瑰崕涓界殑琛ｆ湇锛岃但灏斿ⅷ鏂粰浜嗗ス浼朵繍鐨勫彛鎵嶁€︹€?/p><p>鏈€鍚庯紝瀹欐柉閫掔粰濂逛竴涓簿缇庣殑鐩掑瓙锛屼笂闈㈠埢鐫€涓€琛屽瓧锛?姘歌繙涓嶈鎵撳紑銆?</p><p>娼樺鎷夎閫佸埌浜嗕汉闂达紝瀚佺粰浜嗘櫘缃楃背淇柉鐨勫紵寮熴€傛棩瀛愪竴澶╁ぉ杩囧幓锛屾綐澶氭媺姣忓ぉ鐪嬬潃閭ｄ釜鐩掑瓙锛岃秺鏉ヨ秺濂藉锛氬埌搴曟槸浠€涔堜笢瑗匡紝涓轰粈涔堜笉鑳芥墦寮€锛?/p><p>缁堜簬鏈変竴澶╋紝濂瑰啀涔熷繊涓嶄綇浜嗐€傚ス鎻紑浜嗙洊瀛愨€斺€斿埞閭ｉ棿锛屼粠鐩掑瓙閲岄鍑轰簡鐤剧梾銆佺棝鑻︺€佸珘濡掋€佷粐鎭ㄣ€佽皫瑷€鈥︹€︽墍鏈変笉濂界殑涓滆タ閮芥秾鍚戜簡浜洪棿锛?/p><p>娼樺鎷夊悡寰楄刀绱х洊涓婄洅瀛愶紝浣嗗凡缁忔潵涓嶅強浜嗐€備笉杩囷紝鐩掑瓙閲岃繕鍓╀笅鏈€鍚庝竴鏍蜂笢瑗库€斺€斿笇鏈涖€傛棤璁轰汉绫荤粡鍘嗗灏戣嫤闅撅紝甯屾湜姘歌繙鐣欏湪蹇冧腑锛岀粰浜轰滑缁х画鍓嶈鐨勫姏閲忋€?/p>`},
+
+apollo:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?7鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'鈽€锔?,coverClass:'gr',title:'闃挎尝缃楃殑澶槼椹溅',desc:'灏忔硶鍘勫悓椹剧潃鐖朵翰鐨勫お闃宠溅锛屽樊鐐圭儳姣佷簡鏁翠釜涓栫晫',content:`<p>澶槼绁為樋娉㈢綏姣忓ぉ椹剧潃涓€杈嗙敱鍥涘尮鐏劙绁為┈鎷夌潃鐨勯噾鑹查┈杞︼紝浠庝笢鏂瑰嚭鍙戯紝椋為┌杩囧ぉ绌猴紝缁欎笘鐣屽甫鏉ュ厜鏄庛€?/p><p>闃挎尝缃楁湁涓€涓効瀛愬彨娉曞巹鍚屻€傛湁涓€锟斤拷锟斤紝娉曞巹鍚岀粓浜庨紦璧峰媷姘斿鐖朵翰璇达細"鐖哥埜锛屾垜鐪熺殑鏄綘鐨勫効瀛愬悧锛熷ぇ瀹堕兘绗戣瘽鎴戯紝璇存垜鏄惞鐗涚殑銆傝鎴戦┚涓€娆″お闃抽┈杞﹀惂锛岃繖鏍锋墍鏈変汉閮戒細鐩镐俊浜嗭紒"</p><p>闃挎尝缃楀悡浜嗕竴璺筹細"涓嶈锛佽繖浜涢┈鑴炬皵鐑堝緱寰堬紝杩炲畽鏂兘椹鹃┉涓嶄簡瀹冧滑锛屼綘杩樺お灏忎簡锛?</p><p>鍙槸娉曞巹鍚屼笉鍋滃湴鎭虫眰锛岄樋娉㈢綏鎷椾笉杩囧効瀛愶紝鍙ソ绛斿簲浜嗐€備粬缁欏効瀛愭秱涓婇槻鏅掔殑绁炴补锛屼粩缁嗗彯鍢辫矾绾裤€傛硶鍘勫悓鍏村鍦拌烦涓婇┈杞︼紝鎶撹捣缂扮怀鈥斺€?/p><p>鍥涘尮绁為┈绔嬪埢鍙戠幇椹捐溅鐨勪汉鎹簡涓€涓紝寮€濮嬬柉鐙傚湴濂旇窇锛佹硶鍘勫悓鏍规湰鎷変笉浣忕及缁筹紝澶槼杞︿竴浼氬効椋炲緱澶珮锛屾妸鏄熸槦鎾炲緱涓冮浂鍏惤锛涗竴浼氬効椋炲緱澶綆锛屾妸澶у湴鐑ゆ垚浜嗘矙婕犮€佹妸闈炴床浜虹殑鐨偆鏅掓垚浜嗛粦鑹诧紒</p><p>瀹欐柉鐪肩湅涓栫晫瑕佽鐑ф瘉浜嗭紝涓嶅緱涓嶆墧鍑轰竴閬撻棯鐢碉紝鎶婃硶鍘勫悓浠庤溅涓婂嚮钀戒笅鏉ワ紝鎺夎繘浜嗕竴鏉℃渤閲屻€備粠姝わ紝闃挎尝缃楀啀涔熶笉鏁㈣鍒汉纰颁粬鐨勫お闃宠溅浜嗐€?/p>`},
+
+medusa:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃悕',coverClass:'gr',title:'缇庢潨鑾庣殑璇呭拻',desc:'缇庝附鐨勫皯濂宠鍙樻垚浜嗚泧鍙戝コ濡栵紝璋佺湅濂逛竴鐪煎氨浼氬彉鎴愮煶澶?,content:`<p>缇庢潨鑾庢浘缁忔槸闆呭吀濞滅搴欓噷鏈€缇庝附鐨勫コ绁徃銆傚ス鏈変竴澶寸€戝竷鑸殑闀垮彂锛屾瘮闆呭吀濞滄湰浜鸿繕瑕佺編涓解€斺€旇繖璁╁コ绁炲績閲屾湁浜涗笉楂樺叴銆?/p><p>娴风娉㈠鍐湪绁炲簷閲屽仛浜嗕笉鏁箣浜嬶紝闆呭吀濞滈潪甯告劋鎬掋€備絾濂逛笉鏁㈡儵缃氭尝濉炲啲鈥斺€斿洜涓轰粬鏄嚜宸辩殑鍙斿彅銆備簬鏄泤鍏稿鎶婃墍鏈夌殑鎬掓皵閮芥拻鍦ㄤ簡缇庢潨鑾庤韩涓娿€?/p><p>"鏃㈢劧浣犻偅涔堢編锛?闆呭吀濞滃喎鍐峰湴璇达紝"閭ｅ氨璁╀綘缇庡埌娌′汉鏁㈢湅浣犮€?</p><p>濂规尌鎵嬫柦娉曘€傜編鏉滆帋鏌旈『鐨勯暱鍙戝彉鎴愪簡涓€鏉℃潯鍢跺樁鍚愪俊鐨勬瘨铔囷紝濂圭殑鐪肩潧鍙樺緱鑳藉彂鍑哄彲鎬曠殑鍏夎姃鈥斺€斾换浣曚汉鍙鍜屽ス瀵硅锛岀灛闂村氨浼氬彉鎴愮煶鍍忋€?/p><p>缇庢潨鑾庢偛鐥涙缁濓紝濂逛笉鍐嶆槸閭ｄ釜浜鸿浜虹埍鐨勫皯濂充簡銆傚ス閫冨埌浜嗘渶鍋忚繙鐨勮崚宀涗笂锛岀嫭鑷敓娲汇€傞偅浜涙潵鎸戞垬濂圭殑鍕囧＋浠紝涓€涓帴涓€涓湴鍦ㄥス鐨勭洰鍏変笅鍖栨垚浜嗙煶鍍忥紝鎴愪簡宀涗笂鎭愭€栫殑闆曞儚鏋椼€?/p><p>鐩村埌鏈変竴澶╋紝涓€涓勾杞荤殑鑻遍泟鈥斺€旂弨灏斾慨鏂紝甯︾潃濂崇璧愪簣鐨勭鍣ㄦ潵鎸戞垬濂广€備粬鐢ㄧ浘鐗屽綋闀滃瓙锛屼笉鍘荤湅缇庢潨鑾庢湰浜猴紝闈犵潃鍙嶅皠鐨勫奖瀛愭壘鍒颁簡濂圭殑浣嶇疆锛屼竴鍓戞柀涓嬩簡濂圭殑澶撮銆?/p><p>缇庢潨鑾庢鍚庯紝浠庡ス鐨勮剸瀛愰噷椋炲嚭浜嗕竴鍖归椹€斺€旂弨浼界储鏂紝鎴愪负浜嗗ぉ绌轰腑鏈€缇庣殑鏄熷骇涔嬩竴銆?/p>`},
+
+theseus:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?8鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃Ф',coverClass:'gr',title:'蹇掍慨鏂笌杩峰',desc:'涓€涓嚎鍥㈠府浠栧湪杩峰涓壘鍒板嚭璺紝鎴樿儨浜嗙墰澶存€?,content:`<p>鍏嬮噷鐗瑰矝涓婁綇鐫€涓€鍙彲鎬曠殑鎬墿鈥斺€旂背璇洪櫠锛屽畠闀跨潃鐗涘ご浜鸿韩锛屽悆浜烘棤鏁般€傜背璇烘柉鍥界帇涓哄畠寤洪€犱簡涓€搴у法澶х殑杩峰锛屼换浣曚汉璧拌繘鍘诲氨鍐嶄篃鍑轰笉鏉ャ€?/p><p>闆呭吀鍩庡洜涓哄緱缃簡绫宠鏂紝琚揩姣忎節骞寸尞涓婁竷瀵圭鐢风濂筹紝閫佽繘杩峰缁欑背璇洪櫠褰撻鐗┿€傝繖涓€娆★紝闆呭吀鐜嬪瓙蹇掍慨鏂啀涔熷繊涓嶄綇浜嗭紝浠栦富鍔ㄨ姹傚姞鍏ョ尞绁槦浼嶏細"鎴戣浜叉墜鏉€姝昏繖鍙€墿锛?</p><p>蹇掍慨鏂潵鍒颁簡鍏嬮噷鐗广€傜背璇烘柉鍥界帇鐨勫コ鍎块樋閲岄樋寰锋秴琚繖浣嶈嫳淇婂媷鏁㈢殑鐜嬶拷锟斤拷鎵撳姩浜嗭紝鎮勬倓鎵惧埌浠栵細"鎴戝彲浠ュ府浣狅紝浣嗕綘瑕佺瓟搴旀垜锛屾墦璐ユ€墿鍚庡甫鎴戝洖闆呭吀銆?</p><p>闃块噷闃垮痉娑呯粰浜嗗繏淇柉涓€鎶婇瓟鍓戝拰涓€涓嚎鍥€?鎶婅繖涓嚎鍥㈢殑涓€绔郴鍦ㄨ糠瀹叆鍙ｏ紝杈硅蛋杈规斁绾裤€傛潃浜嗘€墿鍚庯紝椤虹潃绾垮氨鑳借蛋鍑烘潵銆?</p><p>蹇掍慨鏂蛋杩涢粦鏆楃殑杩峰銆備粬鍚埌浜嗘€墿鐨勫拞鍝紝闂诲埌浜嗚鑵ョ殑姘斿懗锛屼絾浠栨病鏈夊悗閫€銆傚湪杩峰鏈€娣卞锛屼粬鍜岀背璇洪櫠灞曞紑浜嗘畩姝绘悘鏂椻€斺€旀渶缁堬紝榄斿墤鍒虹┛浜嗘€墿鐨勫績鑴忥紒</p><p>闈犵潃绾垮洟锛屽繏淇柉璧板嚭浜嗚糠瀹€備粬甯︾潃浼欎即浠紝涔樿埞杩斿洖浜嗛泤鍏糕€斺€斾粠姝わ紝浠栨垚浜嗛泤鍏告渶浼熷ぇ鐨勮嫳闆勩€?/p>`},
+
+icarus:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?4鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃晩锔?,coverClass:'gr',title:'浼婂崱娲涙柉鐨勭繀鑶€',desc:'鐢ㄨ湣鍋氭垚鐨勭繀鑶€椋炲悜澶槼锛屽皯骞寸敤鐢熷懡杩介€愭ⅵ鎯?,content:`<p>鍦ㄥ厠閲岀壒宀涗笂锛屼綇鐫€涓€浣嶅ぉ鎵嶅伐鍖犱唬杈剧綏鏂拰浠栫殑鍎垮瓙浼婂崱娲涙柉銆傜背璇烘柉鍥界帇鎶婁粬浠蒋绂佸湪宀涗笂锛屼笉璁╀粬浠寮€銆?/p><p>浠ｈ揪缃楁柉鏈涚潃椋炵繑鐨勬捣楦ワ紝绐佺劧鏈変簡鐏垫劅銆備粬鐢ㄧ窘姣涘拰铚″仛鎴愪簡涓ゅ宸ㄥぇ鐨勭繀鑶€锛屼竴瀵圭粰鑷繁锛屼竴瀵圭粰鍎垮瓙銆?鎴戜滑鍙互椋炲嚭鍏嬮噷鐗癸紝浣嗚璁颁綇鈥斺€斾笉瑕侀寰楀お浣庯紝娴锋氮浼氭妸缇芥瘺鎵撴箍锛涗篃涓嶈椋炲緱澶珮锛屽お闃充細鎶婅湣铻嶅寲銆?</p><p>浼婂崱娲涙柉鍏村鍦扮偣浜嗙偣澶淬€備粬浠妸缈呰唨缁戝ソ锛屼粠楂橀珮鐨勬偓宕栦笂涓€璺冣€斺€旂湡鐨勯璧锋潵浜嗭紒娴烽鍦ㄨ€宠竟鍛煎暩锛岀櫧浜戜粠韬竟椋樿繃锛岃繖鏄汉绫荤涓€娆￠涓婂ぉ绌猴紒</p><p>鍙槸骞磋交鐨勪紛鍗℃礇鏂お鍏村浜嗐€備粬蹇樿浜嗙埗浜茬殑璀﹀憡锛岃秺椋炶秺楂橈紝瓒婇瓒婇珮锛屼粬鎯虫懜涓€鎽搁偅娓╂殩鐨勫お闃炽€?鍐嶉珮涓€鐐癸紝鍐嶉珮涓€鐐癸紒"</p><p>澶槼瓒婃潵瓒婅繎锛岃湣寮€濮嬭瀺鍖栦簡銆傚暘鍡掆€斺€斾竴婊磋湣鐝犳帀涓嬫潵锛屾帴鐫€鍙堜竴婊淬€備紛鍗℃礇鏂殑缈呰唨鏁ｄ簡鏋讹紝浠栦粠楂樼┖鍧犺惤锛屾秷澶卞湪浜嗚敋钃濈殑澶ф捣涓€?/p><p>浠ｈ揪缃楁柉鍝潃鎵惧埌浜嗗効瀛愮殑韬綋锛屽煁钁湪涓€搴у皬宀涗笂銆傞偅鐗囨捣鍩熶粠姝よ鍙仛"浼婂崱娲涙柉娴?銆?/p>`},
+
+orpheus:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?9鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃幍',coverClass:'gr',title:'淇勮€崇敨鏂濡?,desc:'鐢ㄦ瓕澹版墦鍔ㄥ啣鐜嬶紝涓嬪湴鐙辨嫰鏁戠埍濡荤殑鎰熶汉鏁呬簨',content:`<p>淇勮€崇敨鏂槸澶槼绁為樋娉㈢綏鐨勫効瀛愶紝涔熸槸鍏ㄥ笇鑵婃渶浼熷ぇ鐨勯煶涔愬銆備粬鐨勭惔澹拌兘璁╃煶澶存祦娉€佽鐚涘吔鑷ｆ湇銆備粬鐨勫瀛愭寰嬬媱鍒伙紝鏄叏甯岃厞鏈€缇庣殑濂冲瓙銆?/p><p>鍙槸鍦ㄤ粬浠殑濠氱ぜ閭ｅぉ锛屾寰嬬媱鍒诲湪鑽夊湴涓婃暎姝ユ椂锛屼笉灏忓績韪╁埌浜嗕竴鏉℃瘨铔囷紝琚挰浜嗕竴鍙ｃ€傚ス灏辫繖涔堟浜嗭紝鍘讳簡鍦颁笅鐨勫啣鐣屻€?/p><p>淇勮€崇敨鏂偛鐥涙缁濄€備粬鍋氫簡涓€涓病鏈変汉鍋氳繃鐨勪簨鈥斺€斾粬甯︾潃涓冨鸡鐞达紝璧拌繘浜嗛€氬線鍐ョ晫鐨勬礊绌淬€傚湪鍐ユ渤鐣旓紝浠栫敤鐞村０鎵撳姩浜嗚埞澶崱鎴庯紱鍦ㄥ湴鐙遍棬鍓嶏紝浠栫敤姝屽０椹湇浜嗕笁澶寸姮鍒昏€虫煆娲涙柉銆?/p><p>鏈€鍚庯紝浠栨潵鍒板啣鐜嬪搱杩柉鍜屽啣鍚庣弨鑰冲绂忔秴闈㈠墠锛屽脊濂忎簡涓€棣栨偛浼よ嚦鏋佺殑鏇插瓙銆傚啣鍚庡惉鐫€鍚潃锛屾祦涓嬩簡鐪兼唱鈥斺€旇繖鏄暟鐧惧勾鏉ュス绗竴娆¤浜洪棿鐨勭湡鎯呮墦鍔ㄣ€?/p><p>鍐ョ帇涔熻鎰熷姩浜嗐€備粬绛斿簲璁╂寰嬬媱鍒诲洖鍒颁汉闂达紝浣嗘湁涓€涓潯浠讹細鍦ㄨ蛋鍑哄啣鐣屼箣鍓嶏紝淇勮€崇敨鏂粷涓嶈兘鍥炲ご鐪嬪瀛愶紝鍚﹀垯濂瑰皢姘歌繙娑堝け銆?/p><p>淇勮€崇敨鏂珮鍏存瀬浜嗭紝浠栬蛋鍦ㄥ墠闈紝娆у緥鐙勫埢璺熷湪鍚庨潰銆傚揩瑕佸埌杈炬礊鍙ｇ殑鏃跺€欙紝淇勮€崇敨鏂績閲屽崌璧蜂簡涓€涓彲鎬曠殑蹇靛ご锛?濂圭湡鐨勫湪鎴戣韩鍚庡悧锛?</p><p>浠栧繊涓嶄綇鍥炰簡涓€涓嬪ご鈥斺€斿彧涓€鐬棿锛屾寰嬬媱鍒诲氨鍍忛浘涓€鏍锋秷鏁ｄ簡銆傝繖涓€娆★紝鏄案杩滅殑绂诲埆銆?/p>`},
+
+persephone:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃尯',coverClass:'gr',title:'鐝€鑰冲绂忔秴鐨勭煶姒?,desc:'鏄ヤ箣濂崇琚啣鐜嬫嫄璧帮紝鍏鐭虫Υ绫芥敼鍙樹簡鍥涘',content:`<p>鐝€鑰冲绂忔秴鏄赴鏀跺コ绁炲緱澧ㄥ繏鑰崇殑鐙敓濂冲効锛屼篃鏄槬澶╃殑鍖栬韩銆傚ス璧板埌鍝噷锛岄矞鑺卞氨寮€鍒板摢閲岋紝寰灏卞惞鍒板摢閲屻€?/p><p>鍐ョ帇鍝堣开鏂湪闃存殫鐨勫湴涓嬬帇鍥介噷鎰熷埌闈炲父瀛ょ嫭銆傛湁涓€澶╀粬椹剧潃榛戦┈杞︽潵鍒板湴闈紝鐪嬪埌浜嗘鍦ㄩ噰鑺辩殑鐝€鑰冲绂忔秴鈥斺€斾粬绔嬪埢鐖变笂浜嗚繖涓儚闃冲厜涓€鏍风殑濂冲銆傝秮濂逛笉娉ㄦ剰锛屽啣鐜嬩竴鎶婂皢濂规姄鍒伴┈杞︿笂锛屽甫鍥炰簡鍐ョ晫銆?/p><p>寰楀ⅷ蹇掕€冲彂鐜板コ鍎夸笉瑙佷簡锛屽彂鐤埇鍥涘瀵绘壘銆傚ス鏃犲績宸ヤ綔锛屽簞绋兼灟钀庝簡锛岃姳鏈靛噵璋簡锛屾暣涓笘鐣岃繘鍏ヤ簡瀵掑喎鐨勫啲澶┿€備汉绫诲湪楗ヨ崚涓摥娉ｃ€?/p><p>瀹欐柉鐪嬩笉涓嬪幓浜嗭紝鍛戒护鍝堣开鏂斁浜嗙弨鑰冲绂忔秴銆備絾鍝堣开鏂湪鏀惧ス璧颁箣鍓嶏紝缁欎簡濂瑰叚棰楃煶姒寸苯鍚冣€斺€斿湪鍐ョ晫鍚冧笅涓滆タ鐨勪汉锛屽氨姘歌繙灞炰簬鍐ョ晫浜嗐€?/p><p>鏈€缁堬紝浼楃杈炬垚浜嗕竴涓崗璁細鐝€鑰冲绂忔秴姣忓勾鏈夊叚涓湀鍥炲埌鍦伴潰涓婇櫔浼存瘝浜诧紝鍙﹀鍏釜鏈堝洖鍒板啣鐣屽綋鍐ュ悗銆傚綋濂瑰洖鏉ユ椂锛屽緱澧ㄥ繏鑰抽珮鍏村湴璁╁ぇ鍦拌姳寮€鈥斺€旇繖灏辨槸鏄ュぉ鍜屽澶┿€傚綋濂瑰洖鍒板啣鐣屾椂锛屽緱澧ㄥ繏鑰充激蹇冨湴璁╀竾鐗╁噵锟斤拷鈥斺€旇繖灏辨槸绉嬪ぉ鍜屽啲澶┿€?/p>`},
+
+artemis:{tag:'甯岃厞绁炶瘽',tagClass:'tag-blue',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃徆',coverClass:'gr',title:'鏈堜寒濂崇闃胯€冲繏寮ユ柉',desc:'鑳岀潃閾跺紦鐨勭嫨鐚庡コ绁烇紝瀹堟姢妫灄鍜屾墍鏈夊皬鍔ㄧ墿',content:`<p>闃胯€冲繏寮ユ柉鏄畽鏂殑濂冲効銆侀樋娉㈢綏鐨勫弻鑳炶儙濮愬銆傚ス鍒氬嚭鐢熷氨甯濡堟帴鐢熶簡寮熷紵闃挎尝缃楋紝鎵€浠ュス涔熸垚涓轰簡鎺ョ敓涓庡瀛愮殑瀹堟姢绁炪€?/p><p>灏忔椂鍊欙紝瀹欐柉闂ス鎯宠浠€涔堢ぜ鐗┿€傚皬闃胯€冲繏寮ユ柉璇达細"鎴戣涓€鎶婇摱寮撳拰閾剁锛屾垜瑕佹案杩滀綇鍦ㄦ．鏋楅噷锛屽拰楣裤€佺唺銆佸皬楦熶滑鍋氭湅鍙嬨€傛垜涓嶈缁撳锛屾垜瑕佽嚜鐢辫嚜鍦ㄥ湴濂旇窇锛?瀹欐柉绗戠潃绛斿簲浜嗐€?/p><p>闃胯€冲繏寮ユ柉闀垮ぇ鍚庯紝鎴愪负浜嗘渶鍘夊鐨勭嫨鐚庡コ绁炪€傛瘡鍒板鏅氾紝濂归┚鐫€閾惰壊鐨勬湀鍏夐┈杞﹂杩囧ぉ闄咃紝韬悗璺熺潃涓€缇や粰濂虫姢鍗€傚ス鐢ㄩ摱绠繚鎶ゆ．鏋楅噷鐨勫姩鐗╋紝鎯╃綒閭ｄ簺婊ユ潃鏃犺緶鐨勭寧浜恒€?/p><p>鏈変竴娆★紝涓€涓寧浜洪樋鍏嬫嘲缈佷笉灏忓績鍋风湅鍒颁簡濂瑰湪婀栦腑娲楁尽銆傞樋鑰冲繏寮ユ柉涓轰簡鎯╃綒浠栵紝鎶婁粬鍙樻垚浜嗕竴澶撮箍锛屼粬鑷繁鐨勭寧鐘涓嶅嚭涓讳汉锛屾墤涓婂幓灏辨槸涓€闃佃拷閫愩€?/p><p>铏界劧濂规湁鏃跺緢涓ュ帀锛屼絾闃胯€冲繏寮ユ柉瀵瑰皬鏈嬪弸鐗瑰埆娓╂煍銆傚ス浼氭倓鎮勫畧鎶ょ敓鐥呯殑瀛╁瓙锛屽府杩疯矾鐨勫皬鍔ㄧ墿鎵惧埌鍥炲鐨勮矾銆?/p>`},
+
+// === 鍖楁绁炶瘽 10涓?===
+thor:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?2鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'鈿?,coverClass:'no',title:'闆风绱㈠皵鐨勭閿?,desc:'绁為敜濡欏皵灏煎皵琚洍锛岀储灏旂┛濠氱罕鏅哄彇闇滃法浜?,content:`<p>娓呮櫒锛岄樋鏂姞寰疯涓€澹版儕澶╁姩鍦扮殑鎬掑惣闇囬啋浜嗐€?鎴戠殑閿ゅ瓙锛侊紒锛?闆风绱㈠皵绔欏湪瀵濆闂ㄥ彛锛屽弻鐪煎啋鐏€斺€斾粬鐨勫疂璐濈閿ゅ灏斿凹灏斾笉瑙佷簡锛?/p><p>鎹ｈ泲楝兼礇鍩哄彉鎴愪簡椋為笩锛岄閬嶄節鐣屽幓鎵撳惉娑堟伅銆備粬甯﹀洖浜嗗潖娑堟伅锛氶湝宸ㄤ汉棣栭绱㈠垪濮嗗伔璧颁簡閿ゅ瓙锛屾妸瀹冭棌鍦ㄧ害椤挎捣濮嗘渶娣辩殑鍦版礊閲屻€傜储鍒楀鐨勬潯浠舵槸鈥斺€旇濂崇寮楄暰浜氬珌缁欎粬锛屽惁鍒欐案杩滀笉杩橀敜瀛愩€?/p><p>"浠€涔堬紵锛?绱㈠皵鏆磋烦濡傞浄锛屼絾寮楄暰浜氭洿鐢熸皵锛?鎴戞墠涓嶅珌缁欓偅涓笐鍏€紒"</p><p>娲涘熀鐪肩彔涓€杞紝闇插嚭鐙￠粻鐨勭瑧瀹癸細"鎴戝€掓湁涓富鎰忊€︹€︾储灏旓紝浣犵┛涓婂紬钑句簹鐨勫绾憋紝鍋囪鏄柊濞橈紝鎴戞壆鎴愪綘鐨勪緧濂筹紝鍜变滑涓€璧峰幓绾﹂】娴峰銆傜瓑宸ㄤ汉鎶婇敜瀛愭嬁鍑烘潵褰撹仒绀肩殑鏃跺€欌€斺€?</p><p>绱㈠皵鐬ぇ浜嗙溂锛?浣犺鎴戠┛濠氱罕锛燂紒鎴戝張涓嶆槸灏忓濞橈紒"浣嗗湪娲涘熀鐨勮繛鍝勫甫楠椾笅锛岄浄绁炶繕鏄涓婁簡澶уぇ鐨勫绾憋紝鎴翠笂浜嗗帤鍘氱殑闈㈢罕銆?/p><p>鍒颁簡闇滃法浜虹殑澶у巺锛岀储鍒楀鐪嬪埌"鏂板"鐙煎悶铏庡捊鍦板悆鎺変簡涓€鏁村ご鐗涖€佸叓鏉′笁鏂囬奔鍜屼笁澶ф《铚滈厭锛屾湁鐐规€€鐤戙€傛礇鍩鸿刀绱цВ閲婏細"寮楄暰浜氬お婵€鍔ㄤ簡锛屽凡缁忓叓澶╂病鍚冮キ鍟︺€?</p><p>绱㈠垪濮嗘弧鎰忓湴鍙墜涓嬶細"鎶婂灏斿凹灏旀嬁鏉ワ紒"褰撻敜瀛愯鏀惧埌"鏂板"鑶濅笂鏃讹紝绱㈠皵涓€鎶婃壇鎺夐潰绾扁€斺€旇桨闅嗭紒鐢甸棯闆烽福涔嬩腑锛岄浄绁炴姟璧烽敜瀛愭墦寰楅湝宸ㄤ汉钀借姳娴佹按锛?/p>`},
+
+odin:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?8鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃憗锔?,coverClass:'no',title:'浼楃涔嬬帇濂ヤ竵',desc:'鐢ㄤ竴鍙溂鐫涙崲鍙栨棤涓婃櫤鎱э紝涔濈晫鏈€浼熷ぇ鐨勭帇鑰?,content:`<p>鍦ㄤ節鐣岀殑鏈€楂樺锛屾湁涓€搴у畯浼熺殑閲戝锛岄偅鏄紬绁炰箣鐜嬪ゥ涓佺殑瀹銆傚ゥ涓佽偐澶寸珯鐫€涓ゅ彧绁為甫鈥斺€旀€濇兂涓庤蹇嗭紝瀹冧滑姣忓ぉ椋為亶涔濈晫锛屽甫鍥炲ぉ涓嬫墍鏈夌殑娑堟伅銆?/p><p>浣嗗ゥ涓佸苟涓嶆弧瓒炽€備粬鎯崇煡閬撶殑涓嶅彧鏄?鍙戠敓浜嗕粈涔?锛岃€屾槸"涓轰粈涔堜細鍙戠敓"鈥斺€斾粬鎯宠幏寰楃湡姝ｇ殑鏅烘収銆備粬鍚鍦ㄤ笘鐣屾爲灏ゅ厠鐗规媺甯屽皵鐨勬牴閮紝鏈変竴鍙ｆ櫤鎱т箣娉夛紝鐢卞法浜哄瘑绫冲皵瀹堟姢銆傚枬涓€鍙ｆ硥姘村氨鑳介€氭檽涓€鍒囥€?/p><p>濂ヤ竵姣笉鐘硅鲍鍦板嚭鍙戜簡銆備粬绌胯繃杩烽浘涔嬫．锛屾潵鍒颁簡涓栫晫鏍戠殑鏍归儴銆傚瘑绫冲皵宸ㄤ汉鍧愬湪娉夋按杈癸細"鎴戠煡閬撲綘涓轰粈涔堟潵銆傝鍠濇硥姘达紝蹇呴』鐚嚭浣犵殑涓€鍙溂鐫涖€?</p><p>濂ヤ竵娌夐粯浜嗐€傜劧鍚庯紝浠栨涓嶇姽璞湴鍙栦笅浜嗚嚜宸辩殑鍙崇溂锛屾矇鍏ユ硥姘存繁澶勩€備粬鑸€璧蜂竴鎹ф硥姘村枬涓嬧€斺€斿埞閭ｏ拷锟斤拷锛屼粬鐪嬪埌浜嗚繃鍘荤殑涓€鍒囷紝涔熺湅鍒颁簡鏈潵灏嗚鍙戠敓鐨勮绁為粍鏄忋€?/p><p>浠庢锛屽ゥ涓佺敤涓€鍙溂鐫涚湅鐜板湪锛岀敤鏅烘収鐪嬬┛浜嗚繃鍘讳笌鏈潵銆備粬鎴愪簡涔濈晫鏈€浼熷ぇ鐨勫悰涓伙紝浣嗛偅浠介鐭ユ湯鏃ラ檷涓寸殑瀛ょ嫭锛屽彧鏈変粬鑷繁榛橀粯鎵垮彈銆?/p>`},
+
+yggdrasil:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃尦',coverClass:'no',title:'涓栫晫鏍戠殑绉樺瘑',desc:'涓€妫佃繛鎺ヤ節鐣岀殑宸ㄦ爲锛屾爲涓婁綇鐫€绁炵鐨勭敓鐗?,content:`<p>鍦ㄥ畤瀹欑殑涓績锛岃€哥珛鐫€涓€妫垫棤姣斿法澶х殑姊ｆ爲锛屽悕鍙挨鍏嬬壒鎷夊笇灏斻€傚畠鐨勬爲鍐犻《鐫€澶╃┕锛屾爲鏍逛几鍏ヤ笁涓笉鍚岀殑涓栫晫锛屾爲韬繛鎺ョ潃鏁翠釜涔濈晫銆?/p><p>鍦ㄨ繖妫垫爲涓婏紝浣忕潃寰堝绁炲鐨勭敓鐗┿€傛爲椤朵笂鏈変竴鍙法澶х殑闆勯拱锛屽畠鐨勫弻鐪艰兘鐪嬪埌涔濈晫鏈€閬ヨ繙鐨勮钀姐€傛爲鏍瑰鐩樿笧鐫€涓€鏉℃瘨榫欏凹寰烽湇鏍硷紝瀹冧笉鍋滃湴鍟冨挰鐫€鏍戞牴锛屾兂瑕佹瘉鐏笘鐣屻€?/p><p>涓€鍙彨鎷夊鎵樻柉鍏嬬殑灏忔澗榧狅紝姣忓ぉ鍦ㄦ爲鍐犲拰鏍戞牴涔嬮棿璺戞潵璺戝幓銆傚畠浼犵殑璇濇€绘槸琚坊娌瑰姞閱嬶紝鎵€浠ユ爲椤剁殑闆勯拱鍜屾爲鏍圭殑姣掗緳鏁村ぉ鍚垫潵鍚靛幓鈥斺€旇櫧鐒跺畠浠粠鏉ユ病瑙佽繃闈紒</p><p>姣忓ぉ娓呮櫒锛屽懡杩愪笁濂崇鈥斺€旇繃鍘汇€佺幇鍦ㄥ拰鏈潵鈥斺€斾細鏉ュ埌鏍戜笅锛岀敤娉夋按娴囩亴鏍戞牴锛岃涓栫晫鏍戞案杩滀繚鎸佺繝缁裤€傚ス浠繕鐢ㄦ爲鐨笂鐨勭鍙峰埢涓嬫瘡涓汉鐨勫懡杩愩€?/p><p>鍦ㄤ笘鐣屾爲鐨勬煇涓灊涓笂锛屾寕鐫€涓€涓€︹€﹂偅鏄紬绁炰箣鐜嬪ゥ涓併€備粬鏇惧湪杩欓噷鍊掓寕浜嗕節澶╀節澶滐紝涓嶅悆涓嶅枬锛屽彧涓轰簡棰嗘偀瀹囧畽鐨勭瀵嗏€斺€斿崲鎭╂枃瀛椼€?/p>`},
+
+fenrir:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?7鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃惡',coverClass:'no',title:'鑺噷灏斿法鐙?,desc:'娲涘熀鐨勭嫾鍎垮瓙瓒婇暱瓒婂ぇ锛屽ぇ鍒拌兘鍚炰笅澶槼',content:`<p>娲涘熀鏈変笁涓瀛愶細涓€鏉″ぇ铔囥€佷竴涓崐浜哄崐灏哥殑濂冲効锛岃繕鏈変竴鍙皬鐙煎唇銆傛湰鏉ユ病浠€涔堝ソ鎷呭績鐨勨€斺€斿鍙埍鐨勫皬鐙煎晩銆?/p><p>鍙槸杩欏彧鍙姮閲屽皵鐨勫皬鐙艰秺闀胯秺澶э紝瓒婇暱瓒婂ぇ锛佷紬绁炲紑濮嬩笉瀹変簡锛氶瑷€璇磋繖鍙嫾浼氬湪璇哥榛勬槒涓悶鎺夊ゥ涓侊紒</p><p>浠栦滑鍐冲畾鐢ㄦ渶鍧氬浐鐨勯攣閾剧粦浣忚姮閲屽皵銆傜涓€鏍归攣閾撅紝鑺噷灏旇交杞讳竴鎸ｅ氨鏂簡銆傜浜屾牴閿侀摼锛屽畠鎵撲簡涓柗鍤忓氨宕╃浜嗐€備紬绁炴厡浜嗭紝鍙ソ鎵剧煯浜哄伐鍖犲府蹇欍€?/p><p>鐭汉鐢ㄥ叚绉嶄笉瀛樺湪鐨勪笢瑗库€斺€旂尗鐨勮剼姝ュ０銆佸コ浜虹殑鑳￠』銆佸北鐨勬牴銆佺唺鐨勭瓔銆侀奔鐨勫懠鍚搞€侀笩鐨勫斁娑测€斺€斿仛鎴愪簡涓€鏍圭粏缁嗙殑涓濆甫銆傝繖鏍逛笣甯︽煍杞涓濈桓锛屽嵈娌℃湁浠讳綍涓滆タ鑳芥專鏂畠銆?/p><p>浼楃閭€璇疯姮閲屽皵璇曡瘯杩欐牴"鐜╁叿涓濆甫"銆傚法鐙艰捣浜嗙枒蹇冿細"闄ら潪浣犱滑涓湁浜烘妸鎵嬫斁杩涙垜鍢撮噷鍋氭媴淇濓紒"鎴樼鎻愬皵鍕囨暍鍦版妸鍙虫墜浼歌繘浜嗙嫾鍢撮噷銆傚綋鑺噷灏斿彂鐜版專涓嶈劚鏃讹紝鍜斿殦涓€鍙ｅ挰鏂簡鎻愬皵鐨勬墜銆?/p><p>鑺噷灏旇缁戜綇浜嗭紝浣嗛瑷€璇达細鍦ㄨ绁為粍鏄忕殑閭ｄ竴澶╋紝瀹冨皢鎸ｈ劚鏉熺細锛屽悶鍣お闃充笌鏈堜寒銆?/p>`},
+
+loki:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃幁',coverClass:'no',title:'娲涘熀鐨勬伓浣滃墽',desc:'璇¤涔嬬伀娲涘熀鍓帀浜嗗コ绁炲笇鑺欑殑閲戝彂锛屾児鏉ュぇ楹荤儲',content:`<p>娲涘熀鏄樋鏂姞寰锋渶璁╀汉澶寸柤鐨勭銆備粬鑱槑銆佺嫛鐚俱€佺埍鎹ｈ泲锛屼絾鍙堢壒鍒湁瓒ｂ€斺€旀墍浠ヤ紬绁炶櫧鐒剁粡甯歌浠栨皵鐤紝杩樻槸璁╀粬鐣欏湪闃挎柉鍔犲痉銆?/p><p>鏈変竴娆★紝浠栬秮闆风绱㈠皵鐨勫瀛愬笇鑺欑潯瑙夋椂锛屽伔鍋峰壀鎺変簡濂归偅涓€澶寸編涓界殑閲戝彂锛佸笇鑺欓啋鏉ュ悗鍝潃鍘绘壘绱㈠皵銆傜储灏旀毚鎬掞紝涓€鎶婃姄浣忔礇鍩猴細"濡傛灉澶╅粦涔嬪墠甯岃姍鐨勫ご鍙戞病鏈夐暱鍥炴潵锛屾垜灏辨妸浣犵殑楠ㄥご涓€鏍规牴鎹忕锛?</p><p>娲涘熀鍚撳潖浜嗭紝璧剁揣鍘绘壘鐭汉宸ュ尃銆傜煯浜轰滑涓哄笇鑺欐墦閫犱簡涓€椤舵瘮鐪熷彂杩樼編鐨勯噾鍙戯紝鍙堝仛浜嗗嚑浠剁鍣細涓€鑹樺彲浠ユ姌鍙犳斁杩涘彛琚嬬殑榄旀硶鑸广€佷竴鎶婄櫨鍙戠櫨涓殑绁炵煕銆?/p><p>娲涘熀寰楁剰娲嬫磱鍦版妸杩欎簺涓滆タ甯﹀洖闃挎柉鍔犲痉锛岃繕鑷繁鍚瑰槝锛?鏁翠釜涔濈晫灏辨壘涓嶅埌姣旇繖浜涙洿濂界殑瀹濈墿浜嗭紒"涓€涓煯浜哄惉瑙佷笉鐖戒簡锛屽拰浠栨墦璧屻€傛礇鍩轰竴鏃跺啿鍔紝璧屼笂浜嗚嚜宸辩殑浜哄ご锛?/p><p>缁撴灉鐭汉閫犲嚭浜嗛浄绁炰箣閿ゅ拰鏇村绁炲櫒锛屾礇鍩鸿緭浜嗐€傚綋鐭汉鎷跨潃鍒€鏉ョ爫澶存椂锛屾礇鍩虹嫛杈╄锛?浣犲彲浠ョ爫鎴戠殑澶粹€斺€斾絾鑴栧瓙鏄垜鐨勶紝涓嶅彲浠ョ锛?鐭汉姘斿緱鎶婁粬鐨勫槾缂濅簡璧锋潵銆?/p>`},
+
+heimdall:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃寛',coverClass:'no',title:'褰╄櫣妗ョ殑瀹堝崼',desc:'娴峰杈惧皵鏃ユ棩澶滃瀹堝湪褰╄櫣妗ュご锛屽畧鎶ら樋鏂姞寰?,content:`<p>闃挎柉鍔犲痉鍜屼汉闂撮潬涓€鏉″僵铏规ˉ杩炴帴銆傛ˉ澶寸珯鐫€涓€涓珮澶х殑绁炩€斺€旀捣濮嗚揪灏斻€備粬鐨勭洈鐢查摱鍏夐棯闂紝韬梺鏀剧潃涓€鍙法澶х殑鍙疯銆?/p><p>娴峰杈惧皵琚О涓?鐧借壊鐨勭"銆備粬鏈変節浣嶆瘝浜诧紙鏄節浣嶆捣娴コ绁烇級锛岀敓鏉ュ氨鏈夐潪鍑＄殑鎰熷畼鈥斺€斾粬鐨勭溂鐫涜兘鐪嬪埌涓€鐧鹃噷澶栫殑涓€鍙媿铦囷紝浠栫殑鑰虫湹鑳藉惉鍒板湴搴曚笅闈掕崏鐢熼暱鐨勫０闊筹紝浠栫敋鑷充笉闇€瑕佺潯瑙夛紒</p><p>娴峰杈惧皵鐨勪娇鍛藉彧鏈変竴涓細瀹堟姢闃挎柉鍔犲痉锛岄槻姝换浣曚汉鏈粡鍏佽绌胯繃褰╄櫣妗ャ€備粬涓嶅垎鐧藉ぉ榛戝鍦扮珯鍦ㄦˉ澶达紝浠讳綍椋庡惞鑽夊姩閮介€冧笉杩囦粬鐨勭溂鐫涘拰鑰虫湹銆?/p><p>浠栫殑鍙疯鍙?鍔犳媺灏?锛屽０闊冲ぇ鍒颁節鐣岄兘鑳藉惉瑙併€傞瑷€璇达細褰撹绁為粍鏄忔潵涓存椂锛屾捣濮嗚揪灏斾細鍚瑰搷杩欏彧鍙疯锛岄偅宸ㄥぇ鐨勫彿澹板皢鍙敜鎵€鏈夌鐏垫姇鍏ユ渶鍚庣殑鎴樻枟銆?/p><p>娴峰杈惧皵鍜屾礇鍩烘槸澶╃敓鐨勫澶粹€斺€斾竴涓槸鏈€蹇犺瘹鐨勫畧鍗€咃紝涓€涓槸鏈€鐙＄尵鐨勬崳铔嬮銆傚湪璇哥榛勬槒鐨勬垬鍦轰笂锛屼粬浠敞瀹氬皢鍚屽綊浜庡敖銆?/p>`},
+
+brynhildr:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?8鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃洝锔?,coverClass:'no',title:'濂虫绁炲竷浼﹀笇灏斿痉',desc:'濂ヤ竵鏈€瀹犵埍鐨勫コ姝︾锛屽洜杩濊儗鍛戒护琚綒娌夌潯鍦ㄧ伀鐒颁腑',content:`<p>濂ヤ竵鎷ユ湁涓€缇ょ編涓借€屽媷鐚涚殑濂虫绁烇紝濂逛滑楠戠潃椋為┈椹伴獘鍦ㄦ垬鍦轰笂锛屾寫閫夋渶鑻卞媷鎴樻鐨勬垬澹滑锛屽甫浠栦滑鍘昏嫳鐏垫鈥斺€斿湪閭ｉ噷锛岃嫳闆勪滑姣忓ぉ姣旀锛屾櫄涓婁妇鏉晠楗紝绛夊緟璇哥榛勬槒銆?/p><p>甯冧鸡甯屽皵寰锋槸濂ヤ竵鏈€瀹犵埍鐨勫コ姝︾銆傚ス鐨勫墤鏈棤浜鸿兘鏁岋紝濂圭殑瀹硅矊鑳借闃冲厜閮介化鐒跺け鑹层€?/p><p>鏈変竴澶╋紝涓や釜鍥界帇瑕佸喅鎴樸€傚ゥ涓佸懡浠ゅ竷浼﹀笇灏斿痉甯姪鑰佸浗鐜嬭幏鑳溿€備絾甯冧鸡甯屽皵寰风湅鍒板勾杞荤殑鍥界帇鏇村媷鏁€佹洿鍠勮壇锛岃繚鑳屼簡濂ヤ竵鐨勫懡浠わ紝璁╁勾杞讳汉璧簡銆?/p><p>濂ヤ竵闇囨€掋€備粬鎶婂竷浼﹀笇灏斿痉鍙樻垚浜嗗嚒浜猴紝璁╁ス娌夌潯鍦ㄤ竴搴у北椤朵笂锛屽洓鍛ㄧ幆缁曠潃姘镐笉鐔勭伃鐨勯瓟娉曠伀鐒般€傚ゥ涓佽锛?鍙湁鏈€鍕囨暍鐨勭敺浜猴紝鎵嶈兘绌胯繃鐏劙锛屽皢浣犲敜閱掋€?</p><p>涓嶇煡杩囦簡澶氬皯骞达紝鑻遍泟榻愭牸寮楅噷寰烽獞鐫€椹啿杩囦簡鐏劙锛岀湅鍒颁簡娌夌潯鐨勫竷浼﹀笇灏斿痉銆傚ス鐨勭編涓借浠栧睆浣忎簡鍛煎惛銆備粬杞昏交鎽樹笅濂圭殑澶寸洈鈥斺€斿コ姝︾鐫佸紑浜嗙溂鐫涖€?/p>`},
+
+baldur:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?6鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃挮',coverClass:'no',title:'宸村痉灏斾箣姊?,desc:'鍏夋槑涔嬬姊﹁鑷繁姝诲幓锛屼竴鍒囦竾鐗╅兘鍙戣獡涓嶄激瀹充粬鈥斺€旈櫎浜嗘Р瀵勭敓',content:`<p>宸村痉灏旀槸濂ヤ竵鍜屽コ绁炲紬涓藉槈鐨勫効瀛愶紝涔熸槸闃挎柉鍔犲痉鏈€鍙楁杩庣殑绁炪€備粬闀垮緱鑻变繆锛屾€ф牸娓╂煍锛岃蛋鍒板摢閲岄兘鍍忓甫鐫€闃冲厜銆?/p><p>鍙槸鏈変竴澶╋紝宸村痉灏斿仛浜嗕竴涓彲鎬曠殑姊︹€斺€斾粬琚竴鏀灏勬浜嗐€備粬閱掓潵鍚庨椃闂蜂笉涔愶紝鎶婃ⅵ鍛婅瘔浜嗘瘝浜层€傚紬涓藉槈蹇冩€ュ鐒氾紝濂硅蛋閬嶄簡涔濈晫锛岃鎵€鏈変笢瑗垮彂瑾撲笉浼ゅ宸村痉灏旓細鐭冲ご銆侀搧銆佹按銆佺伀銆佸姩鐗┿€佺柧鐥呪€︹€︽墍鏈夌殑涓€鍒囬兘鍙戜簡瑾撱€?/p><p>浠庢锛屽反寰峰皵鍙樻垚浜嗗垁鏋笉鍏ョ殑绁炪€傚浼氫笂鐨勬父鎴忓氨鏄線浠栬韩涓婃墧涓滆タ鈥斺€斿垁鍓戠鍒颁粬鐨勭毊鑲ゅ氨寮瑰紑浜嗭紝闀跨煕鍍忕鍒扮煶澶翠竴鏍锋姌鏂€傚ぇ瀹堕兘瑙夊緱寰堟湁瓒ｃ€?/p><p>鍙槸娲涘熀鍙戠幇浜嗙瀵嗏€斺€斿紬涓藉槈婕忔帀浜嗕竴鏍蜂笢瑗裤€傞偅妫靛皬灏忕殑妲插瘎鐢熷お骞磋交銆佸お鏌斿急浜嗭紝鐪嬭捣鏉ユ病鏈変换浣曚激瀹冲姏锛屽紬涓藉槈娌℃湁璁╁畠鍙戣獡銆?/p><p>娲涘熀鍋氫簡涓€涓Р瀵勭敓绠ご锛岄獥鐬庝簡鐪肩殑榛戞殫涔嬬闇嶅痉灏斿皠浜嗗嚭鍘汇€傜姝ｄ腑宸村痉灏旂殑蹇冭剰鈥︹€﹂槼鍏夎埇鐨勫厜鏄庝箣绁炲氨杩欐牱鍊掍笅浜嗐€?/p><p>浠栫殑姝伙紝鏄绁為粍鏄忕殑鏈€鏃╅鍏嗐€?/p>`},
+
+frey:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?5鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃悧',coverClass:'no',title:'寮楅浄涓庨粍閲戦噹鐚?,desc:'涓版敹涔嬬涓虹埍鐚嚭鑷繁鐨勭鍓戯紝楠戠潃閲戦噹鐚畧鎶ゅぇ鍦?,content:`<p>寮楅浄鏄崕绾崇鏃忕殑鐜嬪瓙锛岀鐞嗙潃澶у湴鐨勪赴鏀朵笌闃冲厜銆備粬鏈変竴鎶婁細鑷繁鎴樻枟鐨勯瓟娉曠鍓戯紝杩樻湁涓€澶撮粍閲戦瑑姣涚殑閲庣尓鍧愰獞锛岃窇璧锋潵姣旈┈杩樺揩锛?/p><p>鏈変竴澶╋紝寮楅浄鍋峰伔鍧愪笂浜嗗ゥ涓佺殑鐜嬪骇銆傝繖涓帇搴ц兘鐪嬪埌涔濈晫鐨勪换浣曡钀姐€備粬寰€鍖椾竴鐪嬧€斺€旂湅鍒颁簡涓€涓編寰楄浠栨棤娉曞懠鍚哥殑濂冲法浜鸿憶灏斿痉銆傚氨閭ｄ箞涓€鐪硷紝浠栭櫡鍏ヤ簡娣辨繁鐨勫崟鐩告€濓紝鑼朵笉鎬濋キ涓嶆兂銆?/p><p>浠栫殑浠嗕汉鍙插熀灏煎皵涓嶅繊蹇冪湅浠栨秷娌夛紝楠戠潃鐙煎幓绾﹂】娴峰甯粬姹傚銆傝憶灏斿痉涓€寮€濮嬭"涓嶅珌"锛屽彶鍩哄凹灏斾寒鍑洪偅鎶婁細鎴樻枟鐨勭鍓戣锛?浣犱笉绛斿簲锛屾垜灏辨妸鍓戞彃杩涗綘浠闂ㄥ彛锛?钁涘皵寰风粓浜庣瓟搴斾簡銆?/p><p>寮楅浄楂樺叴鏋佷簡锛屾妸绁炲墤閫佺粰浜嗗彶鍩哄凹灏斿綋璋㈢ぜ銆傚彲鏄瑷€璇达細璇哥榛勬槒鏃跺紬闆蜂細鍥犱负娌℃湁绁炲墤鑰屾垬姝汇€傚紬闆风瑧鐫€璇达細"鑳藉拰蹇冪埍鐨勪汉鍦ㄤ竴璧风洿鍒伴偅涓€澶╋紝鎴戝績鐢樻儏鎰裤€?</p>`},
+
+ragnarok:{tag:'鍖楁绁炶瘽',tagClass:'tag-teal',meta:'馃摉 绾?0鍒嗛挓 路 馃攰 鏀寔鏈楄',cover:'馃敟',coverClass:'no',title:'璇哥榛勬槒鐨勯瑷€',desc:'棰勮█涓殑鏈棩澶ф垬锛氫紬绁炪€佸法浜恒€佹€墿灏嗗悓褰掍簬灏?,content:`<p>鍦ㄥ寳娆х璇濅腑锛屾湁涓€涓渶浠や汉鏁晱鐨勬晠浜嬧€斺€旇绁為粍鏄忋€傝繖涓嶆槸缁撳眬锛岃€屾槸涓€涓瑷€銆傚ゥ涓佸凡缁忕湅鍒颁簡閭ｄ竴澶╋紝浣嗕粬鍐冲畾寰瑧鐫€璧板悜瀹冦€?/p><p>閭ｄ釜鍐ぉ灏嗘寔缁笁骞达紝澶槼澶卞幓鐑害锛屽ぉ绌洪檷涓嬭闆ㄣ€傝姮閲屽皵宸ㄧ嫾灏嗘專鑴遍攣閾撅紝澶ц泧鑰舵ⅵ鍔犲緱浠庢捣搴曠炕鑵捐€屽嚭锛屾礇鍩轰粠鍥氱浠栫殑娲炵┐涓€冨嚭鈥斺€斾粬灏嗙巼棰嗘鑰呬箣鑸癸紝婊¤浇鏁屼汉鍚戦樋鏂姞寰疯繘鍙戙€?/p><p>娴峰杈惧皵绔欏湪褰╄櫣妗ヤ笂锛岀敤灏藉叏韬姏姘斿惞鍝嶄簡鍔犳媺灏斿彿瑙掋€傛墍鏈夐樋鏂姞寰风殑绁為兘鎷胯捣浜嗘鍣紝鑻辩伒娈跨殑鎴樺＋浠┛涓婄洈鐢诧紝鍦ㄥ彿瑙掑０涓啿鍚戞垬鍦恒€?/p><p>濂ヤ竵楠戠潃鍏冻绁為┈瀵归樀鑺噷灏斿法鐙硷紱绱㈠皵鎸ヨ垶濡欏皵灏煎皵杩庢垬澶ц泧鑰舵ⅵ鍔犲緱锛涘紬闆锋病鏈夌鍓戯紝鐢ㄩ箍瑙掑拰宸ㄤ汉鎼忔枟锛涙捣濮嗚揪灏斾笌娲涘熀浜掔浉鍒虹┛浜嗗鏂光€︹€?/p><p>澶ф垬涔嬪悗锛屽ぇ鍦版矇鍏ユ捣娲嬶紝涓€鍒囧寲涓虹伆鐑€備絾鏂扮殑涓栫晫灏嗕粠搴熷涓崌璧凤紝涓€瀵瑰垢瀛樼殑浜虹被灏嗕粠涓栫晫鏍戠殑鏋濆彾闂磋蛋鍑烘潵銆傚反寰峰皵灏嗛噸杩旀柊涓栫晫锛屾柊鐨勫お闃冲皢鐓ц€€澶у湴銆?/p><p style="text-align:center;color:#FFD700;font-size:18px">馃専 鏃х殑璇哥閫濆幓浜嗭紝浣嗗笇鏈涙案瀛?馃専</p>`}
+};
+
+// ============ 鐢熸垚鏁呬簨鍗＄墖 ============
+function renderStoryCards(filter='all') {
+  const grid = document.getElementById('storyGrid');
+  grid.innerHTML = '';
+  const keys = Object.keys(stories);
+  for (const key of keys) {
+    const s = stories[key];
+    const cat = s.tagClass === 'tag-gold' ? 'cn' : s.tagClass === 'tag-blue' ? 'gr' : 'no';
+    if (filter !== 'all' && cat !== filter) continue;
+    const card = document.createElement('div');
+    card.className = 'story-card';
+    card.dataset.cat = cat;
+    card.innerHTML = `<div class="story-cover ${s.coverClass}">${s.cover}</div>
+      <div class="story-info">
+        <div class="tag ${s.tagClass}">${s.tag}</div>
+        <h4>${s.title}</h4>
+        <p>${s.desc}</p>
+      </div>`;
+    card.addEventListener('click', () => openStory(key));
+    grid.appendChild(card);
+  }
+}
+renderStoryCards();
+
+// ============ 鍒嗙被绛涢€?============
+function filterStories(cat) {
+  renderStoryCards(cat);
+  document.querySelectorAll('.filter-item').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === (cat==='all'?'鍏ㄩ儴':cat==='cn'?'涓浗':cat==='gr'?'甯岃厞':'鍖楁'));
+  });
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat || (cat==='all' && b.dataset.cat==='all'));
+  });
+  document.getElementById('stories').scrollIntoView({behavior:'smooth'});
+}
+
+// ============ 瀵艰埅鍒囨崲 ============
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', function(){ filterStories(this.dataset.cat); });
+});
+
+// ============ 馃帣锔?绁炵粡缃戠粶 TTS 鏈楄寮曟搸 v3.0 ============
+// 鏅鸿兘璇煶閫夋嫨鍣細鑷姩鎸戦€夋渶浣充腑鏂囧コ澹帮紙浼樺厛寰蒋Azure Neural / Edge Neural锛?// 鏈楄鍙傛暟浼樺寲锛氳閫?.3 + 闊宠皟1.1 = 娓呰剢鐢滅編鐨勫コ瀛╁０闊?
+let ttsUtterance = null;
+let ttsPaused = false;
+let ttsSentences = [];     // 鍒嗗彞鏁扮粍
+let ttsSentenceIdx = 0;    // 褰撳墠鍙ュ瓙绱㈠紩
+let ttsSpeed = 1.3;        // 榛樿璇€燂紙蹇€屾竻鏅帮級
+let ttsPitch = 1.10;       // 闊宠皟绋嶉珮锛屽惉璧锋潵鏇寸敎缇庡勾杞?let ttsVolume = 1.0;       // 闊抽噺
+let ttsBestVoice = null;   // 鏈€浣宠闊?let ttsVoicesReady = false;
+let ttsEngineLabel = '娴忚鍣ㄨ闊冲紩鎿?; // 鏄剧ず鐨勫紩鎿庡悕绉?
+// ---- 璇煶鍔犺浇涓庢櫤鑳介€夋嫨 ----
+function loadVoices() {
+  return new Promise((resolve) => {
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) {
+      selectBestVoice(voices);
+      resolve();
+    } else {
+      window.speechSynthesis.onvoiceschanged = () => {
+        const v = window.speechSynthesis.getVoices();
+        selectBestVoice(v);
+        window.speechSynthesis.onvoiceschanged = null;
+        resolve();
+      };
+      // 3绉掕秴鏃跺洖閫€
+      setTimeout(() => {
+        if (!ttsVoicesReady) { selectBestVoice(window.speechSynthesis.getVoices()); resolve(); }
+      }, 3000);
+    }
+  });
+}
+
+function selectBestVoice(voices) {
+  const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
+  if (zhVoices.length === 0) { ttsBestVoice = null; ttsVoicesReady = true; return; }
+
+  // 馃 绗竴浼樺厛锛氬井杞?Azure Neural 濂冲０锛圗dge 娴忚鍣ㄥ彲鐢級鈥斺€?鏈€鎺ヨ繎"娓呰剢鐢滅編濂冲澹?
+  const neuralOrder = [
+    'XiaoxiaoNeural',    // 鈽?寰蒋Azure锛氭椿娉煎皯濂冲０锛屾竻鑴嗙敎缇?(Edge)
+    'XiaoyiNeural',      // 鈽?寰蒋Azure锛氭俯鏌旂煡鎬уコ澹?(Edge)
+    'XiaochenNeural',    //   寰蒋Azure锛氳嚜鐒跺コ澹?(Edge)
+    'XiaohanNeural',     //   寰蒋Azure锛氱敎缇庡皯濂?(Edge)
+    'YunxiNeural',       //   寰蒋Azure锛氭椿娉肩敺澹帮紙fallback锛?    'Xiaoxiao',          //   寰蒋 Online锛氬皯濂冲０
+    'Xiaoyi',            //   寰蒋 Online锛氬コ澹?    'YunyangNeural',     //   寰蒋Azure锛氫笓涓氭挱鎶ョ敺澹?  ];
+
+  // 鎸変紭鍏堢骇鏌ユ壘
+  for (const name of neuralOrder) {
+    const found = zhVoices.find(v => v.name.includes(name));
+    if (found) { ttsBestVoice = found; break; }
+  }
+
+  // 馃 绗簩浼樺厛锛欸oogle 涓枃濂冲０锛圕hrome 鍙敤锛?  if (!ttsBestVoice) {
+    ttsBestVoice = zhVoices.find(v => v.name.includes('Female') || v.name.includes('female') || v.name.includes('濂?));
+  }
+
+  // 馃 绗笁浼樺厛锛氫换鎰忛珮璐ㄩ噺涓枃璇煶
+  if (!ttsBestVoice) {
+    ttsBestVoice = zhVoices.find(v =>
+      v.name.includes('Google') || v.name.includes('Microsoft') ||
+      v.name.includes('Natural') || v.name.includes('Premium') || v.name.includes('Wavenet')
+    );
+  }
+
+  // 馃弲 绗洓浼樺厛锛氫换鎰忎腑鏂囪闊?  if (!ttsBestVoice) {
+    ttsBestVoice = zhVoices.find(v => v.localService === false) || zhVoices[0];
+  }
+
+  // 璁剧疆寮曟搸鏍囩
+  if (ttsBestVoice) {
+    if (ttsBestVoice.name.includes('Neural')) {
+      ttsEngineLabel = '寰蒋 Azure 绁炵粡缃戠粶璇煶寮曟搸';
+    } else if (ttsBestVoice.name.includes('Google') || ttsBestVoice.name.includes('Wavenet')) {
+      ttsEngineLabel = 'Google 绁炵粡缃戠粶璇煶寮曟搸';
+    } else if (ttsBestVoice.name.includes('Xiaoxiao') || ttsBestVoice.name.includes('Xiaoyi')) {
+      ttsEngineLabel = '寰蒋鍦ㄧ嚎璇煶寮曟搸';
+    } else {
+      ttsEngineLabel = '绯荤粺璇煶寮曟搸';
+    }
+  }
+  ttsVoicesReady = true;
+  console.log('馃帣锔?宸查€夋嫨璇煶:', ttsBestVoice?.name, '| 寮曟搸:', ttsEngineLabel);
+}
+
+// 椤甸潰鍔犺浇鏃堕鍔犺浇璇煶
+loadVoices();
+
+// ---- 鏅鸿兘鍒嗗彞锛氭寜鏍囩偣鎷嗗垎锛岀‘淇濊嚜鐒惰妭濂?----
+function splitSentences(text) {
+  // 鍏堟寜鍙ユ湯鏍囩偣鍒嗗壊
+  const raw = text.split(/(?<=[銆傦紒锛??\n])/g);
+  const result = [];
+  for (let s of raw) {
+    s = s.trim();
+    if (!s) continue;
+    // 濡傛灉鍙ュ瓙澶暱(>180瀛?锛屾寜閫楀彿浜屾鍒嗗壊
+    if (s.length > 180) {
+      const sub = s.split(/(?<=[锛岋紱锛?;:])/g);
+      for (let ss of sub) {
+        ss = ss.trim();
+        if (ss) result.push(ss);
+      }
+    } else {
+      result.push(s);
+    }
+  }
+  return result;
+}
+
+// ---- 鏂囨湰杞函鏂囨湰 ----
+function getStoryPlainText(key) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = stories[key].content;
+  return tmp.textContent.trim();
+}
+
+// ---- 寮€濮嬫湕璇?----
+function startTTS(key) {
+  stopTTS();
+  ttsSentences = splitSentences(getStoryPlainText(key));
+  ttsSentenceIdx = 0;
+  ttsPaused = false;
+
+  if (ttsSentences.length === 0) return;
+
+  // 纭繚璇煶宸插姞杞?  if (!ttsVoicesReady) {
+    loadVoices().then(() => speakNextSentence());
+  } else {
+    speakNextSentence();
+  }
+  updateTTSBar('playing');
+}
+
+// ---- 鏈楄涓嬩竴鍙?----
+function speakNextSentence() {
+  if (ttsPaused) return;
+  if (ttsSentenceIdx >= ttsSentences.length) {
+    stopTTS();
+    return;
+  }
+
+  const sentence = ttsSentences[ttsSentenceIdx];
+  ttsSentenceIdx++;
+
+  ttsUtterance = new SpeechSynthesisUtterance(sentence);
+  ttsUtterance.lang = 'zh-CN';
+  ttsUtterance.rate = ttsSpeed;
+  ttsUtterance.pitch = ttsPitch;
+  ttsUtterance.volume = ttsVolume;
+
+  if (ttsBestVoice) {
+    ttsUtterance.voice = ttsBestVoice;
+  }
+
+  // 鏈楄缁撴潫鍥炶皟
+  ttsUtterance.onend = () => {
+    if (!ttsPaused) {
+      // 鍙ラ棿鑷劧鍋滈】锛氶€楀彿缁撳熬50ms锛屽彞鍙风粨灏?20ms锛屾鏈?00ms
+      const lastChar = sentence.slice(-1);
+      let pause = 100;
+      if (lastChar === '锛? || lastChar === '锛? || lastChar === ',') pause = 50;
+      if (lastChar === '\n' || sentence.endsWith('</p>')) pause = 200;
+      setTimeout(() => speakNextSentence(), pause);
+    }
+  };
+
+  // 閿欒澶勭悊
+  ttsUtterance.onerror = (e) => {
+    if (e.error !== 'canceled' && e.error !== 'interrupted') {
+      console.warn('鏈楄閿欒:', e.error);
+      setTimeout(() => { if (!ttsPaused) speakNextSentence(); }, 200);
+    }
+  };
+
+  // 鏈楄杈圭晫浜嬩欢锛堢敤浜庨珮浜綋鍓嶅彞瀛愶級
+  ttsUtterance.onboundary = (e) => {
+    if (e.name === 'sentence') {
+      highlightCurrentSentence(ttsSentenceIdx - 1);
+    }
+  };
+
+  window.speechSynthesis.speak(ttsUtterance);
+
+  // 楂樹寒褰撳墠鍙ュ瓙
+  highlightCurrentSentence(ttsSentenceIdx - 1);
+
+  // 鏇存柊杩涘害
+  updateProgress();
+}
+
+// ---- 楂樹寒褰撳墠鍙ュ瓙 ----
+function highlightCurrentSentence(idx) {
+  const body = document.querySelector('.modal-body');
+  if (!body) return;
+  const allText = body.querySelectorAll('p');
+  // 绠€鍗曢珮浜細缁欐暣涓?modal-body 鍔犱釜鎸囩ず
+  if (idx >= 0 && idx < ttsSentences.length) {
+    const progressPct = Math.round((idx / ttsSentences.length) * 100);
+    const progBar = document.getElementById('ttsProgressFill');
+    if (progBar) progBar.style.width = progressPct + '%';
+  }
+}
+
+function updateProgress() {
+  const progText = document.getElementById('ttsProgressText');
+  if (progText && ttsSentences.length > 0) {
+    progText.textContent = `绗?${ttsSentenceIdx}/${ttsSentences.length} 鍙;
+  }
+}
+
+// ---- 鏆傚仠 ----
+function togglePauseResume() {
+  if (ttsState === 'playing') {
+    // 姝ｅ湪鏈楄 鈫?鏆傚仠
+    ttsPaused = true;
+    window.speechSynthesis.cancel();
+    updateTTSBar('paused');
+    // 鏇存柊鎸夐挳鏂囧瓧
+    document.querySelectorAll('.tts-toggle').forEach(b => { b.textContent = '鈻讹笍 缁х画'; b.className = 'tts-btn tts-resume tts-toggle'; });
+  } else if (ttsState === 'paused') {
+    // 宸叉殏鍋?鈫?缁х画
+    ttsPaused = false;
+    speakNextSentence();
+    updateTTSBar('playing');
+    document.querySelectorAll('.tts-toggle').forEach(b => { b.textContent = '鈴革笍 鏆傚仠'; b.className = 'tts-btn tts-pause tts-toggle'; });
+  }
+}
+
+// ---- 鍚戝悗鍏煎 ----
+function pauseTTS() { togglePauseResume(); }
+function resumeTTS() { togglePauseResume(); }
+
+// ---- 鍋滄 ----
+function stopTTS() {
+  ttsPaused = false;
+  ttsSentenceIdx = 0;
+  ttsSentences = [];
+  window.speechSynthesis.cancel();
+  ttsUtterance = null;
+  updateTTSBar('stopped');
+  // 閲嶇疆杩涘害鏉?  const progBar = document.getElementById('ttsProgressFill');
+  if (progBar) progBar.style.width = '0%';
+  const progText = document.getElementById('ttsProgressText');
+  if (progText) progText.textContent = '';
+}
+
+// ---- 璁剧疆璇€?----
+function setTTSSpeed(speed) {
+  ttsSpeed = speed;
+  document.querySelectorAll('.tts-speed button').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
+  });
+  // 濡傛灉姝ｅ湪鏈楄锛岀瓑褰撳墠鍙ョ粨鏉熷悗鑷姩搴旂敤鏂拌閫燂紙涓嶉渶瑕佷腑鏂級
+  console.log('馃帣锔?璇€熷凡璁剧疆涓?', speed, '鍊?);
+}
+
+// ---- 璁剧疆闊宠皟 ----
+function setTTSPitch(pitch) {
+  ttsPitch = pitch;
+  document.querySelectorAll('.tts-pitch button').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.dataset.pitch) === pitch);
+  });
+}
+
+// ---- UI 鐘舵€佹洿鏂?----
+let ttsState = 'stopped';
+function updateTTSBar(state) {
+  ttsState = state;
+  const bar = document.getElementById('ttsBar');
+  if (!bar) return;
+  const statusEl = bar.querySelector('.tts-status-text');
+  const dotEl = bar.querySelector('.tts-dot-pulse');
+  const engineEl = bar.querySelector('.tts-engine-label');
+
+  if (state === 'playing') {
+    if (statusEl) statusEl.textContent = '馃攰 姝ｅ湪鏈楄...';
+    if (dotEl) dotEl.style.display = 'inline-block';
+    if (engineEl) engineEl.textContent = ttsEngineLabel;
+    // 鏇存柊鎵€鏈?toggle 鎸夐挳
+    document.querySelectorAll('.tts-toggle').forEach(b => {
+      b.textContent = '鈴革笍 鏆傚仠'; b.className = 'tts-btn tts-pause tts-toggle';
+    });
+  } else if (state === 'paused') {
+    if (statusEl) statusEl.textContent = '鈴革笍 宸叉殏鍋滐紙鐐瑰嚮缁х画锛?;
+    if (dotEl) dotEl.style.display = 'none';
+    document.querySelectorAll('.tts-toggle').forEach(b => {
+      b.textContent = '鈻讹笍 缁х画'; b.className = 'tts-btn tts-resume tts-toggle';
+    });
+  } else {
+    if (statusEl) statusEl.textContent = '馃帶 鐐瑰嚮寮€濮嬫湕璇?;
+    if (dotEl) dotEl.style.display = 'none';
+    const progBar = document.getElementById('ttsProgressFill');
+    if (progBar) progBar.style.width = '0%';
+    const progText = document.getElementById('ttsProgressText');
+    if (progText) progText.textContent = '';
+    document.querySelectorAll('.tts-toggle').forEach(b => {
+      b.textContent = '鈴革笍 鏆傚仠'; b.className = 'tts-btn tts-pause tts-toggle';
+    });
+  }
+}
+
+// ============ 鎵撳紑鏁呬簨寮圭獥 ============
+function openStory(key) {
+  stopTTS();
+  const s = stories[key];
+  const coverBg = s.coverClass === 'gr' ? 'linear-gradient(135deg,rgba(38,76,153,0.4),rgba(76,140,242,0.2))' :
+                  s.coverClass === 'cn' ? 'linear-gradient(135deg,rgba(200,50,50,0.4),rgba(230,150,25,0.2))' :
+                  'linear-gradient(135deg,rgba(25,128,128,0.4),rgba(76,200,204,0.2))';
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="tag ${s.tagClass}" style="margin-bottom:12px">${s.tag}</div>
+    <h2>${s.title}</h2>
+    <div class="modal-meta">${s.meta}</div>
+
+    <!-- 馃帣锔?鏈楄鎺у埗鏍?-->
+    <div id="ttsBar" class="tts-bar">
+      <button class="tts-btn tts-play" onclick="startTTS('${key}')">馃攰 鏈楄鏁呬簨</button>
+      <button class="tts-btn tts-pause tts-toggle" onclick="togglePauseResume()">鈴革笍 鏆傚仠</button>
+      <button class="tts-btn tts-stop" onclick="stopTTS()">鈴癸笍 鍋滄</button>
+      <span style="color:#9B9BB5;font-size:12px;margin:0 4px">璇€?/span>
+      <div class="tts-speed">
+        <button data-speed="1.1" onclick="setTTSSpeed(1.1)">1.1</button>
+        <button data-speed="1.3" class="active" onclick="setTTSSpeed(1.3)">1.3</button>
+        <button data-speed="1.5" onclick="setTTSSpeed(1.5)">1.5</button>
+      </div>
+      <span style="color:#9B9BB5;font-size:12px;margin:0 4px">闊宠皟</span>
+      <div class="tts-speed tts-pitch">
+        <button data-pitch="1.00" onclick="setTTSPitch(1.00)">鏍囧噯</button>
+        <button data-pitch="1.10" class="active" onclick="setTTSPitch(1.10)">鐢滅編</button>
+        <button data-pitch="1.20" onclick="setTTSPitch(1.20)">娓呰剢</button>
+      </div>
+      <span class="tts-status" style="margin-left:auto">
+        <span class="tts-dot-pulse" style="display:none"></span>
+        <span class="tts-status-text">馃帶 鐐瑰嚮寮€濮嬫湕璇?/span>
+        <span class="tts-engine-label" style="display:block;font-size:11px;color:#FFD700;margin-top:2px"></span>
+      </span>
+    </div>
+
+    <!-- 鏈楄杩涘害鏉?-->
+    <div class="tts-progress-wrap">
+      <div class="tts-progress-bar"><div class="tts-progress-fill" id="ttsProgressFill"></div></div>
+      <span class="tts-progress-text" id="ttsProgressText"></span>
+    </div>
+
+    <div class="modal-cover-placeholder" style="background:${coverBg}"><span style="font-size:80px">${s.cover}</span></div>
+    <div class="modal-body">${s.content}</div>
+
+    <!-- 搴曢儴鏈楄鎺у埗 -->
+    <div class="tts-bar" style="margin-top:24px">
+      <button class="tts-btn tts-play" onclick="startTTS('${key}')">馃攰 浠庡ご鏈楄</button>
+      <button class="tts-btn tts-pause tts-toggle" onclick="togglePauseResume()">鈴革笍 鏆傚仠</button>
+      <button class="tts-btn tts-stop" onclick="stopTTS()">鈴癸笍 鍋滄</button>
+      <span class="tts-status" style="margin-left:auto">
+        <span class="tts-dot-pulse" style="display:none"></span>
+        <span class="tts-status-text">馃帶 鐐瑰嚮寮€濮嬫湕璇?/span>
+      </span>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('modal').scrollTop = 0;
+}
+
+function closeModal() {
+  stopTTS();
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeModal(); });
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
+// ============ 婊氬姩娓愭樉 ============
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){ entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; }
+  });
+}, {threshold:0.1});
+setTimeout(()=>{
+  document.querySelectorAll('.cat-card,.story-card,.cal-card,.featured-card').forEach(el=>{
+    el.style.opacity='0'; el.style.transform='translateY(30px)'; el.style.transition='opacity 0.6s ease,transform 0.6s ease'; observer.observe(el);
+  });
+},200);
+
+console.log('馃専 绁炶瘽鏄熺┖ v2.0 - 30涓晠浜?路 鍏ㄩ儴鏀寔鏈楄锛?);
+</script>
+</body>
+</html>
