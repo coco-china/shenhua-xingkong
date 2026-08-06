@@ -168,6 +168,30 @@ body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#0A0A14;
   .story-grid{grid-template-columns:repeat(2,1fr)}
   .section{padding:50px 40px}
 }
+/* 版本历史 */
+.version-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:16px;background:rgba(160,85,255,0.1);border:1px solid rgba(160,85,255,0.2);color:#A055FF;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.3s}
+.version-btn:hover{background:rgba(160,85,255,0.2);transform:translateY(-1px)}
+.version-dot{width:6px;height:6px;border-radius:50%;background:#A055FF;animation:pulse-ver 2s infinite}
+@keyframes pulse-ver{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.version-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,0.94);backdrop-filter:blur(10px);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s}
+.version-overlay.open{opacity:1;pointer-events:all}
+.version-panel{background:#0F0F22;border-radius:28px;padding:36px;max-width:600px;width:94%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 0 80px rgba(160,85,255,0.2);border:1px solid rgba(160,85,255,0.1)}
+.version-panel h2{font-family:'Noto Serif SC','SimSun',serif;font-size:26px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.version-subtitle{font-size:13px;color:#7B8BA0;margin-bottom:24px}
+.version-timeline{position:relative;display:flex;flex-direction:column;gap:20px}
+.version-timeline::before{content:'';position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:rgba(160,85,255,0.2)}
+.version-entry{display:flex;gap:16px;position:relative;z-index:1}
+.version-badge{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(160,85,255,0.15);border:2px solid #A055FF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#FFF;margin-top:2px}
+.version-entry.latest .version-badge{background:linear-gradient(135deg,#A055FF,#FF6B9D);border-color:#FF6B9D;box-shadow:0 0 16px rgba(255,107,157,0.3)}
+.version-body{flex:1}
+.version-body h4{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.version-body .v-date{font-size:11px;color:#7B8BA0;font-weight:400}
+.version-body ul{margin:0;padding-left:16px;list-style:none}
+.version-body ul li{font-size:13px;color:#C8C8DD;line-height:1.7;position:relative}
+.version-body ul li::before{content:'✦';position:absolute;left:-16px;color:#A055FF;font-size:8px;top:6px}
+.version-latest-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,107,157,0.15);color:#FF6B9D;font-weight:600}
+
 @media(max-width:768px){
   .nav{display:none}
   .hero-title{font-size:38px}
@@ -249,15 +273,61 @@ body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#0A0A14;
     <div class="footer-links"><h4>探索王国</h4><a onclick="filterStories('cn')">🐉 中国神话</a><a onclick="filterStories('gr')">⚡ 希腊神话</a><a onclick="filterStories('no')">❄️ 北欧神话</a><a onclick="filterStories('cy')">📜 成语故事</a></div>
     <div class="footer-links"><h4>快捷功能</h4><a onclick="randomStory()">🎲 随机故事</a><a onclick="scrollToTop()">⬆️ 回到顶部</a></div>
   </div>
-  <div class="footer-bottom"><span>© 2026 神话星空 · 为爱听故事的你打造</span><span class="blessing">✨ 每颗星星，都是一个故事</span></div>
+  <div class="footer-bottom">
+    <span>© 2026 神话星空 · 为爱听故事的你打造</span>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button class="version-btn" onclick="openVersionHistory()"><div class="version-dot"></div><span id="versionLabel">v5.0</span></button>
+      <span class="blessing">✨ 每颗星星，都是一个故事</span>
+    </div>
+  </div>
 </footer>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modal"><button class="modal-close" onclick="closeModal()">✕</button><div id="modalContent"></div></div>
 </div>
 
+<div class="version-overlay" id="versionOverlay">
+  <div class="version-panel" id="versionPanel"></div>
+</div>
+
 <script>
-// ============ STORY DATA PLACEHOLDER ============
+// ============ VERSION MANAGEMENT ============
+const VERSION = { major:5, minor:0, date:'2026-08-06', label:'v5.0', codename:'时光档案馆' };
+const VERSION_HISTORY = [
+  { ver:'v5.0', date:'2026-08-06', title:'时光档案馆', latest:true, changes:[
+    '新增版本管理系统，记录每次网站更新',
+    '页脚增加版本号快速入口',
+    '点击版本号可打开"时光档案馆"查看完整更新日志',
+    '每次网站修改都会自动增加新版本记录'
+  ]},
+  { ver:'v4.0', date:'2026-08-05', title:'群星闪耀', changes:[
+    '新增成语故事板块（第四王国，29个故事）',
+    '故事数量暴增至122个（中国34+希腊30+北欧29+成语29）',
+    '新增搜索功能，可按标题搜索',
+    '新增分页系统，每页12个故事',
+    '新增随机故事按钮',
+    '四大王国导航栏快速切换'
+  ]},
+  { ver:'v3.0', date:'2026-08-05', title:'星辰之声', changes:[
+    '新增神经网络TTS朗读功能',
+    '支持语速/音调调节',
+    '支持朗读暂停和继续',
+    '多句分段朗读，语感更自然'
+  ]},
+  { ver:'v2.0', date:'2026-08-05', title:'神话启航', changes:[
+    '从最初几个故事扩展到多板块',
+    '增加希腊神话和北欧神话',
+    '故事详情弹窗阅读',
+    '星夜深蓝梦幻主题'
+  ]},
+  { ver:'v1.0', date:'2026-08-05', title:'星辰初现', changes:[
+    '网站首次创建',
+    '中国神话故事首批上线',
+    '基础阅读功能'
+  ]}
+];
+
+// ============ STORY DATA ============
 const STORIES = [
   {
     "title": "仓颉造字",
@@ -1667,9 +1737,36 @@ function closeModal() {
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
+// ============ VERSION HISTORY ============
+function openVersionHistory() {
+  const panel = document.getElementById('versionPanel');
+  let html = `<button class="modal-close" onclick="closeVersionHistory()" style="position:absolute;top:14px;right:18px;">✕</button>`;
+  html += `<h2>📜 时光档案馆</h2>`;
+  html += `<p class="version-subtitle">神话星空的每一次成长，都记录在这里。当前版本：<b style="color:#A055FF">${VERSION.label}</b>「${VERSION.codename}」</p>`;
+  html += `<div class="version-timeline">`;
+  VERSION_HISTORY.forEach((v,i) => {
+    html += `<div class="version-entry${v.latest?' latest':''}">`;
+    html += `<div class="version-badge">v${v.ver.replace('v','')}</div>`;
+    html += `<div class="version-body">`;
+    html += `<h4>${v.title}${v.latest?' <span class="version-latest-tag">当前版本</span>':''} <span class="v-date">${v.date}</span></h4>`;
+    html += `<ul>${v.changes.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+    html += `</div></div>`;
+  });
+  html += `</div>`;
+  panel.innerHTML = html;
+  document.getElementById('versionOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVersionHistory() {
+  document.getElementById('versionOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('versionOverlay').addEventListener('click',function(e){if(e.target===this)closeVersionHistory();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('versionOverlay').classList.contains('open'))closeVersionHistory();});
+
 // init
 filterStories('all');
-console.log('神话星空 v4.0 - 122个故事，四大板块！');
+console.log(`神话星空 ${VERSION.label}「${VERSION.codename}」- ${STORIES.length}个故事，四大板块！`);
 </script>
 
 <!-- STORIES WILL BE INSERTED HERE -->
