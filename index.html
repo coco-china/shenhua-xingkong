@@ -3,207 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>神话星空 - 每天一个神话故事</title>
+<title>神话星空 - 122个故事等你来探索</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-  background: #0A0A14; color: #E8E8F5; overflow-x: hidden; line-height: 1.6;
-}
-.stars-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-.star { position: absolute; background: #FFD700; border-radius: 50%; animation: twinkle var(--dur) ease-in-out infinite; animation-delay: var(--delay); opacity: 0; }
-@keyframes twinkle { 0%,100%{opacity:0.2} 50%{opacity:1} }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#0A0A14;color:#E8E8F5;overflow-x:hidden;line-height:1.6}
+.stars-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.star{position:absolute;background:#FFD700;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay);opacity:0}
+@keyframes twinkle{0%,100%{opacity:0.2}50%{opacity:1}}
 
-.header { position: sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 80px; height:72px; background:rgba(10,10,20,0.85); backdrop-filter:blur(20px); border-bottom:1px solid rgba(74,134,232,0.1); }
-.logo { display:flex; align-items:center; gap:12px; cursor:pointer; }
-.logo-icon { width:36px; height:36px; }
-.logo-text { font-family:'Noto Serif SC','SimSun',serif; font-size:22px; font-weight:700; }
-.nav { display:flex; gap:32px; align-items:center; }
-.nav-item { font-size:16px; font-weight:500; color:#9B9BB5; cursor:pointer; transition:color 0.3s; background:none; border:none; position:relative; }
-.nav-item:hover,.nav-item.active { color:#E8E8F5; }
-.nav-item.active::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:20px; height:3px; background:#4A86E8; border-radius:2px; }
-.search-btn { width:40px; height:40px; border-radius:50%; background:rgba(74,134,232,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; border:none; transition:background 0.3s; }
-.search-btn:hover { background:rgba(74,134,232,0.25); }
+.header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 80px;height:72px;background:rgba(10,10,20,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(74,134,232,0.1)}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-icon{width:36px;height:36px}
+.logo-text{font-family:'Noto Serif SC','SimSun',serif;font-size:22px;font-weight:700}
+.nav{display:flex;gap:28px;align-items:center}
+.nav-item{font-size:15px;font-weight:500;color:#9B9BB5;cursor:pointer;transition:color 0.3s;background:none;border:none;position:relative;padding:4px 0}
+.nav-item:hover,.nav-item.active{color:#E8E8F5}
+.nav-item.active::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:20px;height:3px;border-radius:2px}
+.nav-item.cn.active::after{background:#FFD700}
+.nav-item.gr.active::after{background:#4A86E8}
+.nav-item.no.active::after{background:#5CC9D0}
+.nav-item.cy.active::after{background:#FF6B9D}
+.nav-item.all.active::after{background:linear-gradient(90deg,#FFD700,#4A86E8,#5CC9D0,#FF6B9D)}
 
-.hero { position:relative; z-index:1; display:flex; align-items:center; padding:100px 80px; gap:80px; min-height:680px; background:linear-gradient(180deg,#020210 0%,#0A0A20 40%,#0F0F2A 70%,#0A0A14 100%); }
-.hero-content { flex:1; display:flex; flex-direction:column; gap:24px; }
-.badge { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:20px; background:rgba(255,215,0,0.1); width:fit-content; }
-.badge-dot { width:8px; height:8px; border-radius:50%; background:#7ED4A0; }
-.badge-text { font-size:14px; font-weight:600; color:#FFD700; }
-.hero-title { font-family:'Noto Serif SC','SimSun',serif; font-size:64px; font-weight:700; line-height:1.25; }
-.hero-subtitle { font-size:20px; color:#9B9BB5; max-width:420px; }
-.cta-btn { display:inline-flex; align-items:center; gap:8px; padding:16px 36px; border-radius:32px; font-size:18px; font-weight:600; color:#FFF; cursor:pointer; border:none; background:linear-gradient(135deg,#4A86E8,#A055FF); width:fit-content; transition:transform 0.3s,box-shadow 0.3s; }
-.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(160,85,255,0.4); }
-.hero-visual { width:480px; height:480px; border-radius:40px; background:radial-gradient(circle at center,#261460 0%,#0F0F2E 70%,#050510 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:0 0 60px rgba(160,85,255,0.3); }
-.hero-visual-content { text-align:center; z-index:2; }
-.hero-visual-content .big-star { font-size:120px; animation:floatStar 3s ease-in-out infinite; }
-@keyframes floatStar { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-.hero-visual::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 50%); animation:rotateSlow 20s linear infinite; }
-@keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.search-wrap{position:relative}
+.search-input{padding:8px 16px 8px 36px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#E8E8F5;font-size:14px;width:200px;transition:all 0.3s;outline:none}
+.search-input:focus{border-color:#4A86E8;background:rgba(255,255,255,0.08);width:240px}
+.search-input::placeholder{color:#7B8BA0}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#7B8BA0}
 
-.section { position:relative; z-index:1; padding:80px; }
-.section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
-.section-title { font-family:'Noto Serif SC','SimSun',serif; font-size:36px; font-weight:700; }
-.section-more { font-size:16px; color:#4A86E8; cursor:pointer; background:none; border:none; transition:opacity 0.3s; }
-.section-more:hover { opacity:0.8; }
+.hero{position:relative;z-index:1;display:flex;align-items:center;padding:80px 80px 60px;gap:60px;min-height:500px;background:linear-gradient(180deg,#020210 0%,#0A0A20 40%,#0F0F2A 70%,#0A0A14 100%)}
+.hero-content{flex:1;display:flex;flex-direction:column;gap:20px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:20px;background:rgba(255,215,0,0.1);width:fit-content}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:#7ED4A0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.badge-text{font-size:14px;font-weight:600;color:#FFD700}
+.hero-title{font-family:'Noto Serif SC','SimSun',serif;font-size:58px;font-weight:700;line-height:1.25}
+.hero-subtitle{font-size:18px;color:#9B9BB5;max-width:460px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:32px;font-size:18px;font-weight:600;color:#FFF;cursor:pointer;border:none;background:linear-gradient(135deg,#4A86E8,#A055FF);width:fit-content;transition:transform 0.3s,box-shadow 0.3s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(160,85,255,0.4)}
+.hero-visual{width:400px;height:400px;border-radius:32px;background:radial-gradient(circle at center,#261460 0%,#0F0F2E 70%,#050510 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(160,85,255,0.3)}
+.hero-visual::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.12) 0%,transparent 50%);animation:rotateSlow 20s linear infinite}
+@keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hero-visual-content{text-align:center;z-index:2}
+.hero-visual-content .big-star{font-size:100px;animation:floatStar 3s ease-in-out infinite}
+@keyframes floatStar{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-.featured-card { display:flex; gap:48px; border-radius:32px; background:#0F0F22; overflow:hidden; align-items:center; box-shadow:0 8px 32px rgba(74,134,232,0.12); cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
-.featured-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(74,134,232,0.2); }
-.featured-cover { width:320px; min-height:360px; flex-shrink:0; background:radial-gradient(circle,#1A3060,#0A0A20); display:flex; align-items:center; justify-content:center; border-radius:24px; }
-.featured-cover-content { text-align:center; }
-.featured-cover-content .temple-icon { font-size:100px; }
-.featured-info { flex:1; padding:20px 20px 20px 0; display:flex; flex-direction:column; gap:16px; }
-.tag { display:inline-flex; padding:6px 14px; border-radius:16px; font-size:13px; font-weight:600; width:fit-content; }
-.tag-blue { background:rgba(74,134,232,0.15); color:#4A86E8; }
-.tag-gold { background:rgba(255,215,0,0.12); color:#FFD700; }
-.tag-teal { background:rgba(92,201,208,0.12); color:#5CC9D0; }
-.story-title { font-family:'Noto Serif SC','SimSun',serif; font-size:28px; font-weight:700; }
-.story-desc { font-size:16px; color:#9B9BB5; line-height:1.75; }
-.story-meta { display:flex; gap:24px; font-size:14px; color:#7B8BA0; }
-.read-btn { display:inline-flex; align-items:center; gap:6px; padding:14px 28px; border-radius:28px; background:#4A86E8; color:#FFF; font-size:16px; font-weight:600; cursor:pointer; border:none; width:fit-content; transition:background 0.3s,transform 0.3s; }
-.read-btn:hover { background:#5C96F5; transform:translateY(-2px); }
+.section{position:relative;z-index:1;padding:60px 80px}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;flex-wrap:wrap;gap:16px}
+.section-title{font-family:'Noto Serif SC','SimSun',serif;font-size:32px;font-weight:700}
+.section-count{font-size:16px;color:#9B9BB5;font-weight:400}
+.filter-row{display:flex;gap:12px;flex-wrap:wrap}
+.filter-item{padding:8px 18px;border-radius:20px;font-size:14px;font-weight:500;color:#9B9BB5;cursor:pointer;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:all 0.3s}
+.filter-item:hover,.filter-item.active{color:#FFF;border-color:transparent}
+.filter-item.cn:hover,.filter-item.cn.active{background:rgba(255,215,0,0.2);border-color:#FFD700}
+.filter-item.gr:hover,.filter-item.gr.active{background:rgba(74,134,232,0.2);border-color:#4A86E8}
+.filter-item.no:hover,.filter-item.no.active{background:rgba(92,201,208,0.2);border-color:#5CC9D0}
+.filter-item.cy:hover,.filter-item.cy.active{background:rgba(255,107,157,0.2);border-color:#FF6B9D}
 
-.cat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-.cat-card { border-radius:32px; background:#0F0F22; overflow:hidden; cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
-.cat-card:hover { transform:translateY(-4px); }
-.cat-card:nth-child(1):hover { box-shadow:0 8px 24px rgba(255,215,0,0.15); }
-.cat-card:nth-child(2):hover { box-shadow:0 8px 24px rgba(74,134,232,0.15); }
-.cat-card:nth-child(3):hover { box-shadow:0 8px 24px rgba(92,201,208,0.15); }
-.cat-cover { height:200px; display:flex; align-items:center; justify-content:center; border-radius:24px; font-size:80px; }
-.cat-cover.cn { background:linear-gradient(135deg,rgba(200,50,50,0.5),rgba(200,150,25,0.3)); }
-.cat-cover.gr { background:linear-gradient(135deg,rgba(38,102,204,0.5),rgba(102,153,255,0.3)); }
-.cat-cover.no { background:linear-gradient(135deg,rgba(25,153,153,0.5),rgba(76,204,230,0.3)); }
-.cat-info { padding:0 20px 20px; display:flex; flex-direction:column; gap:8px; }
-.cat-info h3 { font-family:'Noto Serif SC','SimSun',serif; font-size:24px; font-weight:700; }
-.cat-info span { font-size:14px; color:#9B9BB5; }
+/* 搜索无结果 */
+.search-empty{text-align:center;padding:60px 20px;color:#9B9BB5}
+.search-empty-icon{font-size:60px;margin-bottom:16px}
+.search-empty h3{font-size:22px;margin-bottom:8px;color:#E8E8F5}
+.search-empty p{font-size:15px}
 
-.cal-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
-.cal-card { border-radius:24px; background:#0F0F22; padding:20px; display:flex; flex-direction:column; align-items:center; gap:12px; transition:transform 0.3s,background 0.3s; }
-.cal-card:hover { transform:translateY(-2px); }
-.cal-card.today { background:linear-gradient(135deg,rgba(74,134,232,0.2),rgba(160,85,255,0.15)); border:1px solid rgba(74,134,232,0.3); }
-.cal-dot { width:12px; height:12px; border-radius:50%; }
-.cal-dot.done { background:#7ED4A0; }
-.cal-dot.pending { background:#7B8BA0; }
-.cal-date { font-size:18px; font-weight:700; }
-.cal-story { font-size:14px; font-weight:500; }
-.cal-card.today .cal-story { color:#FFD700; }
-.cal-card:not(.today) .cal-story { color:#9B9BB5; }
-.cal-tag { font-size:12px; color:#7B8BA0; }
+/* 分页 */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:40px;flex-wrap:wrap}
+.page-btn{width:40px;height:40px;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#9B9BB5;transition:all 0.3s}
+.page-btn:hover:not(:disabled){border-color:#4A86E8;color:#FFF}
+.page-btn.active{background:rgba(74,134,232,0.25);border-color:#4A86E8;color:#FFF}
+.page-btn:disabled{opacity:0.3;cursor:default}
+.page-info{font-size:14px;color:#7B8BA0;padding:0 12px}
 
-.filter-row { display:flex; gap:12px; }
-.filter-item { font-size:15px; font-weight:500; color:#9B9BB5; cursor:pointer; background:none; border:none; transition:color 0.3s; }
-.filter-item.active,.filter-item:hover { color:#4A86E8; font-weight:600; }
-.story-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-.story-card { border-radius:24px; background:#0F0F22; overflow:hidden; cursor:pointer; transition:transform 0.3s,box-shadow 0.3s; }
-.story-card:hover { transform:translateY(-4px); }
-.story-card[data-cat="gr"]:hover { box-shadow:0 6px 20px rgba(74,134,232,0.15); }
-.story-card[data-cat="cn"]:hover { box-shadow:0 6px 20px rgba(255,215,0,0.15); }
-.story-card[data-cat="no"]:hover { box-shadow:0 6px 20px rgba(92,201,208,0.15); }
-.story-cover { height:200px; display:flex; align-items:center; justify-content:center; font-size:80px; border-radius:16px; }
-.story-cover.gr { background:linear-gradient(135deg,rgba(38,76,153,0.6),rgba(76,140,242,0.4)); }
-.story-cover.cn { background:linear-gradient(135deg,rgba(200,50,50,0.5),rgba(230,150,25,0.4)); }
-.story-cover.no { background:linear-gradient(135deg,rgba(25,128,128,0.5),rgba(76,200,204,0.4)); }
-.story-info { padding:14px 18px 18px; display:flex; flex-direction:column; gap:6px; }
-.story-info h4 { font-family:'Noto Serif SC','SimSun',serif; font-size:18px; font-weight:700; }
-.story-info p { font-size:13px; color:#9B9BB5; line-height:1.5; }
+/* Cat Grid */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cat-card{border-radius:28px;background:#0F0F22;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s}
+.cat-card:hover{transform:translateY(-4px)}
+.cat-card.cn:hover{box-shadow:0 8px 24px rgba(255,215,0,0.12)}
+.cat-card.gr:hover{box-shadow:0 8px 24px rgba(74,134,232,0.12)}
+.cat-card.no:hover{box-shadow:0 8px 24px rgba(92,201,208,0.12)}
+.cat-card.cy:hover{box-shadow:0 8px 24px rgba(255,107,157,0.12)}
+.cat-cover{height:160px;display:flex;align-items:center;justify-content:center;font-size:64px;border-radius:20px}
+.cat-cover.cn{background:linear-gradient(135deg,rgba(200,50,50,0.4),rgba(200,150,25,0.2))}
+.cat-cover.gr{background:linear-gradient(135deg,rgba(38,102,204,0.4),rgba(102,153,255,0.2))}
+.cat-cover.no{background:linear-gradient(135deg,rgba(25,153,153,0.4),rgba(76,204,230,0.2))}
+.cat-cover.cy{background:linear-gradient(135deg,rgba(200,60,100,0.4),rgba(255,150,180,0.2))}
+.cat-info{padding:14px 18px 18px;display:flex;flex-direction:column;gap:6px}
+.cat-info h3{font-family:'Noto Serif SC','SimSun',serif;font-size:22px;font-weight:700}
+.cat-info span{font-size:13px;color:#9B9BB5}
 
-/* ===== TTS 朗读按钮 ===== */
-.tts-bar { display:flex; gap:10px; margin:16px 0; align-items:center; flex-wrap:wrap; }
-.tts-btn {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:12px 22px; border-radius:24px; font-size:15px; font-weight:600;
-  cursor:pointer; border:none; transition:all 0.3s;
-}
-.tts-play { background:linear-gradient(135deg,#FF6B9D,#C44DFF); color:#FFF; }
-.tts-play:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(196,77,255,0.4); }
-.tts-pause { background:rgba(255,215,0,0.2); color:#FFD700; border:1px solid rgba(255,215,0,0.3); }
-.tts-resume { background:rgba(72,199,142,0.2); color:#48C78E; border:1px solid rgba(72,199,142,0.3); }
-.tts-stop { background:rgba(255,255,255,0.08); color:#9B9BB5; border:1px solid rgba(255,255,255,0.1); }
-.tts-speed { display:flex; gap:4px; margin-left:8px; }
-.tts-speed button {
-  width:36px; height:36px; border-radius:50%; font-size:13px; font-weight:600;
-  cursor:pointer; border:1px solid rgba(255,255,255,0.15); background:transparent;
-  color:#9B9BB5; transition:all 0.2s;
-}
-.tts-speed button.active { background:rgba(74,134,232,0.3); border-color:#4A86E8; color:#FFF; }
-.tts-speed button:hover { border-color:#4A86E8; }
-.tts-status { font-size:13px; color:#7ED4A0; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-.tts-dot-pulse { width:8px; height:8px; border-radius:50%; background:#7ED4A0; animation:pulse 1s infinite; flex-shrink:0; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+/* Story Grid */
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.story-card{border-radius:24px;background:#0F0F22;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s}
+.story-card:hover{transform:translateY(-4px)}
+.story-card.cn:hover{box-shadow:0 6px 20px rgba(255,215,0,0.12)}
+.story-card.gr:hover{box-shadow:0 6px 20px rgba(74,134,232,0.12)}
+.story-card.no:hover{box-shadow:0 6px 20px rgba(92,201,208,0.12)}
+.story-card.cy:hover{box-shadow:0 6px 20px rgba(255,107,157,0.12)}
+.story-cover{height:160px;display:flex;align-items:center;justify-content:center;font-size:64px;border-radius:16px}
+.story-cover.cn{background:linear-gradient(135deg,rgba(200,50,50,0.5),rgba(230,150,25,0.3))}
+.story-cover.gr{background:linear-gradient(135deg,rgba(38,76,153,0.5),rgba(76,140,242,0.3))}
+.story-cover.no{background:linear-gradient(135deg,rgba(25,128,128,0.5),rgba(76,200,204,0.3))}
+.story-cover.cy{background:linear-gradient(135deg,rgba(200,60,100,0.4),rgba(255,150,180,0.3))}
+.story-info{padding:12px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.story-info h4{font-family:'Noto Serif SC','SimSun',serif;font-size:17px;font-weight:700;line-height:1.4}
+.story-info p{font-size:13px;color:#9B9BB5;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* 朗读进度条 */
-.tts-progress-wrap { display:flex; align-items:center; gap:12px; margin:8px 0 16px; }
-.tts-progress-bar {
-  flex:1; height:6px; border-radius:3px;
-  background:rgba(255,255,255,0.08); overflow:hidden;
-}
-.tts-progress-fill {
-  height:100%; border-radius:3px; width:0%;
-  background:linear-gradient(90deg,#FF6B9D,#C44DFF,#4A86E8);
-  transition:width 0.4s ease;
-}
-.tts-progress-text { font-size:12px; color:#9B9BB5; white-space:nowrap; min-width:70px; }
-.tts-engine-label { font-size:11px; color:#FFD700; margin-top:2px; }
+.tag{display:inline-flex;padding:5px 12px;border-radius:14px;font-size:12px;font-weight:600;width:fit-content}
+.tag-gold{background:rgba(255,215,0,0.12);color:#FFD700}
+.tag-blue{background:rgba(74,134,232,0.12);color:#4A86E8}
+.tag-teal{background:rgba(92,201,208,0.12);color:#5CC9D0}
+.tag-rose{background:rgba(255,107,157,0.12);color:#FF6B9D}
 
-/* 音调按钮复用 tts-speed 样式 */
-.tts-pitch button { width:auto; padding:0 10px; }
+/* TTS */
+.tts-bar{display:flex;gap:8px;margin:12px 0;align-items:center;flex-wrap:wrap}
+.tts-btn{display:inline-flex;align-items:center;gap:5px;padding:10px 18px;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.3s}
+.tts-play{background:linear-gradient(135deg,#FF6B9D,#C44DFF);color:#FFF}
+.tts-play:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(196,77,255,0.3)}
+.tts-pause{background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid rgba(255,215,0,0.2)}
+.tts-resume{background:rgba(72,199,142,0.15);color:#48C78E;border:1px solid rgba(72,199,142,0.2)}
+.tts-stop{background:rgba(255,255,255,0.06);color:#9B9BB5;border:1px solid rgba(255,255,255,0.08)}
+.tts-speed{display:flex;gap:4px;margin-left:4px}
+.tts-speed button{width:34px;height:34px;border-radius:50%;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#9B9BB5;transition:all 0.2s}
+.tts-speed button.active{background:rgba(74,134,232,0.25);border-color:#4A86E8;color:#FFF}
+.tts-status{font-size:12px;color:#7ED4A0;display:flex;align-items:center;gap:6px}
+.tts-dot-pulse{width:7px;height:7px;border-radius:50%;background:#7ED4A0;animation:pulse-tts 1s infinite}
+@keyframes pulse-tts{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.tts-progress-wrap{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
+.tts-progress-bar{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden}
+.tts-progress-fill{height:100%;border-radius:3px;width:0%;background:linear-gradient(90deg,#FF6B9D,#C44DFF,#4A86E8);transition:width 0.3s}
+.tts-progress-text{font-size:11px;color:#9B9BB5;white-space:nowrap}
 
-/* 故事详情弹窗 */
-.modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(5,5,15,0.9); backdrop-filter:blur(10px); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s; }
-.modal-overlay.open { opacity:1; pointer-events:all; }
-.modal { background:#0F0F22; border-radius:32px; padding:48px; max-width:820px; width:92%; max-height:88vh; overflow-y:auto; position:relative; box-shadow:0 0 80px rgba(160,85,255,0.3); }
-.modal-close { position:absolute; top:20px; right:24px; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.08); border:none; color:#FFF; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.3s; }
-.modal-close:hover { background:rgba(255,255,255,0.15); }
-.modal h2 { font-family:'Noto Serif SC','SimSun',serif; font-size:32px; margin-bottom:8px; }
-.modal-meta { color:#7B8BA0; font-size:14px; margin-bottom:8px; }
-.modal-cover-placeholder { width:100%; height:200px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:80px; margin-bottom:16px; }
-.modal-body { font-size:16px; color:#C8C8DD; line-height:2.1; }
-.modal-body p { margin-bottom:14px; }
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,0.92);backdrop-filter:blur(10px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#0F0F22;border-radius:28px;padding:40px;max-width:780px;width:94%;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 0 80px rgba(160,85,255,0.25)}
+.modal-close{position:absolute;top:14px;right:18px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:none;color:#FFF;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.3s}
+.modal-close:hover{background:rgba(255,255,255,0.15)}
+.modal h2{font-family:'Noto Serif SC','SimSun',serif;font-size:28px;margin-bottom:6px}
+.modal-meta{color:#7B8BA0;font-size:13px;margin-bottom:6px}
+.modal-cover-placeholder{width:100%;height:180px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:72px;margin:12px 0}
+.modal-body{font-size:15px;color:#C8C8DD;line-height:2}
+.modal-body p{margin-bottom:12px}
 
-.footer { background:#070712; padding:60px 80px; position:relative; z-index:1; }
-.footer-top { display:flex; gap:80px; margin-bottom:40px; }
-.footer-brand { width:300px; display:flex; flex-direction:column; gap:16px; }
-.footer-logo-group { display:flex; align-items:center; gap:10px; }
-.footer-logo-group span { font-family:'Noto Serif SC','SimSun',serif; font-size:20px; font-weight:700; }
-.footer-brand-desc { font-size:14px; color:#7B8BA0; line-height:1.7; }
-.footer-links { display:flex; flex-direction:column; gap:14px; }
-.footer-links h4 { font-size:16px; font-weight:600; }
-.footer-links a { font-size:14px; color:#7B8BA0; cursor:pointer; transition:color 0.3s; text-decoration:none; }
-.footer-links a:hover { color:#4A86E8; }
-.footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid rgba(255,255,255,0.06); }
-.footer-bottom span { font-size:13px; color:#7B8BA0; }
-.footer-bottom .blessing { color:#FFD700; font-family:'Noto Serif SC','SimSun',serif; }
-
-/* 加载更多按钮 */
-.load-more-wrap { text-align:center; margin-top:32px; }
-.load-more-btn {
-  padding:14px 40px; border-radius:28px; font-size:16px; font-weight:600;
-  background:rgba(74,134,232,0.12); color:#4A86E8; border:1px solid rgba(74,134,232,0.25);
-  cursor:pointer; transition:all 0.3s;
-}
-.load-more-btn:hover { background:rgba(74,134,232,0.25); transform:translateY(-2px); }
+.footer{background:#070712;padding:50px 80px 30px;position:relative;z-index:1}
+.footer-top{display:flex;gap:60px;margin-bottom:32px;flex-wrap:wrap}
+.footer-brand{width:280px;display:flex;flex-direction:column;gap:12px}
+.footer-logo-group{display:flex;align-items:center;gap:8px}
+.footer-logo-group span{font-family:'Noto Serif SC','SimSun',serif;font-size:18px;font-weight:700}
+.footer-brand-desc{font-size:13px;color:#7B8BA0;line-height:1.6}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links h4{font-size:15px;font-weight:600}
+.footer-links a{font-size:13px;color:#7B8BA0;cursor:pointer;transition:color 0.3s;text-decoration:none}
+.footer-links a:hover{color:#4A86E8}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:12px}
+.footer-bottom span{font-size:12px;color:#7B8BA0}
+.footer-bottom .blessing{color:#FFD700;font-family:'Noto Serif SC','SimSun',serif}
+.story-total-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:14px;background:rgba(255,215,0,0.08);font-size:13px;color:#FFD700;margin-left:12px}
 
 @media(max-width:1200px){
-  .hero{flex-direction:column;padding:60px 40px}
-  .hero-visual{width:100%;height:360px}
-  .featured-card{flex-direction:column}
-  .featured-cover{width:100%;min-height:240px}
-  .cat-grid,.story-grid{grid-template-columns:repeat(2,1fr)}
-  .cal-row{grid-template-columns:repeat(2,1fr)}
   .header{padding:0 40px}
-  .section{padding:60px 40px}
+  .hero{padding:60px 40px;flex-direction:column}
+  .hero-visual{width:100%;height:300px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .story-grid{grid-template-columns:repeat(2,1fr)}
+  .section{padding:50px 40px}
 }
 @media(max-width:768px){
   .nav{display:none}
-  .hero-title{font-size:40px}
+  .hero-title{font-size:38px}
   .cat-grid,.story-grid{grid-template-columns:1fr}
-  .cal-row{grid-template-columns:1fr 1fr}
-  .story-grid{grid-template-columns:1fr}
+  .search-input{width:140px}.search-input:focus{width:160px}
+  .section{padding:40px 24px}
+  .header{padding:0 20px}
+  .footer{padding:40px 24px 24px}
 }
 </style>
 </head>
 <body>
-
 <div class="stars-bg" id="starsBg"></div>
 
 <header class="header">
@@ -212,70 +188,68 @@ body {
     <span class="logo-text">神话星空</span>
   </div>
   <nav class="nav">
-    <button class="nav-item active" data-cat="all">全部故事</button>
-    <button class="nav-item" data-cat="cn">中国神话</button>
-    <button class="nav-item" data-cat="gr">希腊神话</button>
-    <button class="nav-item" data-cat="no">北欧神话</button>
+    <button class="nav-item all active" data-cat="all">全部故事</button>
+    <button class="nav-item cn" data-cat="cn">中国神话</button>
+    <button class="nav-item gr" data-cat="gr">希腊神话</button>
+    <button class="nav-item no" data-cat="no">北欧神话</button>
+    <button class="nav-item cy" data-cat="cy">成语故事</button>
   </nav>
-  <button class="search-btn" onclick="alert('🔍 搜索故事功能即将上线！')"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#4A86E8" stroke-width="2"/><path d="M13.5 13.5L18 18" stroke="#4A86E8" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="搜索故事..." id="searchInput" oninput="doSearch()">
+  </div>
 </header>
 
 <section class="hero" id="hero">
   <div class="hero-content">
-    <div class="badge"><div class="badge-dot"></div><span class="badge-text">今日已更新</span></div>
+    <div class="badge"><div class="badge-dot"></div><span class="badge-text">海量故事 每日更新</span></div>
     <h1 class="hero-title">欢迎来到<br>神话星空</h1>
-    <p class="hero-subtitle">每天一个神话故事，穿越中国、希腊、北欧的神奇世界。点击故事就能朗读哦！</p>
-    <button class="cta-btn" onclick="openStory('nezha')">⚡ 开始今天的冒险</button>
+    <p class="hero-subtitle">四大神话王国 + 成语智慧宝库，每个故事都能点击朗读，陪你探索奇妙世界！</p>
+    <button class="cta-btn" onclick="randomStory()">🎲 随机一个故事</button>
   </div>
   <div class="hero-visual"><div class="hero-visual-content"><div class="big-star">🌌</div></div></div>
 </section>
 
-<section class="section" id="featured">
-  <div class="section-header"><h2 class="section-title">⭐ 今日推荐故事</h2></div>
-  <div class="featured-card" onclick="openStory('nezha')">
-    <div class="featured-cover"><div class="featured-cover-content"><div class="temple-icon">🔥</div></div></div>
-    <div class="featured-info">
-      <div class="tag tag-gold">中国神话</div>
-      <h3 class="story-title">哪吒闹海</h3>
-      <p class="story-desc">陈塘关总兵李靖的第三个儿子哪吒，脚踩风火轮、手持乾坤圈，在东海龙宫掀起滔天巨浪！他为什么要大闹东海？龙王三太子为何找上门来？</p>
-      <div class="story-meta"><span>📖 约20分钟</span><span>🔊 支持朗读</span></div>
-      <button class="read-btn">📖 开始阅读</button>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="categories">
-  <h2 class="section-title" style="margin-bottom:40px">🏰 探索神话王国</h2>
+  <h2 class="section-title" style="margin-bottom:32px">🏰 探索四大王国</h2>
   <div class="cat-grid">
-    <div class="cat-card" onclick="filterStories('cn')"><div class="cat-cover cn">🐉</div><div class="cat-info"><h3>中国神话</h3><span>10个故事 · 全部可朗读</span></div></div>
-    <div class="cat-card" onclick="filterStories('gr')"><div class="cat-cover gr">⚡</div><div class="cat-info"><h3>希腊神话</h3><span>10个故事 · 全部可朗读</span></div></div>
-    <div class="cat-card" onclick="filterStories('no')"><div class="cat-cover no">❄️</div><div class="cat-info"><h3>北欧神话</h3><span>10个故事 · 全部可朗读</span></div></div>
+    <div class="cat-card cn" onclick="filterStories('cn')"><div class="cat-cover cn">🐉</div><div class="cat-info"><h3>中国神话</h3><span id="cnCount">34个故事</span></div></div>
+    <div class="cat-card gr" onclick="filterStories('gr')"><div class="cat-cover gr">⚡</div><div class="cat-info"><h3>希腊神话</h3><span id="grCount">30个故事</span></div></div>
+    <div class="cat-card no" onclick="filterStories('no')"><div class="cat-cover no">❄️</div><div class="cat-info"><h3>北欧神话</h3><span id="noCount">29个故事</span></div></div>
+    <div class="cat-card cy" onclick="filterStories('cy')"><div class="cat-cover cy">📜</div><div class="cat-info"><h3>成语故事</h3><span id="cyCount">29个故事</span></div></div>
   </div>
 </section>
 
 <section class="section" id="stories">
   <div class="section-header">
-    <h2 class="section-title">📚 故事宝藏架 <span style="font-size:16px;color:#9B9BB5;font-weight:400">（共30个故事）</span></h2>
+    <h2 class="section-title">📚 故事宝库 <span class="section-count" id="storyCount">（共122个故事）</span></h2>
     <div class="filter-row">
-      <button class="filter-item active" onclick="filterStories('all')">全部</button>
-      <button class="filter-item" onclick="filterStories('cn')">中国</button>
-      <button class="filter-item" onclick="filterStories('gr')">希腊</button>
-      <button class="filter-item" onclick="filterStories('no')">北欧</button>
+      <button class="filter-item all active" onclick="filterStories('all')">全部</button>
+      <button class="filter-item cn" onclick="filterStories('cn')">🐉 中国</button>
+      <button class="filter-item gr" onclick="filterStories('gr')">⚡ 希腊</button>
+      <button class="filter-item no" onclick="filterStories('no')">❄️ 北欧</button>
+      <button class="filter-item cy" onclick="filterStories('cy')">📜 成语</button>
     </div>
   </div>
   <div class="story-grid" id="storyGrid"></div>
+  <div class="search-empty" id="searchEmpty" style="display:none">
+    <div class="search-empty-icon">🔍</div>
+    <h3>没有找到相关故事</h3>
+    <p>试试其他关键词？比如搜"龙"、"公主"、"冒险"</p>
+  </div>
+  <div class="pagination" id="pagination"></div>
 </section>
 
 <footer class="footer">
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="footer-logo-group"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="#FFD700" opacity="0.2"/><path d="M14 3L15.5 11L14 14L12.5 11L14 3Z" fill="#FFD700"/><path d="M22 14L14 12.5L14 14L14 15.5L22 14Z" fill="#FFD700"/><path d="M14 25L12.5 17L14 14L15.5 17L14 25Z" fill="#FFD700"/><path d="M6 14L14 15.5L14 14L14 12.5L6 14Z" fill="#FFD700"/></svg><span>神话星空</span></div>
-      <p class="footer-brand-desc">每天一个神话故事，每个故事都能点击朗读。为中国、希腊、北欧神话爱好者打造的专属阅读空间。</p>
+      <div class="footer-logo-group"><svg width="24" height="24" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="#FFD700" opacity="0.2"/><path d="M14 3L15.5 11L14 14L12.5 11L14 3Z" fill="#FFD700"/><path d="M22 14L14 12.5L14 14L14 15.5L22 14Z" fill="#FFD700"/><path d="M14 25L12.5 17L14 14L15.5 17L14 25Z" fill="#FFD700"/><path d="M6 14L14 15.5L14 14L14 12.5L6 14Z" fill="#FFD700"/></svg><span>神话星空</span></div>
+      <p class="footer-brand-desc">中国神话·希腊神话·北欧神话·成语故事 — 120个精彩故事，每个都能朗读，为爱听故事的你打造专属阅读空间。</p>
     </div>
-    <div class="footer-links"><h4>神话世界</h4><a onclick="filterStories('cn')">中国神话</a><a onclick="filterStories('gr')">希腊神话</a><a onclick="filterStories('no')">北欧神话</a></div>
-    <div class="footer-links"><h4>关于我们</h4><a>关于神话星空</a><a>联系我们</a><a>隐私政策</a></div>
+    <div class="footer-links"><h4>探索王国</h4><a onclick="filterStories('cn')">🐉 中国神话</a><a onclick="filterStories('gr')">⚡ 希腊神话</a><a onclick="filterStories('no')">❄️ 北欧神话</a><a onclick="filterStories('cy')">📜 成语故事</a></div>
+    <div class="footer-links"><h4>快捷功能</h4><a onclick="randomStory()">🎲 随机故事</a><a onclick="scrollToTop()">⬆️ 回到顶部</a></div>
   </div>
-  <div class="footer-bottom"><span>© 2026 神话星空 · 为爱听故事的小朋友打造</span><span class="blessing">✨ 用爱与魔法编织每一个故事</span></div>
+  <div class="footer-bottom"><span>© 2026 神话星空 · 为爱听故事的你打造</span><span class="blessing">✨ 每颗星星，都是一个故事</span></div>
 </footer>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -283,486 +257,1402 @@ body {
 </div>
 
 <script>
-// ============ 星空背景 ============
-(function(){const bg=document.getElementById('starsBg');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=Math.random()*3+1+'px';s.style.height=s.style.width;s.style.setProperty('--dur',(Math.random()*3+2)+'s');s.style.setProperty('--delay',Math.random()*4+'s');bg.appendChild(s);}})();
+// ============ STORY DATA PLACEHOLDER ============
+const STORIES = [
+  {
+    "title": "仓颉造字",
+    "cover": "📝",
+    "desc": "黄帝的史官仓颉，观察鸟兽足迹，创造了中国的文字！",
+    "content": "<p>很久很久以前，人们没有文字，只能靠结绳记事。黄帝身边有一位聪明的史官，名叫仓颉。</p><p>仓颉长着四只眼睛，闪闪发光，能看到别人看不到的东西。他发现鸟兽走过泥地会留下不同的脚印，每种动物的脚印都不一样。于是他想：如果给每个事物都画一个符号，不就可以记录事情了吗？</p><p>仓颉开始观察天地万物——太阳是圆的，就画个圆圈；月亮弯弯的，就画个弯钩；山是尖尖的，就画三个山峰。他夜以继日地创造符号，终于造出了最早的文字。</p><p>传说仓颉造字那天，天上下起了谷子雨，鬼怪在夜里哭泣——因为有了文字，人类就能记录智慧，不再被蒙蔽了。这就是\"天雨粟，鬼夜哭\"的传说。</p>",
+    "cat": "cn",
+    "id": "cn_001",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "精卫填海",
+    "cover": "🐦",
+    "desc": "炎帝的小女儿变成一只小鸟，发誓要用石子填平大海！",
+    "content": "<p>炎帝有一个最小的女儿，名叫女娃。她活泼可爱，最喜欢去东海边玩耍。</p><p>有一天，女娃独自划着小船出海，突然狂风大作，巨浪掀翻了小船，女娃不幸被大海吞没了。她的灵魂化作一只美丽的小鸟，头上有花纹，白嘴红爪，发出\"精卫——精卫——\"的叫声。</p><p>精卫鸟恨大海夺走了她的生命，发誓要把东海填平。她每天从西山衔来小石子和树枝，飞到东海上空丢下去。日复一日，年复一年，从不间断。</p><p>大海嘲笑她：「小鸟儿，你就是飞到世界末日也填不平我的！」精卫坚定地回答：「哪怕一千年、一万年，我也要把你填平！」这种不屈不挠的精神，感动了无数后人。</p>",
+    "cat": "cn",
+    "id": "cn_002",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "夸父追日",
+    "cover": "🏃",
+    "desc": "巨人夸父追赶太阳，渴极了喝干了黄河渭水，最后化作一片桃林。",
+    "content": "<p>在北方的大荒中，住着一个巨人部落，他们的首领叫夸父。夸父身高百丈，力大无穷。</p><p>有一年，天气酷热难耐，太阳像火球一样烤着大地。夸父对族人说：「我要追上太阳，让它听我们的命令！」于是他迈开大步，朝着太阳落下的方向飞奔而去。</p><p>夸父跑得飞快，一跨就是几座山。他从东海追到西边，越来越接近太阳了。可是太阳的热量也越来越大，夸父渴得喉咙冒烟。他一口气喝干了黄河和渭河的水，还是不够，又向北方的太泽跑去。</p><p>可惜，还没跑到太泽，夸父就渴死在半路上。他倒下的那一刻，手中的桃木杖落在地上，化作了一片茂密的桃林。桃林为后来追赶太阳的人提供阴凉和果实，夸父虽然没能追上太阳，却给世界留下了一片甜蜜。</p>",
+    "cat": "cn",
+    "id": "cn_003",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "吴刚伐桂",
+    "cover": "🪓",
+    "desc": "月亮上有个叫吴刚的人，他不停地砍一棵桂树，可桂树永远砍不倒。",
+    "content": "<p>每年中秋赏月时，你有没有注意到月亮上好像有影子在动？传说那就是吴刚在砍桂树。</p><p>吴刚原本是个凡人，因为犯了天条，被天帝罚到月宫砍树。月宫里有一棵巨大的桂树，高五百丈，枝叶繁茂，花朵飘香。</p><p>吴刚抡起斧头用力砍下去，每一斧都能在树干上砍出深深的缺口。可神奇的是，每当他拔出斧头，树上的伤口就立刻愈合了，仿佛从来没被砍过一样。</p><p>就这样，吴刚日日夜夜地砍，桂树日日夜夜地愈合。这棵永远砍不倒的桂树，成了月亮上永恒的风景。也许这就是告诉我们：有些事情看起来很徒劳，但坚持本身就是一种意义吧。</p>",
+    "cat": "cn",
+    "id": "cn_004",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "牛郎织女",
+    "cover": "🌟",
+    "desc": "天上的织女爱上了人间的牛郎，却被银河隔开，每年七夕才能相会。",
+    "content": "<p>天上有一位美丽的仙女叫织女，她是王母娘娘的外孙女，负责织造天边的云霞。织女心灵手巧，能把云霞织得五彩斑斓。</p><p>人间的牛郎是个善良的放牛青年，父母早逝，只有一头老牛陪伴着他。老牛其实是天上的金牛星下凡，它告诉牛郎：「仙女们会到山下的湖里洗澡，你拿走一件红色的仙衣，那衣服的主人就是你的妻子。」</p><p>牛郎照做了，织女因为找不回仙衣，只好留在人间。两人日久生情，结为夫妻，生了一对可爱的儿女。可是王母娘娘发现后大发雷霆，派天兵把织女抓回了天上。</p><p>牛郎用扁担挑着两个孩子追到天上，眼看就要追上了，王母娘娘拔出金簪一划——天上出现了一条宽阔的银河，把两人隔在两岸。后来喜鹊们被他们的爱情感动，每年七月初七搭成鹊桥，让他们相会一次。这就是七夕节的来历。</p>",
+    "cat": "cn",
+    "id": "cn_005",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "哪吒闹海",
+    "cover": "🔥",
+    "desc": "哪吒带着混天绫和乾坤圈大闹东海龙宫，为百姓讨公道！",
+    "content": "<p>陈塘关总兵李靖的夫人怀孕三年六个月，生下一个大肉球。李靖一剑劈开肉球，跳出一个小男孩——他就是哪吒。</p><p>哪吒天生神力，太乙真人收他为徒，送给他两件法宝：混天绫和乾坤圈。七岁那年夏天，天气炎热，哪吒到东海边洗澡。他把混天绫放在水里摆动，整个龙宫都摇晃起来。</p><p>龙王三太子敖丙冲出来问罪，哪吒不怕他，用乾坤圈打败了敖丙。龙王大怒，要水淹陈塘关。哪吒为了不连累百姓，毅然自刎，削骨还父，削肉还母。</p><p>太乙真人用莲花和莲藕为哪吒重塑了身体，他变得更加厉害，脚踏风火轮，手持火尖枪，最终收服了龙王，保护了一方百姓。哪吒勇敢正义的精神，一直被小朋友们喜爱。</p>",
+    "cat": "cn",
+    "id": "cn_006",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "画龙点睛",
+    "cover": "🎨",
+    "desc": "大画家张僧繇画了四条龙，点上眼睛后，龙竟然飞走了！",
+    "content": "<p>南北朝时期，有一位大画家叫张僧繇，他画的画栩栩如生，远近闻名。</p><p>有一次，皇帝请他在金陵安乐寺的墙壁上画四条金龙。张僧繇挥笔如飞，不到三天，四条巨龙就出现在墙壁上——每一条都张牙舞爪，威风凛凛，只是都没有画眼睛。</p><p>围观的人都觉得奇怪，问为什么不画眼睛。张僧繇笑着说：「画上眼睛，它们就会飞走的。」大家都不信，觉得他是故弄玄虚。张僧繇于是拿起画笔，给其中两条龙点上了眼睛。</p><p>奇迹发生了！只听一声霹雳，墙壁裂开，两条点了眼睛的龙腾云驾雾，飞上了天空。而没有画眼睛的两条龙，还好好地留在墙壁上。从此，\"画龙点睛\"就成了形容在最关键的地方加上精彩一笔的成语。</p>",
+    "cat": "cn",
+    "id": "cn_007",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "神笔马良",
+    "cover": "🖌️",
+    "desc": "穷孩子马良得到一支神笔，画什么都能变成真的，他用神笔帮助穷人。",
+    "content": "<p>从前有个穷苦的孩子叫马良，他特别喜欢画画。可是因为没钱，他连一支画笔都买不起，只能用木棍在地上画，用石头在墙上画。</p><p>有一天夜里，马良梦到一位白胡子老爷爷送给他一支金光闪闪的毛笔。老爷爷说：「这是一支神笔，你要用它帮助穷苦的人。」马良醒来发现，手里真的握着那支笔！</p><p>马良用神笔画了一只小鸟，小鸟拍拍翅膀飞走了；画了一条小鱼，小鱼跳进水里游走了。穷人们没有犁，他画犁；没有水车，他画水车。消息传到了皇帝的耳朵里，皇帝派人把马良抓去，逼他画金山银山。</p><p>马良很聪明，他先画了一片大海，又在大海中间画了一座金山。皇帝坐船去拿金子，马良画了一阵大风，掀翻了船，贪心的皇帝沉入了海底。马良又回到了家乡，继续用神笔帮助穷人。</p>",
+    "cat": "cn",
+    "id": "cn_008",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "梁山伯与祝英台",
+    "cover": "🦋",
+    "desc": "祝英台女扮男装去读书，与梁山伯相爱，死后双双化蝶。",
+    "content": "<p>古时候，有个聪明好学的女孩叫祝英台。她想出门求学，可那时候女孩子是不能上学的。于是她女扮男装，说服家人让她去杭州读书。</p><p>在去杭州的路上，祝英台遇到了梁山伯。两人一见如故，结拜为兄弟，一起读书三年，同窗共寝。梁山伯一直不知道祝英台是女孩子，只觉得这个\"兄弟\"特别细心温柔。</p><p>分别时，祝英台暗示自己是女生，可梁山伯太老实了，完全没听懂。等到梁山伯终于明白过来，赶去提亲时，祝英台已经被父母许配给马家了。梁山伯伤心过度，一病不起，不久就去世了。</p><p>祝英台出嫁那天，花轿经过梁山伯的坟墓。她跳下花轿跑到坟前痛哭，突然间狂风大作，坟墓裂开，祝英台跳了进去。雨过天晴，从坟里飞出一对美丽的蝴蝶，翩翩起舞，永不分离。这就是中国最动人的爱情故事之一。</p>",
+    "cat": "cn",
+    "id": "cn_009",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "白蛇传",
+    "cover": "🐍",
+    "desc": "白娘子为了报答许仙的救命之恩，化身美丽的女子与他结为夫妻。",
+    "content": "<p>在杭州西湖边，住着两条修炼千年的蛇精——白素贞和小青。白素贞曾经被一个善良的年轻人救过，她修炼成仙后，决定下凡报答恩人。</p><p>清明时节，西湖细雨蒙蒙。白素贞和小青化作美丽的女子，在断桥上遇到了书生许仙，白素贞一眼认出他就是当年救自己的恩人。三人同舟游湖，白素贞和许仙一见钟情，不久便结为夫妻。</p><p>可是，金山寺的法海和尚识破了白素贞的真实身份，认为人妖不能相恋。他骗许仙喝下雄黄酒，白素贞在端午节现出了白蛇原形，把许仙吓昏了过去。</p><p>白素贞冒着生命危险去昆仑山盗取灵芝仙草救活了许仙。可法海还是不肯罢休，把许仙关在金山寺。白素贞和小青水漫金山，和法海大战。最后白素贞被压在雷峰塔下，直到她的儿子长大中了状元，才把她救了出来。</p>",
+    "cat": "cn",
+    "id": "cn_010",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "宝莲灯",
+    "cover": "🏮",
+    "desc": "沉香为救被压在华山下的母亲，历尽千辛万苦，用神斧劈开华山。",
+    "content": "<p>天庭的仙女三圣母爱上了人间的书生刘彦昌，两人结为夫妻，生下一个可爱的儿子叫沉香。三圣母有一盏法力强大的宝莲灯，能驱邪除魔。</p><p>三圣母的哥哥二郎神知道后大怒，认为妹妹触犯天条。他派天兵天将捉拿三圣母，可宝莲灯威力无比，天兵打不过。二郎神就变成一位老人，骗走了宝莲灯，把三圣母压在了华山下。</p><p>沉香长大后，得知母亲被压在华山下，悲痛万分。他拜霹雳大仙为师，苦学武艺和法术。为了磨炼意志，他在冰天雪地里修炼，在悬崖峭壁上攀爬，终于练成了绝世本领。</p><p>沉香手持开山神斧来到华山，面对阻拦的二郎神毫不畏惧。在众仙的帮助和宝莲灯神力的加持下，沉香一斧劈开了华山，救出了母亲。母子团聚，感人至深。</p>",
+    "cat": "cn",
+    "id": "cn_011",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "田螺姑娘",
+    "cover": "🐚",
+    "desc": "一个勤劳的单身汉捡到一只大田螺，从此每天回家都有热腾腾的饭菜。",
+    "content": "<p>从前有个勤劳的单身青年，父母早亡，每天辛苦地在田里耕作。他虽然贫穷，但心地善良，从不伤害小动物。</p><p>有一天，他在田里捡到一只特别大的田螺，觉得很稀奇，就把它带回家养在水缸里。奇怪的事情发生了——从那天起，他每天干完活回家，桌子上都摆好了热腾腾的饭菜！</p><p>他想知道是谁在帮他，有一天假装出门干活，半路偷偷跑回来，从门缝里往里瞧。只见水缸里冒出一阵轻烟，走出来一个美丽的姑娘，正是那只大田螺变的！田螺姑娘忙着给他做饭呢。</p><p>原来田螺姑娘是水中的仙女，被他的善良勤劳所感动，特意来帮助他。两人后来结为夫妻，过上了幸福的生活。这个故事告诉我们：好心人总会有好报。</p>",
+    "cat": "cn",
+    "id": "cn_012",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "孟姜女哭长城",
+    "cover": "🏯",
+    "desc": "孟姜女千里寻夫，得知丈夫修长城累死，她悲痛的哭声震塌了八百里长城。",
+    "content": "<p>秦朝时期，秦始皇下令修筑万里长城，征用了无数民夫。新婚不久的范喜良也被抓去修长城了，他的妻子孟姜女日夜思念丈夫。</p><p>冬天来了，孟姜女想到丈夫在北方一定冻坏了，便带着亲手缝制的棉衣，踏上了千里寻夫的路。她翻山越岭，走过荒野，饿了吃干粮，渴了喝溪水，终于来到了长城脚下。</p><p>可到了工地，孟姜女却得知一个噩耗——范喜良因为过度劳累，早已累死在修筑工程中，被埋在了长城底下。孟姜女悲痛欲绝，趴在长城上放声大哭。</p><p>她的哭声感天动地，哭了三天三夜。电闪雷鸣中，八百里长城轰然倒塌，露出了范喜良的尸骨。这个故事充满了深沉的爱情和对暴政的控诉，千百年来一直感动着中国人。</p>",
+    "cat": "cn",
+    "id": "cn_013",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "钟馗捉鬼",
+    "cover": "👹",
+    "desc": "钟馗虽然长得丑，却一身正气，专门捉拿作恶的鬼怪。",
+    "content": "<p>唐朝有个书生叫钟馗，才华横溢却相貌丑陋。他去京城赶考，文章写得极好，主考官都赞不绝口。可皇帝一见他满脸大胡子、豹头环眼的模样，就皱起了眉头。</p><p>钟馗在殿前撞柱而死，死后到了阴间。阎王爷见他一身正气、文武双全，便封他为捉鬼将军，赐给他一把斩鬼宝剑。从此，钟馗成了阴间的守护神，专门捉拿那些在人间作恶的鬼怪。</p><p>每当夜幕降临，钟馗就带着他的宝剑和蝙蝠使者巡游四方。哪个鬼怪敢害人，他就挥剑斩之。他的画像被百姓贴在门上，恶鬼见了都绕道走。</p><p>虽然钟馗长得不好看，但他从不因此自卑。他曾说：「相貌是天生的，人品是自己修的。我虽然长得丑，但我做的事，对得起天地良心！」钟馗成了正义的象征，过年时很多人都会挂钟馗像驱邪。</p>",
+    "cat": "cn",
+    "id": "cn_014",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "姜太公钓鱼",
+    "cover": "🎣",
+    "desc": "白发老人姜子牙用直钩钓鱼，周文王识得人才，请他出山相助。",
+    "content": "<p>商朝末年，有一个七十多岁的老人叫姜子牙，人们都叫他姜太公。他每天都在渭水边钓鱼，可他的鱼钩是直的，上面还没有鱼饵，离水面三尺高。</p><p>路人见了都笑话他：「老人家，你这样怎么可能钓到鱼呢？」姜太公笑而不答，只是说了一句千古名言：「愿者上钩。」——他钓的不是水里的鱼，而是能识人才的君王。</p><p>消息传到了周文王姬昌的耳朵里。姬昌是个爱才如命的明君，他觉得这个老人不简单，亲自来到渭水边拜见。两人一谈就是三天三夜，周文王被姜太公的才华和谋略深深折服。</p><p>周文王恭敬地请姜太公上车，亲自为他拉车走了八百步。姜太公说：「你拉我八百步，我保你八百年江山。」后来姜太公辅佐周文王和周武王，推翻了暴虐的商纣王，建立了周朝，果然兴旺了八百年。</p>",
+    "cat": "cn",
+    "id": "cn_015",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "百鸟朝凤",
+    "cover": "🦚",
+    "desc": "美丽的凤凰在森林大火中救出了无数小鸟，百鸟为了感谢它，每年都来朝拜。",
+    "content": "<p>很久以前，森林里住着一只美丽的凤凰。和别的鸟儿不同的是，凤凰不光外表美丽，还有一颗金子般的心。</p><p>有一年，森林遭遇了百年不遇的大旱，鸟儿们找不到食物，快要饿死了。凤凰打开自己的粮仓，把多年积攒的食物全部分给了大家。鸟儿们得救了，可凤凰自己却饿得皮包骨头。</p><p>第二年春天，万物复苏，森林又变得生机勃勃。鸟儿们为了感谢凤凰的救命之恩，纷纷拔下自己身上最漂亮的羽毛，织成了一件五彩斑斓的百鸟衣，送给凤凰。从此，凤凰变得比以前更加华丽耀眼。</p><p>后来，每逢凤凰的生日，百鸟都会从四面八方飞来，围着凤凰唱歌跳舞，这就是「百鸟朝凤」的由来。凤凰也成了吉祥、美好、仁爱的象征，人们常说「凤凰涅槃，浴火重生」。</p>",
+    "cat": "cn",
+    "id": "cn_016",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "孔雀东南飞",
+    "cover": "🦜",
+    "desc": "焦仲卿与刘兰芝相爱却被强行拆散，两人双双殉情，化为孔雀比翼双飞。",
+    "content": "<p>汉朝末年，庐江府有个小官吏叫焦仲卿，娶了一位美丽勤劳的妻子刘兰芝。兰芝心灵手巧，十三岁能织布，十四岁会裁衣，是个百里挑一的好媳妇。</p><p>可是焦仲卿的母亲不喜欢兰芝，百般刁难，最后竟然逼儿子休掉妻子。焦仲卿跪下求母亲，母亲却以死相逼。无奈之下，焦仲卿只好把兰芝送回娘家，两人约定日后一定接她回来。</p><p>兰芝回到娘家后，县令的儿子和太守的儿子都来求婚。兰芝的哥哥贪图富贵，逼她改嫁。兰芝宁死不从。焦仲卿听说兰芝要嫁人了，急忙赶来质问，两人在路旁抱头痛哭，决心生死相随。</p><p>刘兰芝在出嫁那天投水自尽，焦仲卿得知后也在庭院的树上上吊殉情。死后，两人的坟上长出了两棵枝叶相连的大树，树上有两只孔雀向着东南方飞去，从此永不分离。</p>",
+    "cat": "cn",
+    "id": "cn_017",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "八仙过海",
+    "cover": "🧚",
+    "desc": "八位神仙各显神通，用自己的法宝渡过东海，留下了精彩传说。",
+    "content": "<p>传说有八位神仙：铁拐李、汉钟离、张果老、蓝采和、何仙姑、吕洞宾、韩湘子和曹国舅。他们各有各的宝贝，各有各的神通。</p><p>有一天，八仙一起去赴王母娘娘的蟠桃会，路过东海。吕洞宾提议：「咱们别腾云飞过去了，各用自己的法宝过海，比比看谁的办法最妙！」大家一致赞同。</p><p>铁拐李把他的葫芦扔进海里，站在葫芦上漂了过去；汉钟离坐在自己的芭蕉扇上乘风破浪；张果老倒骑着纸毛驴悠然过海；蓝采和踩着花篮悠然而行；何仙姑踏着荷花婷婷袅袅；吕洞宾舞着宝剑踏浪而行；韩湘子吹着笛子脚踩竹篮；曹国舅用玉板开路。</p><p>八仙过海时，东海龙王看上了蓝采和的花篮，派出虾兵蟹将抢夺，引发了一场大战。最后八仙同心协力打败了龙王，平安渡过了东海。「八仙过海，各显神通」从此成了人们津津乐道的成语。</p>",
+    "cat": "cn",
+    "id": "cn_018",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "鲤鱼跳龙门",
+    "cover": "🐟",
+    "desc": "黄河里的鲤鱼逆流而上跳龙门，跳过去的就能变成巨龙！",
+    "content": "<p>在黄河上游，有一道陡峭的瀑布，像一扇大门一样拦住河水，人们叫它「龙门」。传说只要鲤鱼能跳过龙门，就能化身为龙！</p><p>每年春天，黄河里成千上万的鲤鱼都会逆流而上，来到龙门下。它们蓄足力气，一个接一个地向瀑布顶端跳去。可龙门太高太陡了，绝大多数鲤鱼都跳不上去。</p><p>那些勇敢的小鲤鱼一次次失败，一次次重新尝试。有的被急流冲下去几里远，又游回来继续跳；有的撞在岩石上伤了身体，休息一下又继续挑战。终于，有极少数最勇敢、最坚持的鲤鱼成功了！</p><p>跳过龙门的鲤鱼，在落下的瞬间身上长出龙鳞，头上生出龙角，变成了金色的巨龙，腾云驾雾飞向天空。这个故事激励着无数读书人——只要努力坚持，鲤鱼也能变龙！</p>",
+    "cat": "cn",
+    "id": "cn_019",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "愚公移山",
+    "cover": "⛰️",
+    "desc": "九十岁的愚公决心搬走挡在家门口的两座大山，感动了天帝。",
+    "content": "<p>古时候有个老人叫愚公，快九十岁了。他家门口有两座大山——太行山和王屋山，方圆七百里，高耸入云，堵住了出行的路。</p><p>愚公召集全家人说：「咱们把这两座大山挖平，开出一条大路来！」全家人都赞成，只有他的妻子担心地问：「就凭咱们，连小土丘都难挖平，怎么搬得动大山啊？挖下来的土石又往哪放呢？」</p><p>愚公笑着说：「渤海那么大，我们把土运到渤海去！」说干就干，愚公带着儿孙们开始挖山。邻居家七八岁的小孩也来帮忙，大家挖山不止。可一趟渤海来回就要大半年。</p><p>有个叫智叟的老人嘲笑愚公：「你都快九十了，还能活几天？怎么可能挖平大山！」愚公回答说：「我死了还有儿子，儿子死了还有孙子，子子孙孙无穷无尽。山又不会长高，还怕挖不平吗？」天帝被愚公的精神感动了，派两个大力神把两座大山搬走了。从此，愚公家门口一片坦途。</p>",
+    "cat": "cn",
+    "id": "cn_020",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "嫦娥奔月",
+    "cover": "🌙",
+    "desc": "嫦娥吃了仙药飞上月亮，从此住在广寒宫里，与玉兔相伴。",
+    "content": "<p>很久以前，天上出现了十个太阳，烤得大地冒烟，庄稼枯死。神箭手后羿登上昆仑山顶，拉开神弓，一口气射下了九个太阳，留下一个造福人间。</p><p>后羿的英雄事迹感动了西王母，她赐给后羿一颗不死仙药，吃下去就能飞天成仙。后羿舍不得妻子嫦娥，把仙药交给嫦娥保管。</p><p>后羿的徒弟逢蒙是个心术不正的小人，知道仙药的事后，趁后羿外出打猎，闯入嫦娥的房间逼她交出仙药。嫦娥知道自己打不过逢蒙，情急之下吞下了仙药。</p><p>仙药入腹，嫦娥的身体越来越轻，飘出了窗外，飞向了天空。她越飞越高，一直飞到了月亮上。从此，嫦娥就住在清冷的广寒宫里，只有一只玉兔陪伴。后羿知道了悲痛万分，每年八月十五月圆之夜，他都在院子里摆上嫦娥爱吃的圆饼，仰望明月思念妻子。这就是中秋节的由来。</p>",
+    "cat": "cn",
+    "id": "cn_021",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "神农尝百草",
+    "cover": "🌿",
+    "desc": "神农氏为了给人类寻找治病的草药，亲自尝遍百草，多次中毒都不放弃。",
+    "content": "<p>远古时代，人类还不会种庄稼，也没有医药。人们靠打猎和采野果为生，经常因为误食有毒的植物而生病甚至丧命。神农氏看到这一切，心里非常难过。</p><p>神农氏决定亲自尝遍天底下的所有草木，找出哪些能吃、哪些能治病、哪些有毒。他的身体是透明的，五脏六腑都看得清清楚楚，吃了什么东西在肚子里怎样变化，一望便知。</p><p>神农带着随从，走遍高山深谷。他尝过甜美的果实，也尝过苦涩的根茎。有一次中了毒，头晕目眩，躺在地上动弹不得。幸好一阵风吹来几片茶叶，他嚼了嚼咽下去，竟然解毒了！这就是茶叶的由来。</p><p>神农一共尝了三百六十五种草药，记录了《神农本草经》，为人类留下了宝贵的医药知识。最后一次，他尝到了断肠草，毒性太强，还没来得及服下解药就去世了。人们深深怀念这位为人类牺牲的先祖。</p>",
+    "cat": "cn",
+    "id": "cn_022",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "大禹治水",
+    "cover": "🌊",
+    "desc": "大禹为了治理洪水，三过家门而不入，用了十三年终于治好水患。",
+    "content": "<p>尧帝时期，天下洪水滔天，百姓苦不堪言。尧派鲧去治水，鲧用堵的办法，九年都没治好。鲧的儿子禹接过了治水的重任。</p><p>禹总结了父亲失败的教训，决定改用疏导的办法——把洪水引导到大江大河中去。他走遍了九州大地，测量山川地形，规划治水方案。他的手上磨出了厚厚的老茧，脚趾甲都走掉了。</p><p>大禹结婚才四天就出门治水了。他途经家门口，听到妻子分娩的呻吟和婴儿的啼哭，可他咬咬牙没有进门。第二次经过，儿子已经会叫爸爸了。第三次经过，儿子已经十几岁了。这十三年，大禹三次经过家门都没有进去。</p><p>经过十三年的艰苦奋斗，洪水终于被治好了。人们安居乐业，感激大禹的功绩。大禹也因为他高尚的品德和伟大的功业，被推举为部落联盟的首领，建立了中国第一个王朝——夏朝。</p>",
+    "cat": "cn",
+    "id": "cn_023",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "杜康造酒",
+    "cover": "🍶",
+    "desc": "杜康发现了酿酒的秘密，从此人类有了美酒佳酿。",
+    "content": "<p>夏朝时期，有个叫杜康的人负责管理国家的粮食。他把粮食囤积在枯树洞里，因为忙着其他事务，很久没有去查看。</p><p>一天，杜康路过枯树洞，闻到一股奇特的香味。他凑近一看，发现树洞里有些水汪汪的液体——原来堆积在树洞里的粮食被雨水浸泡后，又经过日晒，自然发酵了。</p><p>杜康好奇地用手指蘸了蘸，放进嘴里尝了尝。那液体有一种从来没有尝过的味道，先是辣辣的，然后是酸酸甜甜的，咽下去肚子里暖暖的。杜康高兴极了，觉得这一定是上天赐给人间的美味。</p><p>杜康把这种液体带回去给大家品尝，所有人都赞不绝口。他把制作方法记下来，反复试验和改进，终于酿出了最早的酒。后人尊称杜康为酿酒始祖，曹操的千古名句「何以解忧？唯有杜康」说的就是他。</p>",
+    "cat": "cn",
+    "id": "cn_024",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "刘海砍樵",
+    "cover": "🦊",
+    "desc": "砍柴少年刘海救了一只狐狸，狐仙变成美丽姑娘报恩，两人幸福生活。",
+    "content": "<p>武陵山下住着一个勤劳的砍柴少年，名叫刘海。他每天上山砍柴，挑到城里卖钱，和双目失明的老母亲相依为命。</p><p>有一天，刘海在山中遇到一只被猎人追赶的小狐狸。他心生怜悯，把小狐狸藏在柴堆里，骗过了猎人。小狐狸感激地看了他一眼，跑进了深山。原来这只小狐狸是修炼千年的狐仙。</p><p>狐仙变成美丽的姑娘，自称胡秀英，在集市上和刘海「偶遇」，帮他照顾母亲。刘海被她的善良温柔打动，两人结为夫妻。婚后男耕女织，日子虽然清贫但幸福美满。</p><p>后来当地有个恶霸看上了胡秀英，派人来抢。刘海拼命保护妻子。关键时刻，胡秀英现出真身，用仙法教训了恶霸。刘海这才知道妻子是狐仙，但他一点都不害怕，反而更加珍惜这段奇缘。这个民间故事在湖南一带广为流传。</p>",
+    "cat": "cn",
+    "id": "cn_025",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "鲁班造伞",
+    "cover": "☂️",
+    "desc": "木匠祖师鲁班看到荷叶上滚动的雨珠，灵机一动发明了雨伞。",
+    "content": "<p>鲁班是春秋时期最著名的工匠，被尊为中国木匠的祖师爷。他发明过锯子、墨斗、刨子等许多工具，还有一件我们每天都在用的东西——雨伞。</p><p>有一天，鲁班和妹妹在花园里散步，忽然下起了倾盆大雨。两人跑到亭子里躲雨，可衣服还是淋湿了不少。妹妹抱怨说：「要是能有一个可以随身携带的亭子就好了，走到哪都不怕下雨。」</p><p>鲁班把这句话记在了心里。他日思夜想，可随身携带的亭子哪有那么容易做？直到有一天，他在池塘边看到雨滴打在荷叶上，滚来滚去就是透不过去。他灵机一动：荷叶不就像一个小亭子吗？</p><p>鲁班马上动手，用竹条做骨架，糊上油纸，在中间穿一根棍子做手柄，做成了世界上的第一把伞。这把伞可以打开来遮挡雨雪，不用时收起来便于携带。六百年后的今天，伞的构造还是当初鲁班设计的样子。</p>",
+    "cat": "cn",
+    "id": "cn_026",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "伯牙绝弦",
+    "cover": "🎵",
+    "desc": "俞伯牙弹琴只有钟子期能听懂，子期死后，伯牙摔琴谢知音。",
+    "content": "<p>春秋时期，有个弹琴高手叫俞伯牙。他的琴艺天下无双，弹到高山时，琴声巍峨；弹到流水时，琴声潺潺。可是，他一直找不到一个真正能听懂他琴声的人。</p><p>有一次，伯牙乘船路过汉阳，明月当空，他取出琴来弹奏。突然，岸边传来一个樵夫的赞叹声：「善哉，巍巍乎若泰山！」伯牙一惊——这不正是自己弹的高山之意吗？他继续弹奏，樵夫又说：「善哉，洋洋乎若流水！」</p><p>伯牙又惊又喜，把樵夫请上船。原来他叫钟子期，虽然没有功名，却有一双天赋予的音乐耳朵。两人彻夜弹琴论乐，结为生死之交，约定一年后再在这里相会。</p><p>一年后伯牙如期赴约，却得知钟子期已经去世了。伯牙悲痛万分，来到子期的坟前弹了最后一曲《高山流水》，然后举起琴摔在地上，把琴弦全部扯断。他流着泪说：「知音已逝，这世上再也没有人值得我弹琴了。」从此伯牙终生不复弹琴。</p>",
+    "cat": "cn",
+    "id": "cn_027",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "苏武牧羊",
+    "cover": "🐑",
+    "desc": "汉朝使臣苏武被匈奴扣押十九年，在北海牧羊，始终不背叛祖国。",
+    "content": "<p>汉武帝时期，苏武奉命出使匈奴。匈奴的单于背信弃义，把他扣留下来，用尽各种方法逼迫他投降。苏武宁死不屈，他说：「我是汉朝的使臣，宁死不做背叛国家的事！」</p><p>单于一怒之下，把苏武放逐到冰天雪地的北海边，给了他一群公羊，说：「什么时候这些公羊生了小羊，你就什么时候回去。」这分明是永远不让他回去的意思。</p><p>北海的冬天冷到零下几十度，苏武没有食物，就挖野鼠洞里的草籽充饥；没有水，就抓一把雪塞在嘴里。他每天握着汉朝的使节杖去放羊，连睡觉都抱着它。节杖上的毛都掉光了，可他依然紧紧握着不放。</p><p>十九年过去了，苏武的头发白了，牙齿掉了，但他对祖国的忠心从未动摇。汉朝和匈奴和好后，苏武终于回到了长安。全城百姓都来迎接这位白发苍苍的英雄。苏武的故事告诉我们什么叫做忠贞不渝、气节崇高。</p>",
+    "cat": "cn",
+    "id": "cn_028",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "花木兰从军",
+    "cover": "⚔️",
+    "desc": "花木兰女扮男装替父从军，在战场上立下赫赫战功。",
+    "content": "<p>北魏时期，边境战事不断。朝廷下达了征兵令，花木兰的父亲也在被征之列。可父亲年老体弱，弟弟又太小。木兰心想：「父亲去了一定会死在战场上，这个家不能没有父亲！」</p><p>花木兰毅然决定女扮男装，替父从军。她到集市上买了骏马、马鞍和马鞭，剪掉长发，穿上铠甲，告别父母，踏上了从军之路。没有人看出来她是个女孩子。</p><p>战场上，花木兰比男儿还要勇敢。她冲锋陷阵，屡建战功。暗夜里行军，她咬牙坚持；寒冬里打仗，她从不退缩。十二年的戎马生涯，花木兰从一个青春少女变成了战功赫赫的将军。</p><p>战争结束后，天子要赏赐花木兰，问她想要什么。木兰说：「我不要金银财宝，不要官职封地，只求一匹快马，送我回到家乡。」回家后，木兰脱下战袍，换上女儿装，出门见战友。战友们都惊呆了——打了十二年仗的战友居然是个女孩子！</p>",
+    "cat": "cn",
+    "id": "cn_029",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "阿诗玛",
+    "cover": "🏔️",
+    "desc": "彝族姑娘阿诗玛和恋人阿黑相爱，被恶霸迫害后，化作石林中的回声。",
+    "content": "<p>云南石林地区流传着一个美丽的彝族传说。阿诗玛是彝族寨子里最美丽的姑娘，她歌声像百灵鸟一样动听，心灵像山泉水一样纯净。</p><p>阿诗玛和勇敢的猎手阿黑相爱了。两人在火把节上对歌定情，约定终身。可云南最有钱有势的财主热布巴拉的儿子也看上了阿诗玛，派人来提亲，被阿诗玛拒绝了。</p><p>热布巴拉恼羞成怒，派家丁趁阿黑不在的时候，把阿诗玛强行抢走了。他们把阿诗玛关在牢房里，用尽各种手段逼她改嫁，阿诗玛誓死不从。阿黑听说后，骑马翻山越岭赶来相救。</p><p>在回家途中，热布巴拉打开了山中的洪水闸门，企图淹死两人。阿诗玛为了救阿黑，被洪水冲走了。她的身躯化作了一座石峰，永远矗立在石林之中。每当有人在石林喊她的名字，山间就会传来悠长的回声，仿佛阿诗玛在回应。这就是云南石林中回声壁的美丽传说。</p>",
+    "cat": "cn",
+    "id": "cn_030",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "天仙配",
+    "cover": "💕",
+    "desc": "七仙女下凡爱上了穷书生董永，被天规拆散后，最终鹊桥相会。",
+    "content": "<p>玉皇大帝有七个美丽的女儿，最小的七仙女心地最善良。她从天上看人间，发现一个叫董永的书生格外孝顺——卖身葬父，在傅员外家做长工还债。</p><p>七仙女被董永的孝心所感动，私自下凡化作凡间女子，在槐荫树下与他结为夫妻。两人相亲相爱，一起劳作。七仙女用仙术一夜织出十匹锦缎，帮董永提前还清了债务。</p><p>可好景不长，玉皇大帝发现七仙女私自下凡，勃然大怒，派天兵天将把她抓回天庭。董永在槐荫树下苦苦追赶，却怎么也追不上腾云驾雾的妻子，只能眼睁睁看着心爱的人离自己越来越远。</p><p>七仙女在云端撕下一片罗裙，咬破手指写下血书：「来年槐花开放日，便是你我重逢时！」后来，玉帝被两人的真情所感动，允许他们每年七夕相会一次。槐荫树见证了这一段天人永隔的真爱。</p>",
+    "cat": "cn",
+    "id": "cn_031",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "林默娘（妈祖）",
+    "cover": "👼",
+    "desc": "林默娘从小就有神力，在海上救人无数，死后被尊为妈祖海神。",
+    "content": "<p>宋朝时，福建莆田湄洲岛上住着一户姓林的人家。林家生了一个女孩，取名默娘。默娘出生时，红光满室，异香扑鼻。更奇怪的是，她从出生到满月都不哭不闹，所以叫「默娘」。</p><p>默娘从小就与众不同。十三岁那年，她遇到一位道士传授她法术和医术。从此，她能预知海上天气的变化，能用符咒驱邪治病。渔民出海前都来找她问天气，她从不出错。</p><p>有一次，默娘的父亲和哥哥出海打渔，突然遭遇狂风暴雨。默娘在家打坐入定，灵魂出窍飞到海上，左手拉着父亲，右手拉着哥哥，把他们从风浪中救了回来。渔民们听说了这件事，无不惊叹。</p><p>默娘二十八岁那年，在海上救人时不幸遇难。但渔民们都说没有失去她——每当海上起了风浪，总能看到一个穿着红衣的女子在云端引路，保佑船只平安。渐渐地，她成了东南沿海渔民心中的保护神——妈祖。</p>",
+    "cat": "cn",
+    "id": "cn_032",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "毕方鸟",
+    "cover": "🔥",
+    "desc": "神鸟毕方只有一只脚，所到之处必有火灾，但它其实是在警告人类。",
+    "content": "<p>在《山海经》中，记载着一种神秘的神鸟，名叫毕方。毕方长得像仙鹤，却只有一只脚，浑身覆盖着青色的羽毛，上面有红色的花纹，嘴巴是白色的。</p><p>毕方鸟不常出现，每次出现都会伴随着大火灾。人们一开始非常害怕它，认为它是灾祸的使者。有个村庄的人一见到毕方就四散奔逃，但后来发生了一件事，改变了人们对毕方的看法。</p><p>有一次，毕方飞到一片森林上空盘旋鸣叫，人们以为森林要遭殃了。可那天夜里，雷电劈中枯木，森林果然燃烧起来。村民们这才发现——毕方不是来放火的，是来警告大家火灾即将发生的！</p><p>从此以后，只要毕方出现的地方，人们就提前做好防火准备。毕方成了火神的使者，它用自己神秘的直觉守护着人类。这个故事告诉我们：有时候看似不祥的事物，也许是善意的提醒。</p>",
+    "cat": "cn",
+    "id": "cn_033",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "九色鹿",
+    "cover": "🦌",
+    "desc": "九色鹿救了落水的人，那人却出卖了它，最终受到惩罚。",
+    "content": "<p>在恒河边的森林里，住着一只神奇的九色鹿。它的皮毛有九种颜色，闪闪发光，角像雪一样洁白。九色鹿心地善良，从不伤害任何生灵。</p><p>有一天，一个砍柴人不小心掉进了湍急的河水中，大声呼救。九色鹿听到后毫不犹豫跳进河里，把砍柴人驮上了岸。砍柴人千恩万谢，九色鹿只提了一个要求：「不要告诉任何人你见过我，人类会伤害我的。」砍柴人满口答应。</p><p>不久，王后梦见了一只九色鹿，醒来后吵着要国王用九色鹿的皮做衣服。国王张贴告示，悬赏重金寻找九色鹿。砍柴人看到告示后，贪念战胜了良心，带着国王的人马来到森林，找到了九色鹿。</p><p>就在弓箭手准备放箭的时候，九色鹿开口说话了：「告密的人，你忘了是谁把你从河里救出来的吗？」国王听了十分震惊，下令不许伤害九色鹿。而那个忘恩负义的砍柴人，身上突然长满了毒疮。这个佛经故事警醒世人：做人要知恩图报。</p>",
+    "cat": "cn",
+    "id": "cn_034",
+    "cat_label": "中国神话"
+  },
+  {
+    "title": "潘多拉的盒子",
+    "cover": "📦",
+    "desc": "潘多拉被好奇心驱使打开了魔盒，放出了疾病和灾难，却把希望关在了里面。",
+    "content": "<p>普罗米修斯从天上偷火给人类之后，众神之王宙斯非常愤怒。他决定惩罚人类，想出了一个巧妙的计策。</p><p>宙斯命令火神赫菲斯托斯用泥土创造了一个美丽的女子，给她取名叫潘多拉，意思是「拥有一切礼物的」。智慧女神雅典娜给她穿上华丽的衣服，爱神阿芙洛狄特赐给她迷人的魅力，赫尔墨斯教她甜美的言语。</p><p>宙斯把潘多拉送给普罗米修斯的弟弟厄庇米修斯做妻子，同时送给她一个精美的盒子作为嫁妆。宙斯叮嘱她：「绝对不能打开这个盒子。」潘多拉把盒子放在卧室里，每天看着它，心里越来越好奇：盒子里到底装着什么？</p><p>终于有一天，潘多拉再也忍不住了。她轻轻掀开盒盖——刹那间，疾病、痛苦、嫉妒、仇恨、战争……所有的灾难像黑烟一样从盒子里飞了出来，散布到人间。潘多拉吓得赶紧盖上盒子，但只有一样东西被关在了里面——希望。所以无论人类遭遇多少苦难，只要心中还存有希望，就能继续活下去。</p>",
+    "cat": "gr",
+    "id": "gr_035",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "普罗米修斯盗火",
+    "cover": "🔥",
+    "desc": "普罗米修斯冒着得罪宙斯的危险，为人类偷来了天火，自己却遭受残酷惩罚。",
+    "content": "<p>在很久很久以前的希腊神话中，人类生活在黑暗和寒冷中。他们没有火，只能吃生冷的食物，晚上在黑暗中瑟瑟发抖。众神之王宙斯不愿意把火给人类。</p><p>善良的泰坦神普罗米修斯不忍心看着人类受苦。他对弟弟厄庇米修斯说：「人类不应该这样悲惨地活着，我要帮助他们。」一天夜里，普罗米修斯偷偷飞到太阳神的马车上，用一根茴香枝点燃了火种。</p><p>普罗米修斯小心翼翼地把火种带到了人间，教人类用火取暖、做饭、锻造工具。人类从此告别了茹毛饮血的生活，文明开始飞快地发展起来。但宙斯发现后，恼羞成怒。</p><p>宙斯派出两位神——力量和暴力，把普罗米修斯锁在高加索山巅的岩石上。每天，一只巨鹰飞来啄食他的肝脏，晚上肝脏又长出来，第二天巨鹰再来啄食……如此反复，痛苦永无止境。几万年后，大英雄赫拉克勒斯路过时才射杀了巨鹰，解救了他。</p>",
+    "cat": "gr",
+    "id": "gr_036",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "雅典娜与波塞冬之争",
+    "cover": "🏛️",
+    "desc": "雅典娜送了一棵橄榄树给人类，赢得了雅典城的守护权。",
+    "content": "<p>希腊有一座美丽的城市需要一位守护神。海神波塞冬和智慧女神雅典娜都希望成为这座城市的保护者，两人争执不下，决定来一场比试。</p><p>众神之王宙斯宣布比赛规则：谁能送给人类最有用的礼物，谁就成为这座城的守护神。波塞冬哈哈大笑，挥起三叉戟往地上一敲，地上立刻涌出一股咸泉，接着一匹雪白的战马出现了。波塞冬骄傲地说：「有了马，人类就能征战四方，战无不胜！」</p><p>轮到雅典娜了。她不慌不忙地用长枪轻轻一点地面，一棵小小的树苗破土而出，迅速长成了一棵结满果实的橄榄树。雅典娜微笑着说：「橄榄可以吃，可以榨油照明，树枝象征和平。我的礼物给人带来的是生活与安宁。」</p><p>众神一致认为雅典娜的礼物更好——和平与富足比战争更重要。这座城市从此以雅典娜的名字命名，叫作「雅典」。至今希腊的国旗上还有橄榄枝的图案，而在雅典卫城，人们依然敬奉着这位智慧的女神。</p>",
+    "cat": "gr",
+    "id": "gr_037",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "赫拉克勒斯的十二任务",
+    "cover": "💪",
+    "desc": "大英雄赫拉克勒斯半神半人，完成了十二项不可能的任务，成为希腊最伟大的英雄。",
+    "content": "<p>赫拉克勒斯是众神之王宙斯和凡间女子阿尔克墨涅的儿子，天生拥有不可思议的力气。天后赫拉嫉妒他，在他还是婴儿时就派了两条毒蛇来害他，可小小的赫拉克勒斯居然徒手掐死了两条蛇！</p><p>长大后，赫拉克勒斯因为赫拉的诡计发了疯，做了可怕的事。为了赎罪，神谕指示他必须为迈锡尼国王欧律斯透斯完成十二项任务。这些任务一个比一个艰难，任何普通人都无法完成。</p><p>第一项是杀死刀枪不入的尼米亚猛狮，赫拉克勒斯徒手勒死了它。然后他又战胜了九头蛇海德拉、生擒了金角鹿、活捉了野猪、清理了三十年没打扫的牛棚……最后一项，他甚至深入冥界，把地狱三头犬刻耳柏洛斯带到了人间。</p><p>完成十二项任务后，赫拉克勒斯赢得了永生，成为了奥林匹斯山上的神。他的故事告诉人们：即使命运给你安排了最艰难的道路，只要勇敢面对、永不放弃，你就能创造奇迹。</p>",
+    "cat": "gr",
+    "id": "gr_038",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "伊卡洛斯的翅膀",
+    "cover": "🪽",
+    "desc": "伊卡洛斯用蜡和羽毛做的翅膀飞向太阳，却因为太骄傲而坠入大海。",
+    "content": "<p>在克里特岛上，有一位天才的工匠叫代达罗斯。他为国王建造了一座迷宫，专门关着可怕的半人半牛怪物米诺陶洛斯。可后来国王把代达罗斯和他的儿子伊卡洛斯也关了起来，不许他们离开克里特岛。</p><p>代达罗斯望着天空飞翔的海鸥，想出了一个逃走的办法。他收集了很多鸟的羽毛，用蜡把它们粘在一起，做了两对巨大的翅膀。他叮嘱伊卡洛斯：「千万不要飞太低，海水的潮气会让羽毛变重；也不要飞太高，太阳的热量会把蜡融化。」</p><p>两人戴上翅膀，像鸟儿一样飞向了天空。一开始伊卡洛斯紧紧跟着父亲，可飞着飞着，他被飞翔的自由和快乐冲昏了头脑，把父亲的叮嘱忘得一干二净——他越飞越高，离太阳越来越近。</p><p>果然，太阳的热量融化了粘羽毛的蜡，羽毛一片片飘落。伊卡洛斯慌了手脚，可已经来不及了——他像一块石头一样坠入大海，被汹涌的海浪吞没了。那片海域后来就被命名为「伊卡洛斯海」。这个故事告诫我们：不要骄傲自满，要听从长辈的忠告。</p>",
+    "cat": "gr",
+    "id": "gr_039",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "那喀索斯与水仙花",
+    "cover": "🌼",
+    "desc": "美少年那喀索斯爱上了自己在水中的倒影，最终变成了一朵水仙花。",
+    "content": "<p>那喀索斯是希腊神话中最俊美的少年，所有见过他的人都会被他迷住。森林里的仙女们为了多看他一眼，常常偷偷跟着他经过林间小道。</p><p>仙女厄科深深地爱上了那喀索斯。可她因为得罪了天后赫拉，被惩罚只能重复别人说的最后一个字，没法表达自己的心意。有一天那喀索斯在森林里迷了路，大喊「有人吗？」，厄科只能回答「人吗……人吗……」那喀索斯头也不回地走了，厄科伤心地化作了一缕回声。</p><p>后来，那喀索斯来到一汪清澈的泉水边，正要喝水时看到了自己在水中的倒影。他一下子被水中的美少年迷住了，完全不知道那就是他自己。他对着水中的倒影微笑，倒影也对他微笑；他伸手去触摸，影子就碎了，水面恢复平静后倒影又回来了。</p><p>那喀索斯日日夜夜守在泉水边，不吃不喝，只为多看一眼水中的倒影。最后，他在泉水边渐渐枯萎，变成了一朵弯着腰凝视水面的花——这就是水仙花。所以水仙花的英文就叫「Narcissus」。</p>",
+    "cat": "gr",
+    "id": "gr_040",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "阿波罗与月桂树",
+    "cover": "🏹",
+    "desc": "太阳神阿波罗追求仙女达芙妮，达芙妮却变成了一棵月桂树。",
+    "content": "<p>太阳神阿波罗是宙斯最俊美的儿子，他掌管光明、音乐和预言。有一天，他遇到了森林仙女达芙妮。达芙妮美丽活泼，像风中的精灵一样自由自在。</p><p>阿波罗一眼就爱上了达芙妮，可是达芙妮却不喜欢他。鲁莽的爱神厄洛斯（丘比特）为了报复阿波罗，用金箭射中了阿波罗让他疯狂爱上达芙妮，却用铅箭射中了达芙妮让她厌恶爱情。于是，阿波罗拼命追求，达芙妮拼命逃跑。</p><p>阿波罗在后面喊道：「美丽的仙女，不要跑！我是太阳神阿波罗，不是坏人！」可达芙妮头也不回地向前冲去。她跑得太快了，眼看就要被追上。跑到一条小河边时，达芙妮绝望地喊道：「父亲，河神啊，救救我吧！」</p><p>话音刚落，达芙妮的双脚变成了树根固定在地上，身体变成了树干，手臂变成了枝条，头发变成了树叶——她变成了一棵月桂树。阿波罗追到树前悲痛万分，他抚摸着树干说：「既然你不能做我的妻子，那就做我的圣树吧。我的头冠、竖琴和箭囊都要用你的枝叶来装饰。」从此月桂树成了太阳神的圣木。</p>",
+    "cat": "gr",
+    "id": "gr_041",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "忒修斯与米诺陶洛斯",
+    "cover": "🐂",
+    "desc": "英雄忒修斯进入迷宫，用线团做路标，战胜了半人半牛的怪物。",
+    "content": "<p>在克里特岛上，有一座巨大的迷宫，里面住着可怕的怪物米诺陶洛斯——它长着牛头人身，以吃人为生。每年，雅典城都要给克里特进贡七对童男童女，送去给怪物吃掉。</p><p>雅典王子忒修斯不忍心看着同胞白白送死，主动要求加入进贡的队伍。他对父亲埃勾斯国王说：「爸爸，别担心，我一定会杀死怪物，平安回来的。回程时如果我的船挂着白帆，就代表我还活着。」</p><p>到了克里特岛，克里特公主阿里阿德涅被忒修斯的勇敢打动，悄悄给了他一个线团和一把魔剑。她告诉忒修斯：「进迷宫时把线团的一端绑在入口，边走边放线，这样你就能原路返回。」</p><p>忒修斯进入漆黑的迷宫，一路上是白骨累累。他在迷宫最深处找到了熟睡的米诺陶洛斯，经过一番激烈的搏斗，用魔剑杀死了怪物。然后靠着线团的指引，平安走出了迷宫。可惜在回程途中他太高兴了，忘记了和父亲的约定——忘了换上白帆。父亲远远看到挂着黑帆的船，以为儿子死了，悲痛地投海自尽。那片海因此叫做「埃勾斯海」，也就是今天的爱琴海。</p>",
+    "cat": "gr",
+    "id": "gr_042",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "俄耳甫斯与欧律狄刻",
+    "cover": "🎼",
+    "desc": "音乐家俄耳甫斯下到冥界寻找亡妻，用琴声感动了冥王，却因一个回头功亏一篑。",
+    "content": "<p>俄耳甫斯是希腊最伟大的音乐家，他的琴声能让野兽俯首、树木跳舞、顽石落泪。他的妻子欧律狄刻是个温柔美丽的仙女，两人深深相爱，过着幸福的生活。</p><p>可是有一天，欧律狄刻在草地上被毒蛇咬伤，不幸去世了。俄耳甫斯悲痛欲绝，决定去冥界把妻子带回来。他抱着竖琴，穿过黑暗的洞穴，来到了冥河的渡口。冥河船夫卡戎不肯渡他过河，他就弹起琴来。琴声如泣如诉，卡戎听得流下了眼泪，破例让他过了河。</p><p>俄耳甫斯一直走到冥王哈迪斯的宝座前，弹起了他一生中最悲伤、最动人的曲子。琴声让冥后珀耳塞福涅泪流满面，连冷酷的冥王也被打动了。哈迪斯同意放欧律狄刻回去，但有一个条件：在走出冥界之前，俄耳甫斯绝对不能回头看妻子。</p><p>一路上，俄耳甫斯走在前面，欧律狄刻跟在后面。他听不到妻子的脚步声，心里越来越慌——冥王会不会骗我？妻子真的跟在后面吗？就在快要走出冥界的最后一刻，俄耳甫斯终于忍不住回头了。他看到妻子的脸，可就在那一瞬间，欧律狄刻被一股无形的力量拖回了黑暗。俄耳甫斯伸手想抓住她，却只抓到了一把空气。从此他永远失去了爱人。</p>",
+    "cat": "gr",
+    "id": "gr_043",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "法厄同的太阳马车",
+    "cover": "☀️",
+    "desc": "太阳神的儿子法厄同偷偷驾驶太阳马车，差点烧毁整个大地。",
+    "content": "<p>法厄同是太阳神赫利俄斯的儿子，但他从小和母亲生活在人间，同学们都不相信他的父亲是太阳神。有一天，法厄同终于找到了父亲居住的太阳宫殿。</p><p>赫利俄斯很高兴见到儿子，为了证明自己的身份，他对着冥河发誓：「无论你向我求什么，我都答应你！」法厄同想都没想就说：「我想驾驶你的太阳马车，在天上跑一圈，让所有人都知道我是太阳神的儿子！」</p><p>赫利俄斯一听脸都白了。他恳求儿子换个要求，说那四匹天马是天下最烈的马，连大神宙斯都不敢驾驭，何况一个凡人少年。可法厄同坚持不肯改变主意。赫利俄斯既然发了誓就无法反悔，只好给他戴上防火的药膏，再三叮嘱驾车的要领。</p><p>法厄同上了马车，天马感觉到驾车的人太轻，就开始狂奔起来。法厄同根本拉不住缰绳，马车在天上乱窜——一会儿飞得太高，大地冻成了冰；一会儿飞得太低，草木都被烤焦了，河流干涸，大地裂开。宙斯见情况危急，只好扔出一道霹雳把马车炸毁。法厄同从天上坠落，变成了一颗流星。他的姐妹们日夜哭泣，化作了溪边的白杨树。</p>",
+    "cat": "gr",
+    "id": "gr_044",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "英雄珀尔修斯",
+    "cover": "🗡️",
+    "desc": "珀尔修斯斩杀蛇发女妖美杜莎，用她的头战胜了所有敌人。",
+    "content": "<p>珀尔修斯是宙斯与凡间公主达那厄的儿子。国王波吕得克忒斯想要娶他的母亲，故意出了一个不可能完成的任务——杀死蛇发女妖美杜莎。美杜莎的头发是无数条毒蛇，任何人直视她的眼睛都会变成石头。</p><p>但众神帮助了珀尔修斯。雅典娜给了他一面闪亮的铜盾，赫尔墨斯给了他一把锋利的宝剑和一顶隐身帽，水泽仙女给了他一双带翅膀的飞鞋和一个魔法口袋。有了这些宝物，珀尔修斯找到了三个女妖的住处。</p><p>珀尔修斯趁美杜莎睡着的时候，背对着她，用铜盾当镜子观察她的位置，一剑斩下了她的头。从头颅中飞出了飞马珀伽索斯。珀尔修斯把美杜莎的头装进魔法口袋里，穿着飞鞋逃走了。</p><p>在回家的路上，珀尔修斯看到一位美丽的公主安德洛墨达被锁在海边的岩石上，等着被海怪吃掉。他用美杜莎的头把海怪变成了石头，救下公主并娶她为妻。回到家乡后，他把美杜莎的头朝国王波吕得克忒斯一举，那个坏人立刻变成了石像。最后，珀尔修斯把美杜莎的头献给了雅典娜，镶嵌在女神的盾牌上。</p>",
+    "cat": "gr",
+    "id": "gr_045",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "独眼巨人的秘密",
+    "cover": "👁️",
+    "desc": "奥德修斯用智慧骗过了独眼巨人波吕斐摩斯，带领伙伴逃出生天。",
+    "content": "<p>特洛伊战争结束后，英雄奥德修斯带领伙伴们乘船回家。半路上船队偏离了航线，来到一个陌生的岛屿。岛上有一个巨大的山洞，里面堆满了羊群和奶酪。伙伴们高兴坏了，大吃大喝起来。</p><p>傍晚，山洞的主人回来了——那是一个像小山一样的独眼巨人波吕斐摩斯！他只有一只眼睛，长在额头正中央。巨人一进洞就用一块巨石堵住了洞口，然后抓起奥德修斯的两个伙伴，像吃点心一样丢进嘴里。奥德修斯知道，不能和巨人硬拼，必须智取。</p><p>第二天，奥德修斯献上一皮囊的烈酒给巨人，巨人喝完醉得不省人事。奥德修斯和伙伴们把一根削尖的大木桩在火里烧红，然后齐心协力捅进了巨人的独眼。巨人疼得满地打滚，但他堵在洞口，用手摸索着每一只出洞的羊，以防有人逃跑。</p><p>聪明的奥德修斯让每个伙伴躲在三只羊的肚子底下，紧紧抓住羊毛。第二天早上，巨人让羊群出洞吃草，一边摸着羊背一边数数，却完全没有发现羊肚子底下的人。奥德修斯和伙伴们成功逃到了船上。奥德修斯的智慧救了所有人。</p>",
+    "cat": "gr",
+    "id": "gr_046",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "阿拉克涅的蜘蛛网",
+    "cover": "🕷️",
+    "desc": "织布能手阿拉克涅狂妄挑战雅典娜，输了后被变成了蜘蛛。",
+    "content": "<p>在吕底亚王国，有一个叫阿拉克涅的姑娘，她的织布技艺天下无双，连森林里的仙女们都跑来看她织布。可是阿拉克涅太骄傲了，她宣称：「就算是雅典娜女神本人来了，也织不出比我更好的布！」</p><p>这句话传到了智慧女神雅典娜的耳朵里。雅典娜变成一个白发老婆婆来劝她：「孩子，技艺高超是好事，但不要狂妄，向女神认个错吧。」阿拉克涅不仅不听，反而更加狂妄：「让雅典娜自己来跟我比！」</p><p>雅典娜立刻现出真身，众人都吓得跪下了，唯独阿拉克涅毫不畏惧。两人开始比赛织布。雅典娜织了一幅宏伟的图案，描绘了众神的荣耀和对狂妄者的惩罚。阿拉克涅织的图案精美绝伦，但她织的是众神的丑事——宙斯怎么哄骗姑娘，众神怎么荒唐可笑。</p><p>雅典娜看了勃然大怒，她承认阿拉克涅的技艺确实无与伦比，但她的狂妄和对神的不敬不可饶恕。雅典娜用梭子敲了阿拉克涅的头，把她变成了一只小小的蜘蛛。从此，阿拉克涅和她的子孙们就永远吊在丝线上织网。蜘蛛的希腊文「Arachne」就是她的名字。</p>",
+    "cat": "gr",
+    "id": "gr_047",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "迈达斯国王的点金术",
+    "cover": "👑",
+    "desc": "迈达斯国王希望一切碰到的东西都变成金子，结果连食物和水也变成了金子。",
+    "content": "<p>弗里吉亚国王迈达斯非常富有，但他总是觉得不够。一天，酒神的老师西勒诺斯喝醉了酒，在他的玫瑰园里睡着了。迈达斯热情地款待了他十天，然后亲自把他送回酒神狄奥尼索斯身边。</p><p>酒神十分高兴，对迈达斯说：「你想要什么赏赐，我都满足你！」迈达斯脱口而出：「我希望我碰到的任何东西都变成金子！」酒神皱了皱眉说：「你可想好了？」迈达斯斩钉截铁：「想好了！」</p><p>愿望实现了！迈达斯摸了一下花园里的玫瑰，玫瑰变成了金玫瑰；摸了一下餐桌上的盘子，盘子变成了金盘。他欣喜若狂，以为自己成了世界上最幸运的人。可是当他拿起面包想咬一口的时候——面包变成了金子；端起酒杯想喝水的时候——水变成了凝固的金块。</p><p>迈达斯这才慌了。他不能吃、不能喝，连抱女儿的时候女儿都差点变成金像。他跪在酒神像前哭诉：「求求你把点金术收回去吧！我再也不贪心了！」酒神让他去河水中沐浴，河水冲走了点金术，从此河里的沙子都变成了金砂。这个故事流传千古：贪心会让人失去最重要的东西。</p>",
+    "cat": "gr",
+    "id": "gr_048",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "雅辛托斯之死",
+    "cover": "🌸",
+    "desc": "阿波罗最爱的少年雅辛托斯不幸被铁饼击中而死，鲜血化作风信子花。",
+    "content": "<p>太阳神阿波罗和斯巴达王子雅辛托斯是最好的朋友。阿波罗教他射箭、弹琴、打猎，两人形影不离，感情胜过一切。每天清晨，阿波罗就来接雅辛托斯一起到山上去锻炼。</p><p>西风神泽费罗斯也很喜欢雅辛托斯，看到他和阿波罗那么亲近，心里十分嫉妒。有一天，阿波罗在教雅辛托斯掷铁饼。阿波罗用力一掷，铁饼飞得高高的，划过一道优美的弧线。</p><p>雅辛托斯兴奋地跑过去想要接住铁饼，想证明自己的本领。就在这时，嫉妒的西风神吹了一口气，改变了铁饼的轨迹。铁饼不偏不倚地砸在了雅辛托斯的头上，鲜血流了一地。阿波罗飞快地跑过去，抱起雅辛托斯，可他怎么也救不回他了。</p><p>阿波罗把雅辛托斯的血洒在地上，那里立刻开出了一朵紫红色的花，花瓣上仿佛写着哀悼的文字——AI AI（痛哉痛哉）。这朵花就是风信子，希腊文就叫「Hyacinth」。从此，每年的雅辛托斯节，斯巴达人都会弹琴唱歌，纪念这位早逝的王子。</p>",
+    "cat": "gr",
+    "id": "gr_049",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "阿尔忒弥斯的金角鹿",
+    "cover": "🦌",
+    "desc": "狩猎女神阿尔忒弥斯的金角鹿被赫拉克勒斯追赶了整整一年。",
+    "content": "<p>月亮和狩猎女神阿尔忒弥斯有五只心爱的金角鹿。其中四只拉着她的银色马车在夜空飞驰，剩下一只在凯律尼亚山上自由自在地生活。这只鹿全身雪白，长着一对金光闪闪的角，比风还要快。</p><p>赫拉克勒斯的第三项任务就是要活捉这只金角鹿，不能伤了它一丝一毫。这比打败狮子、杀死九头蛇还要难——首先你得追上它的速度，其次你不能伤害它，最后你还得躲过女神阿尔忒弥斯的愤怒。</p><p>赫拉克勒斯追着金角鹿跑过山川和平原，从夏天追到冬天，又从冬天追到春天。金角鹿像一道白色的闪电，赫拉克勒斯怎么也追不上。不能射箭，不能用陷阱，只能靠两条腿追。</p><p>整整一年过去了。一天，金角鹿跑到河边喝水，稍微放慢了速度。赫拉克勒斯抓住机会飞扑上去，用网子罩住了它。阿尔忒弥斯非常生气，正要发怒，赫拉克勒斯诚恳地解释了自己的苦衷。女神被他的诚意打动，允许他把鹿带去交差，但必须随后放生。赫拉克勒斯信守承诺，完成了任务后就把金角鹿放回了山林。</p>",
+    "cat": "gr",
+    "id": "gr_050",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "回声与那耳喀索斯",
+    "cover": "🗣️",
+    "desc": "仙女厄科只能重复别人的话，她爱上那耳喀索斯却被无情拒绝。",
+    "content": "<p>厄科是森林里最会说话的仙女，她讲起故事来三天三夜也说不完。天后赫拉来森林里抓宙斯的风流韵事时，厄科就用滔滔不绝的故事拖住赫拉，让其他仙女趁机溜走。</p><p>赫拉发现真相后勃然大怒：「你这张嘴太狡猾了，从此以后你只能重复别人说过的最后一个字！」惩罚立即生效——厄科想说「你好美」，却只能说出「美」；想说「我爱你」，却只能说出「你」。</p><p>孤零零的厄科在森林里徘徊，遇到了俊美的少年那喀索斯。她一见倾心，却无法表达。那喀索斯在森林里喊道：「有人在吗？」厄科只能回答：「在吗……」那喀索斯说：「到这儿来！」厄科高兴地跑出来张开双臂。可那喀索斯嫌恶地后退：「走开！我才不要被你抱住！」厄科只能重复：「被你抱住……」</p><p>厄科心碎了。她躲在洞穴里，身体一天天消瘦，最终化作了一缕声音。直到今天，如果你在山谷里大喊，还能听到厄科在重复你的话——这就是回声（Echo）的由来。那喀索斯也因为自己的骄傲，遭到了致命的惩罚。</p>",
+    "cat": "gr",
+    "id": "gr_051",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "珀伽索斯——天马",
+    "cover": "🐴",
+    "desc": "从美杜莎的鲜血中诞生的天马珀伽索斯，帮助英雄打败了喷火怪物。",
+    "content": "<p>当珀尔修斯斩下蛇发女妖美杜莎的头颅时，一匹雪白的神马从美杜莎的鲜血中跳了出来——它就是珀伽索斯，生来就有一对巨大的翅膀。珀伽索斯展翅飞上了奥林匹斯山，成为了宙斯的坐骑，专门负责为天上运送雷电。</p><p>后来，英雄柏勒洛丰接受了一个不可能完成的任务——杀死喷火怪物喀迈拉。喀迈拉长着狮子头、山羊身和蛇尾巴，嘴里喷出的火焰能烧毁整片田野。柏勒洛丰知道光靠自己打不过它。</p><p>智慧女神雅典娜在梦中给了他一副金色的马缰，指引他找到正在泉边喝水的珀伽索斯。柏勒洛丰悄悄走到天马身边，轻轻把缰绳套在它的头上。奇迹般的，珀伽索斯没有反抗，乖乖让柏勒洛丰骑了上去。</p><p>柏勒洛丰骑着天马飞上天空，从上方向喀迈拉射箭。喀迈拉的火焰够不着他们，箭却一支支射中了怪物。最终柏勒洛丰用一块铅戳进喀迈拉的喉咙，铅被火焰融化，烫死了怪物。珀伽索斯后来化作天上的一个星座，永远在夜空中飞翔。</p>",
+    "cat": "gr",
+    "id": "gr_052",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "雅典娜的橄榄枝",
+    "cover": "🫒",
+    "desc": "雅典娜的橄榄树成为和平的象征，至今在地中海沿岸处处可见。",
+    "content": "<p>当雅典娜用长枪轻点地面，第一棵橄榄树破土而出的时候，在场的众神都惊呆了。这棵看似不起眼的小树，却代表着任何人都无法估量的价值。</p><p>橄榄树四季常青，不怕酷暑干旱，即使在最贫瘠的石头缝隙里也能扎根。它的果实可以直接吃，也可以榨油。橄榄油不仅是美味的调料，还能点灯照明、涂抹身体、治疗伤口。橄榄木是最坚硬的木材之一，可以雕刻出精美的神像。</p><p>雅典娜把这棵橄榄树种在雅典卫城上，亲自教导雅典人如何种植和照料橄榄树。很快，橄榄树遍布了希腊的山野和海岸，成了希腊人生活的中心。人们用橄榄枝编织成花冠，戴在奥林匹克冠军的头上，代表最高的荣誉。</p><p>从古至今，橄榄枝就是和平的象征。奥运会获奖者戴橄榄冠的传统延续了两千多年。在联合国徽章上，橄榄枝环绕着地球——这全要感谢雅典娜那轻轻的一击，给人类带来了和平与丰收的礼物。</p>",
+    "cat": "gr",
+    "id": "gr_053",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "塞壬的歌声",
+    "cover": "🎶",
+    "desc": "海妖塞壬的歌声能让水手迷失方向，英雄奥德修斯用蜡封住伙伴的耳朵闯过了这一关。",
+    "content": "<p>在茫茫大海中有几座险恶的岛屿，上面住着半人半鸟的海妖——塞壬。她们的歌声比世界上任何音乐都动听，任何听到歌声的水手都会失去理智，把船驶向礁石撞得粉碎。</p><p>女巫喀耳刻提前警告奥德修斯：「经过塞壬岛时，一定要用蜡丸堵住所有水手的耳朵。如果你自己想听，就让同伴把你绑在桅杆上，吩咐他们不管你怎样哀求都不要解开。」奥德修斯照着做了。</p><p>船驶近塞壬岛，海面上飘来了一阵阵令人心醉神迷的歌声：「来呀，聪明的奥德修斯，停下来听听我们的歌声吧……」奥德修斯听得如痴如醉，拼命想要挣脱绳索，他朝同伴们大喊大叫，眼睛里充满渴望，可同伴们什么都听不到，只是埋头划桨。</p><p>直到船远离了塞壬岛，歌声再也听不到了，奥德修斯才恢复了理智。同伴们解开了他的绳索。奥德修斯是唯一一个听到塞壬歌声还活下来的人。这个故事告诉我们：有时候最美的诱惑也是最危险的陷阱。</p>",
+    "cat": "gr",
+    "id": "gr_054",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "欧罗巴与公牛",
+    "cover": "🐂",
+    "desc": "美丽的公主欧罗巴被化身白牛的宙斯带到了另一片大陆，那片大陆以她的名字命名。",
+    "content": "<p>腓尼基国王有一位美丽的女儿，名叫欧罗巴。一天清晨，欧罗巴和侍女们在海边采花玩耍。爱神阿芙洛狄特让她做了一个梦，梦里有两块大陆在争夺她。</p><p>宙斯在天上看到了欧罗巴，一下子被她的美貌迷住了。他变成了一头雪白的公牛，温驯地走到姑娘们中间。欧罗巴看到这头公牛闪闪发光，浑身散发着花香，就大胆地抚摸它，还编了一个花环挂在它角上。</p><p>公牛乖乖地趴下来，欧罗巴觉得好玩就骑了上去。可她刚坐稳，公牛突然站起来冲向大海。欧罗巴吓得大叫，可公牛踏着海浪飞奔而去，海神波塞冬在前面开路，海仙女们在两旁伴游。欧罗巴知道这不是凡间的动物了。</p><p>公牛一直游到了克里特岛，现出宙斯的真身。欧罗巴成了宙斯的新娘，生下了后来希腊最伟大的国王米诺斯。而她被带到的这片大陆，从此就用她的名字来命名——「欧罗巴」（Europa），也就是今天的欧洲。你看到的两欧元硬币上，就印着骑在牛背上的欧罗巴。</p>",
+    "cat": "gr",
+    "id": "gr_055",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "赫菲斯托斯的陷阱",
+    "cover": "🔨",
+    "desc": "瘸腿的火神赫菲斯托斯用一张看不见的金网抓住了不忠的妻子和阿瑞斯。",
+    "content": "<p>火神赫菲斯托斯是奥林匹斯山上最丑的神——他生下来就是个瘸子。但他也是手最巧的神，能打造出任何精美绝伦的东西，连宙斯的霹雳闪电都是他造的。</p><p>天后赫拉觉得儿子太丑，一生下来就把他扔下了奥林匹斯山。赫菲斯托斯掉进海里，被海仙女抚养长大。为了报复母亲，他打造了一把精美的黄金宝座送给赫拉。赫拉一坐上去就被看不见的锁链锁住了，谁也无法解开，只有赫菲斯托斯自己能开。</p><p>后来赫菲斯托斯回到了奥林匹斯山，娶了最美丽的女神——阿芙洛狄特。可是阿芙洛狄特嫌弃丈夫又丑又瘸，偷偷和英俊的战神阿瑞斯约会。太阳神赫利俄斯看到了这一切，告诉了赫菲斯托斯。</p><p>赫菲斯托斯面不改色，悄悄打造了一张细如蛛丝却坚韧无比的金网，布置在天花板上。当阿芙洛狄特又和阿瑞斯约会时，金网从天而降把他们死死网住。赫菲斯托斯叫来所有的神观看。众神哈哈大笑，而阿瑞斯和阿芙洛狄特再也抬不起头来。这个故事告诉我们：聪明才智和巧手比外表更重要。</p>",
+    "cat": "gr",
+    "id": "gr_056",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "刻耳柏洛斯——地狱看门犬",
+    "cover": "🐕",
+    "desc": "冥界入口蹲着一条三头犬刻耳柏洛斯，活人休想进入，死人休想出去。",
+    "content": "<p>在古希腊神话中，人死后要去往冥界。冥界的入口有一条令人闻风丧胆的看门犬——刻耳柏洛斯。它有三个巨大的脑袋，满口锋利的獠牙，脖子上长着一条条毒蛇。它从不睡觉，任何想溜进冥界的活人都会被它撕碎，任何想逃出冥界的灵魂都会被它抓回去。</p><p>赫拉克勒斯的最后一项任务就是活捉刻耳柏洛斯，带到人间给国王看——这几乎是不可能的任务。连神的信使赫尔墨斯都对他说：「你这是去找死。」但赫拉克勒斯从不退缩。</p><p>赫拉克勒斯下到冥界，请求冥王哈迪斯允许他带走刻耳柏洛斯。哈迪斯说：「可以，但你不能使用任何武器，只能用你的双手。」赫拉克勒斯答应了。他找到刻耳柏洛斯，三个巨大的狗头同时向他扑来。</p><p>赫拉克勒斯赤手空拳冲了上去，用双臂死死抱住三个脖子。毒蛇在咬他，但他毫不放松。力量大到三个狗头都无法动弹。最终，刻耳柏洛斯屈服了，乖乖地跟着赫拉克勒斯上了地面。国王吓得躲进了大缸里，赫拉克勒斯完成任务后又把刻耳柏洛斯送回了冥界。</p>",
+    "cat": "gr",
+    "id": "gr_057",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "代达罗斯的迷宫",
+    "cover": "🏗️",
+    "desc": "工匠代达罗斯为国王建造了一座复杂的迷宫，连他自己都差点走不出来。",
+    "content": "<p>克里特岛的国王米诺斯请来了天下第一巧匠代达罗斯，让他建造一座前所未有的迷宫，专门关着米诺斯一家的耻辱——半人半牛的怪物米诺陶洛斯。</p><p>代达罗斯设计的迷宫有数不清的弯道、岔路和死胡同。走廊层层叠叠，像一团乱麻。人一旦走进去就会完全迷失方向，再也找不到出口。米诺斯非常满意，但他怕迷宫的建造方法泄露出去，竟然把代达罗斯和他的儿子伊卡洛斯也关在了里面。</p><p>代达罗斯被自己的杰作困住了。但他没有绝望，而是抬头看了看天空。海鸥在迷宫上空自由地飞翔。他突然有了灵感：「国王可以困住我的身体，但他困不住我的思想和我的翅膀！」</p><p>接下来的情节大家就熟悉了——代达罗斯用羽毛和蜡做了两对翅膀，和儿子飞离了克里特。但这个故事也提醒我们：再聪明的工匠也可能困在自己建造的笼子里。真正的自由不在于建筑有多复杂，而在于思想有多宽广。</p>",
+    "cat": "gr",
+    "id": "gr_058",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "卡吕冬的狩猎",
+    "cover": "🐗",
+    "desc": "一支由希腊最勇敢英雄组成的狩猎队伍，围猎一头被神发怒派来的巨型野猪。",
+    "content": "<p>卡吕冬国王俄纽斯丰收后向众神献祭，却忘记献给狩猎女神阿尔忒弥斯。女神非常生气，派出一头像小山一样的巨型野猪在卡吕冬到处横冲直撞，踩坏庄稼，撞死牲畜，谁也拦不住。</p><p>国王的儿子墨勒阿革洛斯召集了希腊最英勇的英雄来围猎这头野猪，其中包括大力士赫拉克勒斯、双子神卡斯托尔和波吕丢刻斯、最厉害的女猎手阿塔兰忒。阿塔兰忒是队伍里唯一的女性，她的速度和箭法让所有男人都自愧不如。</p><p>围猎开始，野猪冲出灌木丛，獠牙像两把弯刀。几个英雄被撞飞出去。阿塔兰忒毫不畏惧，一箭射中了野猪的耳朵。接着墨勒阿革洛斯趁野猪中箭摇晃的一瞬间，用长矛刺穿了它的心脏。</p><p>墨勒阿革洛斯把野猪皮和獠牙作为荣誉奖给了阿塔兰忒，因为是她射出了第一箭。可他的两个舅舅不服气，上前抢夺，墨勒阿革洛斯一怒之下失手杀死了舅舅。他的母亲为了给弟弟报仇，烧掉了象征墨勒阿革洛斯生命的木柴，让他在胜利后不久就死去了。胜利的喜悦和悲剧的阴影交织在这个故事中。</p>",
+    "cat": "gr",
+    "id": "gr_059",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "双子座的诞生",
+    "cover": "♊",
+    "desc": "卡斯托尔和波吕丢刻斯是世间最亲密的兄弟，一个死后另一个甘愿分享自己的永生。",
+    "content": "<p>斯巴达王后勒达生了一对双胞胎——卡斯托尔和波吕丢刻斯。但这对双胞胎的身世十分奇特：卡斯托尔是凡人国王的儿子，波吕丢刻斯却是众神之王宙斯的儿子。所以一个会死，一个永生。</p><p>这对兄弟从出生起就形影不离，一起长大，一起冒险。他们参加了著名的阿尔戈号远征，寻找金羊毛；还参与了卡吕冬野猪大围猎。世上没有任何两兄弟比他们更亲密了。</p><p>在一次战斗中，凡人的卡斯托尔被敌人的长矛刺中，倒在了战场上。波吕丢刻斯抱着弟弟的尸体悲痛欲绝。他跪在宙斯面前哭求：「父亲，把我的永生分一半给卡斯托尔吧！没有他，永生又有什么意义？」</p><p>宙斯被儿子的深情所感动，答应了。从此，兄弟俩轮流在天上和冥界生活——一天在奥林匹斯山与众神欢宴，一天在冥界安息。宙斯还把他们变成了天上的双子座，闪闪发亮的卡斯托尔星和波吕丢刻斯星光永远相映相伴。当你仰望夜空，看到那两颗靠得很近的亮星，那就是他们。</p>",
+    "cat": "gr",
+    "id": "gr_060",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "阿塔兰忒的金苹果",
+    "cover": "🍎",
+    "desc": "女猎手阿塔兰忒跑得比风还快，一个聪明的追求者用三颗金苹果赢得了她的心。",
+    "content": "<p>阿塔兰忒是希腊最了不起的女猎手，她跑得比任何男人都快。她从小被遗弃在森林里，由一头母熊抚养长大，后来被猎人收养，练就了一身非凡的本领。</p><p>阿塔兰忒发誓终身不嫁，但她的父亲一定要她结婚。她提出了一个条件：「谁能在跑步比赛中跑赢我，我就嫁给谁。跑不赢的，就得死。」许多英俊的王子都来挑战，可没有一个能追得上阿塔兰忒的步伐。</p><p>英俊的青年希波墨涅斯也深深地爱上了阿塔兰忒。他知道跑不过她，就向爱神阿芙洛狄特求助。爱神给了他三颗闪闪发光的金苹果，告诉他：「比赛的时候，等阿塔兰忒快超过你的时候，就丢一颗金苹果。」</p><p>比赛开始了。阿塔兰忒像离弦的箭一样冲了出去。希波墨涅斯丢出第一颗金苹果，阿塔兰忒忍不住弯腰去捡；丢出第二颗，她又弯腰去捡；丢出第三颗时，她犹豫了一下，但还是停下来捡了。就在这一瞬间，希波墨涅斯冲过了终点线。阿塔兰忒笑着接受了失败，两人结为了幸福的夫妻。你看，有时候爱情不需要跑得最快，只需要一点——聪明。</p>",
+    "cat": "gr",
+    "id": "gr_061",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "赫斯珀里得斯的金苹果树",
+    "cover": "🍏",
+    "desc": "在世界的尽头有一个花园，长着一棵结金苹果的圣树，由百头巨龙守护。",
+    "content": "<p>在世界的极西之地，有一个美丽的果园，名叫赫斯珀里得斯花园。花园里长着一棵神奇的苹果树，上面结的苹果全都是纯金打造的，闪闪发光。这是大地女神盖亚送给宙斯和赫拉的结婚礼物。</p><p>守护这棵金苹果树的，是一条名叫拉冬的巨龙，它有一百个头，一百张嘴永远发出嘶嘶的声音，从来不需要睡觉。此外还有赫斯珀里得斯三姐妹，她们是夜的女儿，负责照料果树。</p><p>赫拉克勒斯的第十一项任务就是摘取三颗金苹果。可他走遍大地也找不到金苹果园在哪。他问了无数人，走过了无数个国家，直到老海神涅柔斯告诉他：要走到世界的尽头，还得靠泰坦神阿特拉斯帮忙。</p><p>阿特拉斯是那个扛着天空的巨神。他对赫拉克勒斯说：「我帮你去摘，你帮我扛一会儿天。」赫拉克勒斯接过了天空的重担，阿特拉斯摘下苹果后却想趁机溜走。赫拉克勒斯灵机一动，假装答应，但请阿特拉斯「帮我再扛一小会儿，让我调整一下垫子」。阿特拉斯傻乎乎的接回了天空，赫拉克勒斯捡起苹果就走了。哈哈，有时候力气大不如脑子活！</p>",
+    "cat": "gr",
+    "id": "gr_062",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "勒托和她的双胞胎",
+    "cover": "🌴",
+    "desc": "勒托流浪到提洛岛生下了阿波罗和阿尔忒弥斯，一座飘浮的孤岛变成了圣地。",
+    "content": "<p>勒托是泰坦女神，被宙斯所爱。这让天后赫拉嫉妒得发狂。赫拉发出诅咒：大地上的任何地方都不许给予勒托生产的庇护。勒托拖着沉重的身子跑遍大地，可没有一块土地敢收留她。</p><p>勒托来到提洛岛。这是一座在海面上漂流的孤岛，四下荒芜，没有人烟。岛上的声音对勒托说：「我什么都没有，如果你愿意让你的孩子以这座岛为家，我就接纳你。」勒托马上发誓让这个岛成为最神圣的地方。</p><p>赫拉使尽各种手段拖延她的分娩。九天九夜过去了，勒托还是生不出孩子。众神偷偷去请来了生育女神，终于，阿波罗和阿尔忒弥斯诞生了！阿波罗出生时，岛上的光芒突然普照四方，提洛岛被四根金柱固定在海床上，再也没有漂移过。</p><p>阿波罗长大后，提洛岛成了全希腊最重要的圣岛之一，无数朝圣者从四面八方赶来朝拜。而阿波罗和阿尔忒弥斯这对双胞胎，一个成了太阳神，一个成了月亮和狩猎女神，永远照亮天穹的两端。</p>",
+    "cat": "gr",
+    "id": "gr_063",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "金羊毛远征队",
+    "cover": "🐏",
+    "desc": "五十位希腊最伟大的英雄乘坐阿尔戈号大船，跨过半个世界去寻找金羊毛。",
+    "content": "<p>在遥远的科尔基斯王国，有一张稀世珍宝——金羊毛。那是一只神羊遗留下来的金色皮毛，悬挂在森林中的一棵橡树上，由一条永远不睡觉的巨龙守护着。</p><p>伊阿宋王子要夺回原本属于他的王位，篡位的叔父给他出了一个不可能完成的任务：「把金羊毛带回来，王位就是你的！」伊阿宋召集了全希腊最勇敢的英雄，足有五十人，乘坐着雅典娜亲自监制的巨船阿尔戈号，出发了。</p><p>远征路途惊险无比。他们在海上遭遇六臂巨人，在岛上与怪鸟搏斗，还要穿过两座会夹击船只的巨岩。但英雄们同心协力，靠着智慧和勇气闯过了一关又一关。</p><p>到了科尔基斯，伊阿宋得到了公主美狄亚的帮助。美狄亚爱上伊阿宋，用魔法帮他在巨龙的守护下盗取了金羊毛。阿尔戈号载着英雄们和金羊毛胜利返航。虽然伊阿宋后来辜负了美狄亚，导致悲剧收场，但金羊毛远征依然是希腊神话中最伟大的冒险史诗之一。</p>",
+    "cat": "gr",
+    "id": "gr_064",
+    "cat_label": "希腊神话"
+  },
+  {
+    "title": "世界树尤克特拉希尔",
+    "cover": "🌳",
+    "desc": "一棵巨大的白蜡树撑起了九个世界，树梢住着神鹰，树根盘绕着恶龙。",
+    "content": "<p>在北欧神话的中心，有一棵巨大无比的白蜡树，名叫尤克特拉希尔，意思是「宇宙之树」。这棵树贯穿了整个宇宙——树枝伸展在天穹之上，树根扎进了最深的深渊。</p><p>世界树的树枝撑起了九个世界：最上层住着阿萨神族和华纳神族，中间是人间的米德加尔特，下层是冰霜巨人的约顿海姆和死者的赫尔海姆。每一个世界都有各自不同的生灵和神奇的故事。</p><p>世界树的树梢停着一只巨大的神鹰，它每天都在观察着九个世界发生的所有事情。树根则盘绕着一条叫尼德霍格的恶龙，它不停地啃咬树根，想要毁灭这棵支撑着宇宙的巨树。树上还有一只叫拉塔托斯克的松鼠，它在树梢的神鹰和树根的恶龙之间上蹿下跳，传着闲话。</p><p>这棵巨大的世界树并非永远稳固。神话预言，在末日决战「诸神的黄昏」来临之时，世界树也会剧烈地颤抖，大地崩裂，星辰陨落。但只要世界树还活着，九个世界就能在毁灭后重生——新的阳光将照亮新生的大地。</p>",
+    "cat": "no",
+    "id": "no_065",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "雷神索尔与霜巨人",
+    "cover": "⚡",
+    "desc": "索尔挥舞着雷神之锤妙尔尼尔，保护人类世界不受巨人的侵犯。",
+    "content": "<p>在阿斯加德的神族中，最受人类爱戴的不是智慧的奥丁，而是力大无穷的雷神索尔。他长着一头红头发和一把火红的大胡子，脾气火爆但心地无比善良。</p><p>索尔最厉害的武器是一把名叫妙尔尼尔的锤子。这把锤子是矮人工匠铸造的神器，扔出去后会自己飞回来，威力大到能劈开山岳。但真正厉害的不是锤子本身，而是握住它的手——只有索尔这样真正的英雄才有资格举起它。</p><p>索尔最讨厌霜巨人，因为这些家伙整天想攻打人类世界米德加尔特。只要听说哪里有巨人作恶，索尔就驾着由两只山羊拉着的雷霆战车冲过去。天空中的雷声，就是索尔的战车碾过云层的声音；雨后的彩虹，就是战车碾过的车辙。</p><p>有一回，霜巨人国王斯克里米尔把一只巨手套冒充山洞骗索尔钻进去睡觉，还用食物篮子冒充高山，饿得索尔大发脾气。索尔三次抡锤砸向巨人的头，都被巨人巧妙化解——原来这才是最强的对手！不过索尔从不放弃，每次失败后都变得更加强大。</p>",
+    "cat": "no",
+    "id": "no_066",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "奥丁的智慧之泉",
+    "cover": "🧙",
+    "desc": "众神之父奥丁为了喝一口智慧之泉的水，献出了自己的一只眼睛。",
+    "content": "<p>奥丁是北欧神话中至高无上的神，但他是靠智慧而不是蛮力统治世界的。他是唯一不满足于现状的神，永远在追求更多的知识。</p><p>在宇宙的边缘，巨人国约顿海姆的深处，有一口智慧之泉，由巨人密米尔守护着。任何人只要喝了智慧之泉的水，就能获得洞悉过去未来的无边智慧。但密米尔开出了一个条件：必须用最珍贵的东西来交换。</p><p>奥丁来到了泉水边，密米尔冷冷地说：「想要我的泉水吗？那就把你的右眼挖出来给我。」奥丁没有丝毫犹豫，伸手挖出了自己的右眼，扔进了泉水里。密米尔惊呆了——他没有想到奥丁居然这么果断。</p><p>奥丁深深地喝了一口泉水，顿时感觉整个宇宙的知识都在脑海中涌现——九界的命运、巨人的阴谋、甚至世界末日的场景，都清晰地呈现在他眼前。从此奥丁成了独眼神，但他的智慧和远见超过了所有其他神祇。他每天都在思考如何推迟那必将到来的末日——诸神的黄昏。</p>",
+    "cat": "no",
+    "id": "no_067",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "洛基的孩子们",
+    "cover": "🐺",
+    "desc": "诡计之神洛基有三个可怕的孩子：巨狼、巨蛇和掌管冥界的女神。",
+    "content": "<p>洛基是阿斯加德中最狡猾、最不可捉摸的神。他和女巨人安格尔波达生了三个孩子，个个都长得奇形怪状。奥丁预见到这三个孩子将是众神的灾祸，决定趁他们还小就把他们处理掉。</p><p>大哥是巨狼芬里尔，它每过一天就长大一倍，嘴巴张开能顶到天。奥丁派战神提尔用魔法锁链绑住它。芬里尔要求一个神把手放进它嘴里做担保，勇敢的提尔牺牲了自己的右手，才让芬里尔被锁住。</p><p>二哥是巨蛇耶梦加得，长得盘住了整个人间。奥丁抓起它扔进了大海。可是它越长越大，最终大到能绕着世界一整圈，用嘴咬住自己的尾巴。当它松开尾巴之日，就是世界末日之时。</p><p>小妹是海拉，她一半脸美丽动人，一半脸却腐烂可怖。奥丁把她派去掌管冥界赫尔海姆，那些不是光荣战死的人的灵魂都归她管。兄妹三人的命运早已写在预言中——在诸神的黄昏里，芬里尔会吞掉奥丁，耶梦加得会和索尔同归于尽。预言可怕，但无法逃避。</p>",
+    "cat": "no",
+    "id": "no_068",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "巴德尔的噩梦",
+    "cover": "😢",
+    "desc": "光明之神巴德尔梦见自己将会死去，他的母亲让万物发誓不伤害他……却漏了一株槲寄生。",
+    "content": "<p>巴德尔是奥丁和弗丽嘉最心爱的儿子，光明之神，也是所有神中最俊美、最善良的一个。他的笑容能驱散阿斯加德所有的阴霾。可是有一天，巴德尔开始做可怕的噩梦，梦见自己将遭遇不测。</p><p>母亲弗丽嘉急坏了，她走遍九个世界，让所有东西都发誓不伤害巴德尔——石头发誓了，金属发誓了，树木花草发誓了，疾病和野兽也发誓了……万物都发了誓。弗丽嘉唯独漏掉了墙角一株不起眼的槲寄生，觉得它太幼小无力了。</p><p>众神知道巴德尔不会受伤后，把朝他扔东西当成了游戏。独眼神霍德尔因为看不见，站在一旁很落寞。狡猾的洛基把一支槲寄生削成箭递给霍德尔说：「你也来玩玩吧，我帮你瞄准。」霍德尔不知真相，朝着巴德尔射出了箭。</p><p>箭正中巴德尔的心脏，光明之神应声倒地，再也没有醒来。阿斯加德陷入无尽悲痛。霍德尔这才知道自己被洛基利用了。芙蕾雅试图去冥界要回巴德尔的灵魂，冥界女神说除非万物都为巴德尔流泪。洛基变成的女巨人拒绝哭泣，巴德尔终究没能复活。阿斯加德从这一天开始，缓缓走向了不可逆转的命运——诸神的黄昏。</p>",
+    "cat": "no",
+    "id": "no_069",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "芙蕾雅的鹰羽斗篷",
+    "cover": "🦅",
+    "desc": "爱与美之神芙蕾雅有一件神奇的鹰羽斗篷，穿上它就能化作飞鹰。",
+    "content": "<p>芙蕾雅是华纳神族中最美丽的女神，她主管爱情、美丽、生育和魔法。她住在富丽堂皇的宫殿中，每天乘坐由两只大猫拉着的金色马车巡视世界。</p><p>芙蕾雅最珍贵的宝贝之一，就是一件用巨鹰羽毛编织的斗篷。只要披上这件斗篷，她就可以变成一只矫健的飞鹰，在九个世界之间自由翱翔。这件斗篷不知道帮了多少次忙。</p><p>有一回，雷神索尔的锤子被巨人偷走了，巨人说要娶芙蕾雅做老婆才肯归还锤子。索尔不好意思地来找芙蕾雅借斗篷，打算变成鹰去侦察巨人的动向。芙蕾雅二话不说就把斗篷借给了他：「只要你能把妙尔尼尔找回来，随便用！」</p><p>还有一次，洛基被巨人抓走，需要这件斗篷去营救，芙蕾雅也慷慨地借了出去。虽然芙蕾雅爱美如命，但她在关键时刻从不小气。她曾说：「世界上最美的东西，不是金色的长发，也不是闪闪发光的项链，而是一颗愿意帮助别人的心。」</p>",
+    "cat": "no",
+    "id": "no_070",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "女武神瓦尔基里",
+    "cover": "🛡️",
+    "desc": "骑飞马的女武士们在人间的战场上挑选最勇敢的战士灵魂，带往英灵殿。",
+    "content": "<p>在北欧神话中，有一群威风凛凛的女战士，她们就是瓦尔基里——奥丁的侍女。她们骑着长有翅膀的飞马，身穿银光闪闪的铠甲，手持长矛和盾牌，在天空中驰骋。</p><p>每当人间爆发大战，瓦尔基里们就会出现在战场上空。她们不是来打仗的，而是来挑选的——挑选那些最英勇、生得光荣死得壮烈的战士灵魂。被选中的战士将获得无上的荣耀：去往阿斯加德的英灵殿瓦尔哈拉。</p><p>在瓦尔哈拉里，英雄们白天在操场上互相较量，战死的人在傍晚又复活过来，大家坐在金色大厅里享用野猪肉和美酒。他们这样训练自己，不是娱乐，而是为了那场注定的末日决战——诸神的黄昏。那一天，所有英灵都要随奥丁迎战巨人和洛基的大军。</p><p>瓦尔基里中最著名的叫布伦希尔德，她是所有女武神的首领。有一次，她违背了奥丁的意旨在战场上帮助了一个不该赢的人。奥丁惩罚她变成凡人，让她沉睡在火焰环绕的山顶上，直到一位真正的英雄来吻醒她……那又是另一个精彩的故事了。</p>",
+    "cat": "no",
+    "id": "no_071",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "矮人锻造的神器",
+    "cover": "⚒️",
+    "desc": "地底深处的矮人工匠们锻造了众神的三件无价之宝，引发了众神间的激烈争论。",
+    "content": "<p>在地底的深处，住着世界上最厉害的工匠——矮人。他们虽然个子矮小，但双手无比的灵巧，能在滚烫的熔炉边不吃不喝锻造出任何神器。</p><p>有一天，狡猾的洛基搞了个恶作剧，剪掉了女神西芙的一头美丽金发。雷神索尔气得要把他捏碎，洛基只好去矮人那里求他们帮忙。矮人不仅用纯金打造了一顶能自动生长的金发，还顺便打造了另外两样宝物：一把会自动飞回来的长矛，和一艘折叠起来可以放进口袋的魔法大船。</p><p>洛基得意洋洋地炫耀了一番，另一个矮人布洛克不服气，赌洛基的脑袋说他的兄弟能打出更好的东西。于是矮人兄弟开始打造。洛基变成牛虻疯狂叮咬他们——结果矮人打造出了雷神之锤妙尔尼尔、金色的神猪和永不脱落的魔法戒指。</p><p>众神评比之后，一致认为矮人兄弟打造的宝物更胜一筹。洛基输了赌约，可他耍赖说：「赌的是我的脑袋，不是我的脖子——你总不能砍我脖子吧，脖子不在赌注范围内。」虽然洛基耍赖保住了脑袋，但矮人兄弟用针线缝住了他的嘴，让他好一阵子没法招摇撞骗。</p>",
+    "cat": "no",
+    "id": "no_072",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "天空中的彩虹桥",
+    "cover": "🌈",
+    "desc": "阿斯加德和人间的通道是一条美丽的彩虹桥，由永远不睡觉的守护神守护。",
+    "content": "<p>连接着神域阿斯加德和人类世界米德加尔特的，是一座闪闪发光的彩虹桥。这座桥由三色彩虹组成——红色的是燃烧的火焰，蓝色的是翻腾的海水，绿色的是生机勃勃的大地。</p><p>守护彩虹桥的是光明之神海姆达尔。他日夜站在桥头，睁着他那能看穿千里迷雾的眼睛，竖着他能听清青草生长的耳朵。他从来不用睡觉，也从来不会松懈。一旦发现有敌人靠近，他就吹响号角加拉尔，号声响彻九个世界。</p><p>众神每天都要通过彩虹桥前往智慧之泉旁的世界树下开会。彩虹桥只允许神通行，凡人的脚一旦踏上就会燃烧。只有一种例外——阵亡的英雄由瓦尔基里引路走上彩虹桥前往英灵殿。</p><p>神话预言，在诸神的黄昏那一天，巨人大军将会攻打阿斯加德。当火巨人骑着燃烧的巨马冲上彩虹桥时，这座美丽的桥会崩塌碎裂。海姆达尔将吹响最后一次号角，声音凄厉悲壮。这是彩虹桥的宿命——在最绚丽的时候，也许离毁灭也最靠近了。</p>",
+    "cat": "no",
+    "id": "no_073",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "被埋藏的芬里尔巨狼",
+    "cover": "🐺",
+    "desc": "战神提尔为了把巨狼芬里尔绑住，勇敢地把右手伸进了狼口中。",
+    "content": "<p>洛基的儿子芬里尔是一头一天比一天大的巨狼。奥丁看在眼里，怕在心里。他已经预见到了——这头狼将在末日之战中吞掉他自己。众神决定趁芬里尔还没长到不可收拾的地步就把它绑起来。</p><p>第一次，他们用粗铁链绑住芬里尔。芬里尔轻轻一挣，铁链像面条一样断了。第二次，他们用了世界上最粗的铁链，芬里尔用力一蹬，铁链碎了一地。众神慌了。只好去找矮人——只有矮人才能造出束缚得了巨狼的锁链。</p><p>矮人用六种不可能的东西做成了细如丝线的锁链：猫的脚步声、女人的胡子、山的根、熊的筋腱、鱼的呼吸和鸟的唾液。这条线看起来细得可笑，芬里尔起了疑心：「这条线一定有诈。除非你们中有一个人把手放进我嘴里做担保，不然我不让你们绑。」</p><p>众神面面相觑，没人敢。只有战神提尔站了出来，平静地把右手伸进了巨狼嘴里。芬里尔被绑住后拼命挣扎，可线越勒越紧。它一口咬下去，提尔的手齐腕断了。从此提尔成了独臂战神，可他无怨无悔。提尔的牺牲，让巨狼被锁了千万年。</p>",
+    "cat": "no",
+    "id": "no_074",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "赫尔海姆的守门犬",
+    "cover": "🐕",
+    "desc": "冥界入口蹲着一条四眼恶犬，它的旁边是一条鲜血染红的毒龙。",
+    "content": "<p>在北欧神话最底层的世界中，有一个黑暗阴冷的地方——赫尔海姆，死者的国度。那里终年笼罩着迷雾，河水里飘着生锈的刀锋。没有英勇战死的普通人，死后都要来到这里。</p><p>守卫赫尔海姆大门的是恶犬加尔姆，它长着四只血红的眼睛，满嘴的獠牙从早流到晚的毒口水。它喜欢在入口的洞穴里嚎叫，声音让人毛骨悚然。旁边还有一条叫尼德霍格的血红色毒龙，以啃噬死者的骸骨为乐。</p><p>掌管这片死亡之地的是半面美丽半面腐烂的海拉女神。奥丁虽然安排她管冥界，但无法取消赫尔海姆的规则，其中最重要的一条就是：死人一旦进来就再也不能出去。</p><p>当光明之神巴德尔死后被送入赫尔海姆时，众神派使者去求海拉放人。海拉开出条件：如果万物都为巴德尔哭泣，就放他回来。万物几乎都哭了——只有躲在角落里的女巨人（洛基变的）没有哭。赫尔海姆的铁门轰然关闭，巴德尔永远的留在了冥界。有时候命运就是这么残酷：千千万万的眼泪都换不回一个人，只因一个人的一滴泪不肯流。</p>",
+    "cat": "no",
+    "id": "no_075",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "亚尔夫的冒险",
+    "cover": "🛶",
+    "desc": "北欧的普通渔夫亚尔夫用智慧和勇气打败了盘踞在峡湾里的海怪。",
+    "content": "<p>在挪威最北端的峡湾里，住着一头巨大的海怪，它有八只触手，每只都有桅杆那么粗。这头海怪每到夏天就浮出海面，掀翻渔船，吞下落单的水手。附近村庄的渔民吓得都不敢出海了。</p><p>村里有个勇敢的年轻渔夫叫亚尔夫，他对大家说：「我们不能一辈子躲着它，总有一天要和它决一死战。」老人们都劝他不要去，说那海怪是洛基留下的恶种，凡人对付不了。亚尔夫不听，拿着鱼叉就出了海。</p><p>夜色下，海面开始剧烈翻腾，八条触手从四面八方伸出来，缠住了亚尔夫的小船。他差点被勒成两截。危急之时亚尔夫想起了奶奶说过的故事——海怪最软的部位是它两眼之间的前额。他举起鱼叉，瞄准海怪的额头，用尽全身力气刺了下去。</p><p>海怪发出震天的嘶吼，松开了触手，翻滚着沉入了深海。亚尔夫满身是血地划回了村庄，成了全挪威最出名的英雄。后来有人说他是雷神索尔的凡人子孙，因为他像索尔一样——靠的不是魔法，而是凡人的勇气。在挪威民间故事中，亚尔夫的传奇代代相传。</p>",
+    "cat": "no",
+    "id": "no_076",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "巨人国的谜语",
+    "cover": "🧩",
+    "desc": "雷神索尔和他的随从去巨人国做客，却被巨人的幻术耍得团团转。",
+    "content": "<p>雷神索尔带着随从洛基和人类少年夏尔菲来到了巨人国约顿海姆。巨人的国王乌特加德洛基（注意，不是那个狡诈之神洛基）傲慢地接见了他们：「远道而来的小矮人们，你们有什么本事啊？」</p><p>洛基说他吃得最快，巨人就叫来一个叫罗吉的巨人跟他比吃。洛基狼吞虎咽地吃掉了肉，可罗吉连骨头带盘子都吞下去了。夏尔菲说他跑得最快，巨人叫来一个叫休吉的小孩和他比。夏尔菲像风一样跑出去，可休吉像闪电一样早就到了终点。索尔不服气，说他力气最大。</p><p>巨人递给他一个牛角杯：「把你的神力展示出来吧，喝完这一杯。」索尔仰头就灌，可不管他喝多少，杯里的酒纹丝不动。索尔脸都憋红了。巨人又说：「那你试试把我这只猫举起来。」索尔弯腰去抱，可那只猫越来越大，索尔举到青筋暴起也只抬起了它的一只脚。</p><p>第二天离开时，乌特加德洛基才哈哈大笑地揭晓了真相：罗吉是野火的化身，休吉是思想的飞驰，牛角杯连着整个大海，而那只猫——是缠绕世界的大蛇耶梦加得！巨人用魔法幻术把索尔一行耍了个够。但索尔并没有生气，反而若有所思：「原来世界上还有比蛮力更厉害的东西——那就是幻术和智慧。」</p>",
+    "cat": "no",
+    "id": "no_077",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "青春女神伊登的苹果",
+    "cover": "🍎",
+    "desc": "众神之所以不会老去，全靠伊登的金苹果，一旦被偷走，众神就迅速衰老。",
+    "content": "<p>为什么北欧的众神不会老去？因为阿斯加德有一位青春女神伊登。她的花园里长着一棵神奇的金苹果树，每天结出的果子，就是众神永葆青春的秘密。</p><p>有一天，洛基因为嘴贱得罪了一个巨人，巨人抓住他逼他答应带一个女伴来巨人国。洛基回去后哄骗伊登带着金苹果出了阿斯加德。巨人在路上伏击，把伊登连人带苹果抓到了风雪呼啸的巨人国。</p><p>伊登失踪的第二天，奥丁照镜子发现自己的额头多了几条皱纹，弗丽嘉的黑发里冒出了几根白丝。雷神索尔的红胡子也开始变灰了……众神大惊失色，这才发现金苹果连同伊登一起不见了！奥丁震怒：「洛基！又是你干的好事！」</p><p>洛基吓得魂飞魄散，急忙借来芙蕾雅的鹰羽斗篷，变成一只鹰飞到巨人国把伊登救了回来。第二天，众神吃上了新鲜的金苹果，皱纹消失了，白发变回了黑发，笑容重新回到了脸上。从此伊登的花园加派了守卫，而洛基被罚在火巨人旁边听候训话，再也不敢拿众神的宝贝开玩笑了。</p>",
+    "cat": "no",
+    "id": "no_078",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "弗雷尔的魔剑",
+    "cover": "🗡️",
+    "desc": "丰饶之神弗雷尔为爱舍弃了魔剑，在末日之战中徒手面对火巨人。",
+    "content": "<p>弗雷尔是华纳神族的首领之一，管理着阳光、甘雨和丰收。他有一把神奇的魔剑——不需要主人挥舞，这把剑自己就能在战场上飞翔杀敌，无人可挡。</p><p>有一天，弗雷尔趁奥丁不在，偷偷坐上了奥丁的王座。从这个位子上可以俯瞰九个世界的一切。他看到巨人国约顿海姆有一个美丽的巨人姑娘吉尔达，立刻坠入了爱河，茶饭不思，日渐消瘦。</p><p>弗雷尔的仆人夏尼尔去帮忙提亲。巨人姑娘一开始根本不答应，夏尼尔用魔法威胁她，最后她松口了，但要弗雷尔一样东西来换——他的那把魔剑。弗雷尔毫不犹豫地点头答应了。夏尼尔劝他：「这是你的护身神器啊！」弗雷尔说：「没有她，有神剑又有什么意义？」</p><p>后来在诸神的黄昏里，弗雷尔面对的敌人是手持烈焰之剑的火巨人苏尔特尔。可他手上已经没有那把自动杀敌的魔剑了，只能拿着鹿角当武器。他奋力战斗，但最终不敌火巨人，倒在了战场上。有人惋惜他为了爱情失去了性命，但弗雷尔自己大概不会后悔——他曾经对吉尔达说过：「有一天你会站在阳光下微笑，那就是我的丰收。」</p>",
+    "cat": "no",
+    "id": "no_079",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "尼伯龙根的宝藏",
+    "cover": "💍",
+    "desc": "一枚被诅咒的黄金戒指，让所有拥有它的人都死于非命，引发了人间和神域的战争。",
+    "content": "<p>在北欧的民间传说中，有一笔惊天动地的宝藏——尼伯龙根的黄金。这笔宝藏最初的持有者是矮人王子安德瓦里，他用魔法戒指可以源源不断地发现新的黄金矿脉。</p><p>一天，主神奥丁、霍尼尔和洛基无意中杀死了安德瓦里变化的水獭。为了赔偿，他们抢走了矮人的全部黄金和那枚魔法戒指。安德瓦里在被抢走戒指的时候发出了最恶毒的诅咒：佩戴此戒者，必将死于非命，且所有染指黄金的人都不得好死。</p><p>诅咒很快生效了。得到黄金的法夫纳变成了毒龙守护宝藏，他的兄弟雷金挑唆英雄西格鲁德杀了法夫纳。西格鲁德拿到戒指后不久就在宫廷阴谋中被刺杀。女武神布伦希尔德为他殉情。戒指经过了无数人的手，每一个持有者都逃不过诅咒。</p><p>最后，这枚戒指连同所有的黄金被沉入了莱茵河的河底，由三个水仙女永远守护着。尼伯龙根宝藏至今仍沉睡在莱茵河底，诅咒也在河水中平息了。但据说每当河面上出现金色波光的时候，就是那枚戒指在想方设法勾引新的贪婪者。</p>",
+    "cat": "no",
+    "id": "no_080",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "建墙的神马",
+    "cover": "🐎",
+    "desc": "一个巨人说他能在六个月内为阿斯加德建好城墙，他的报酬是——太阳、月亮和女神芙蕾雅。",
+    "content": "<p>阿斯加德的城墙在一次大战中毁坏了，金宫暴露在外，众神整天心惊胆战。一天，一个巨人石匠来了：「我能在六个月之内给你们建一堵永远也攻不破的墙。我的报酬是——太阳、月亮和女神芙蕾雅。」</p><p>众神气坏了，但洛基眼珠一转，出了一个馊主意：「答应他，但条件是必须独自在六个月内完工，不许任何人帮忙。他绝对完不成，这样我们就不用付工钱还白得一面墙。」众神竟然同意了。</p><p>可没想到这巨人有一匹叫斯瓦迪尔法利的神马。这匹马力大无穷，一夜之间就能驮来小山般的石头。冬天快结束时，城墙眼看就要完工了。众神抓狂了——难道真的要把太阳月亮和芙蕾雅都交给一个巨人？</p><p>又是洛基——这次为了补救自己捅的篓子。他变成一匹美丽的母马，跑到工地附近嘶叫。神马斯瓦迪尔法利被迷得魂不守舍，挣断缰绳追着母马跑掉了。巨人失去了帮手，没能按时完成工程，气得现出原形——原来他是一个石头巨人。雷神索尔一锤下去，把他砸成了碎片。这件事之后不久，洛基生下了一匹八条腿的小马——那就是后来奥丁的坐骑斯雷普尼尔。</p>",
+    "cat": "no",
+    "id": "no_081",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "霜巨人之祖尤弥尔",
+    "cover": "🧊",
+    "desc": "在世界初开的冰与火交汇处，诞生了第一个生命——霜巨人之祖尤弥尔。",
+    "content": "<p>在宇宙的最开始，还没有天也没有地，没有神也没有人。只有一道巨大的裂缝，裂缝的北面是冰雪覆盖的尼福尔海姆，南面是火焰熊熊的穆斯贝尔海姆。冰与火的交汇处，滴落的第一滴水孕育了第一个生命——霜巨人尤弥尔。</p><p>尤弥尔庞大如山，身体由冰和霜构成。他既是第一个巨人，也是所有巨人的祖先。后来从冰中又诞生了一头母牛，用奶水喂养尤弥尔。母牛舔食冰中的盐块时，舔出了一个英俊的男子——布里，他是所有神族的始祖。</p><p>布里的孙子奥丁和他的两个兄弟维利、维，有一天决定杀死尤弥尔。他们用长矛刺穿了巨人的身体。尤弥尔的血喷涌而出，化成了大洪水，淹死了几乎所有的巨人，只有一对巨人夫妇坐着木箱逃出生天。</p><p>奥丁和兄弟们用尤弥尔的身体创造了世界：用他的血液做成了海洋和河流，用他的骨头做成了山脉，用他的头颅做成了天空，用他的眉毛做成了人类世界的围墙，用他的脑髓做成了天上的云朵。所以地上的一切，都来自那位最初巨人的身体。</p>",
+    "cat": "no",
+    "id": "no_082",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "西芙的金发",
+    "cover": "💇‍♀️",
+    "desc": "洛基恶作剧剪掉了雷神之妻西芙的金发，结果引发了矮人之间的神兵打造大赛。",
+    "content": "<p>雷神索尔的妻子西芙有一头美丽绝伦的金色长发，像成熟的麦浪一样，是阿斯加德最漂亮的头发。索尔深爱着妻子，对那头金发尤为骄傲。</p><p>有一天早晨，西芙醒来尖叫一声——她的枕头上一片金色的发丝散落，她的头顶光秃秃的。谁干的？当然是那个无聊透顶的恶作剧大师洛基！趁西芙睡着的时候，他偷偷潜进来剪光了她的头发。索尔知道后暴跳如雷，揪着洛基的衣领把他提到了雷神殿。</p><p>「立即把我妻子的头发变回来，不然我一锤把你砸成灰！」洛基吓坏了，赶紧跑到地底找矮人工匠。经过一番折腾——就是前面说过的三件神器的锻造比赛——矮人不仅给西芙做了一顶比原来更美的纯金头发，还锻造出了雷神之锤妙尔尼尔。</p><p>西芙戴上金发的那一刻，整个阿斯加德都亮了起来。索尔转怒为笑。而洛基因为嘴巴被缝住了，好几天不能说话。众神都说：「这是阿斯加德有史以来最宁静的几天。」有时候恶作剧虽然会惹出大乱子，但正因为洛基的搞鬼，世界上才多了那么多精彩的神器。</p>",
+    "cat": "no",
+    "id": "no_083",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "巨蟒耶梦加得",
+    "cover": "🐍",
+    "desc": "洛基的儿子是一条巨蛇，被奥丁扔进大海后，长得盘住了整个世界。",
+    "content": "<p>在洛基的三个可怕孩子中，最让凡人感到恐惧的不是巨狼芬里尔，也不是死亡女神海拉，而是潜伏在深海中的巨蟒耶梦加得。它是雷神索尔一生的宿敌。</p><p>耶梦加得被奥丁扔进大海的时候，还只是一条小小的海蛇。可它在深海中一天天长大，最终大到绕着整个世界一圈，嘴巴能咬住自己的尾巴。它在深海中搅动海水，造成狂风巨浪，吞没过往的船只。</p><p>雷神索尔和耶梦加得结怨最深。有一次，索尔在巨人国被要求抱起一只猫，他拼尽全力只抬起了猫的一只脚——那根本不是猫，而是耶梦加得被用幻术伪装成了猫的样子。另一次索尔出海钓鱼，用牛头做鱼饵钓上了耶梦加得，差点用锤子把它打死，但被同伴吓破了胆割掉了鱼线。</p><p>两强的宿命对决留给了诸神的黄昏。那一天，耶梦加得会从深海中暴怒冲出海面，喷吐毒液遮天蔽日。索尔挥舞雷神之锤迎战——最终他用锤子打死了巨蟒，但自己也中了蛇毒，走了九步就倒下了。一个英雄和一条巨蛇，从出生那天就注定要同归于尽。</p>",
+    "cat": "no",
+    "id": "no_084",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "勇士之殿瓦尔哈拉",
+    "cover": "🏰",
+    "desc": "奥丁为末日决战准备的终极堡垒——瓦尔哈拉，每天有五百四十扇门迎接新的英灵。",
+    "content": "<p>在阿斯加德最中心的位置，有一座全宇宙最壮观的大殿——瓦尔哈拉，也就是英灵殿。奥丁建立它的唯一目的，就是为诸神的黄昏做准备。</p><p>瓦尔哈拉的大殿顶上盖着金色的茅草，五百四十扇大门排成一列。每一扇门都宽阔到能让八百名全副武装的战士并肩走出来。墙壁由长矛组成，屋顶由盾牌覆盖，长凳上铺着闪亮的锁子甲——这是世界的终极堡垒。</p><p>这里住着几万年来人世间最英勇的阵亡战士。每天清晨，他们穿上铠甲，到操场上互相搏杀，练习武艺。战死的人当天傍晚就会神奇地复活，大家一起进入金色大厅，享用无穷无尽的美酒和神猪投喂的野猪肉。</p><p>这样日复一日的训练不是娱乐——他们在等待着那个万众瞩目的日子。当海姆达尔的号角吹响，彩虹桥崩塌崩裂的时刻到来时，瓦尔哈拉的五百四十扇门将同时打开，所有英灵会像潮水一样涌出，追随着奥丁迎向最后的战役。他们知道那天自己会战死——但他们更知道，那就是他们一生追求的光荣。</p>",
+    "cat": "no",
+    "id": "no_085",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "雾之国尼福尔海姆",
+    "cover": "❄️",
+    "desc": "在世界之初，极北有一片永恒的冰雪迷雾，毒河和不死者盘踞其中。",
+    "content": "<p>在世界树的最北端根下，有一片永恒黑暗和冰冷的区域——尼福尔海姆，也就是雾之国。早在宇宙诞生之前，这片冰雾之地就已经存在了。</p><p>尼福尔海姆最深处有一条叫赫瓦格密尔的毒泉，从中涌出的水流经剧毒的冰原，形成了十一条毒河。一些最恐怖的生物在迷雾中潜伏——恶龙尼德霍格在这里啃噬世界树的根部，毒蛇在河流中盘绕，亡魂在雾霭中徘徊。</p><p>这里还有一个可怕的实体叫「冰冻的赫利姆」，他是巨人的一支后裔，在雾之国永恒的冰霜中永生不死。他坐在冰雪宝座上，等待着诸神的黄昏那天，那时他会带着千千万万的冰霜大军冲向南方的战场。</p><p>在最古老的预言中，尼福尔海姆将会是末日风暴的起点。当芬里尔咬断锁链、火焰巨人跨过彩虹桥时，雾之国积攒了亿万年的寒冰毒雾也将席卷整个宇宙。冰与火的最终对决，就诞生在远古时代的这片永恒迷雾之中。</p>",
+    "cat": "no",
+    "id": "no_086",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "弗丽嘉的母爱",
+    "cover": "🤱",
+    "desc": "众神之后弗丽嘉为了救儿子巴德尔可以穿行九个世界，却终究没能改变命运。",
+    "content": "<p>弗丽嘉是奥丁的妻子，阿斯加德的王后。如果说奥丁是众神的大脑，那弗丽嘉就是他们的心脏。她是所有天地间最伟大的母亲——为了儿子巴德尔，她踏遍了九个世界。</p><p>当巴德尔开始做噩梦后，弗丽嘉立即出发。她让火发誓、让水发誓、让石头发誓、让金属发誓、让所有的动物和树木发誓——绝不伤害巴德尔。她只疏忽了最小的东西：一株长在墙角的槲寄生。可就是这株不起眼的槲寄生，要了巴德尔的命。</p><p>儿子死后的弗丽嘉并没有崩溃。她收拾心情，立即派赫尔莫德骑着八足神马斯雷普尼尔直奔冥界，去和海拉谈判。当海拉开出让万物流泪的条件后，弗丽嘉又让信使通知九个世界的所有生灵为巴德尔哭泣。</p><p>万物都哭了——神哭了、人哭了、动物哭了、树木哭了、甚至石头也流出了眼泪。可最后在一个角落里，一个叫索克的女巨人（又是洛基变的）冷笑着说：「巴德尔活着的时候没给过我什么好处，死了我为什么要哭？」就是这一个小小的拒绝，让所有努力化为泡影。弗丽嘉的故事告诉我们：母爱的力量伟大到敢与命运对抗，但命运有时候就是那么残酷无情。</p>",
+    "cat": "no",
+    "id": "no_087",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "海姆达尔的号角",
+    "cover": "📯",
+    "desc": "光明之神海姆达尔守卫彩虹桥，一旦敌人来袭就吹响末日号角加拉尔。",
+    "content": "<p>在彩虹桥的桥头，日夜站着一个永远不睡觉的哨兵——海姆达尔。他是九个女儿的父亲，拥有比鹰更锐利的眼睛和比兔子更灵敏的耳朵。他甚至能听到青草在春天破土的声音。</p><p>海姆达尔的使命只有一个：守望。他一年三百六十五天，一天二十四小时，不吃不睡，眼睛一眨不眨地盯着九个世界的动静。他的右手始终握着一把叫加拉尔的黄金号角，藏在世界树根部的智慧之泉边上。</p><p>当那一天到来时——月亮被巨狼吞下、星辰从天穹坠落、大地开始颤动——海姆达尔将第一个察觉到。他会长身而起，用尽全部力气吹响加拉尔。号角声将如同千雷齐鸣，穿透九个世界，让瓦尔哈拉里的英灵们整装待发，告诉众神：最后的战役来了。</p><p>在诸神的黄昏中，海姆达尔的宿敌不是别人，正是那个将带巨人们攻上彩虹桥的洛基。两个从世界之初就彼此憎恨的神，将在彩虹桥的废墟上展开最后的决斗，最终双双倒在对方的剑下。但他们的故事更像一个隐喻：光明的守夜人就该和黑暗的背叛者同归于尽，没有其他更好的结局。</p>",
+    "cat": "no",
+    "id": "no_088",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "诸神的黄昏",
+    "cover": "🌋",
+    "desc": "北欧神话中预言的末日之战，众神与巨人的最终对决，旧世界毁灭新世界诞生。",
+    "content": "<p>在北欧神话中，一切故事都指向同一个终点——拉格纳洛克，诸神的黄昏。这是一场从宇宙诞生之初就已被预言的大战：众神知道他们会输，但他们从不逃避。</p><p>末日来临之前，将有三年漫长的寒冬，太阳暗淡无光，兄弟反目，父子相残。巨狼芬里尔挣脱了锁链，巨蟒耶梦加得从深海中狂暴翻腾，火巨人苏尔特尔挥舞燃烧之剑跨过了崩塌的彩虹桥，洛基带着赫尔海姆的死灵大军直冲阿斯加德。</p><p>瓦尔哈拉的英灵们冲杀而出，史无前例的决战开始了。奥丁被芬里尔一口吞下，索尔和耶梦加得双双陨命，弗雷尔徒手迎战烈焰巨人，海姆达尔和洛基互相刺死对方……天地崩裂，星辰熄灭，世界树尤克特拉希尔剧烈颤抖然后轰然倒下。</p><p>但毁灭不是终结。在灰烬中，一个新世界悄然升起。巴德尔和霍德尔从冥界归来，一对人类幸存者在世界树洞里躲过了劫难。新的太阳升起了，新的大地绿意盎然。众神的黄昏，也是新世界的黎明。这就是北欧人面对命运的态度：知道结局不可更改，却依然要用尽力气打一场漂亮的仗。</p>",
+    "cat": "no",
+    "id": "no_089",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "密米尔的智慧头颅",
+    "cover": "🗣️",
+    "desc": "巨人密米尔是世界上最聪明的生物，他死后奥丁还把他的头颅保存下来继续询问智慧。",
+    "content": "<p>密米尔是远古巨人中最具智慧的，传说他在世界之初就喝过智慧之泉的水。正因为如此，他比任何一个神知道的都多。他那道能喝到泉水的守护权，就是来自他无与伦比的渊博学识。</p><p>华纳神族和阿萨神族曾经爆发过一场大战。战争结束后，双方交换人质以求和平。密米尔作为阿萨一方的人质去了华纳神族。但华纳神族怀疑他带着间谍使命，一怒之下把他砍了头，将头颅送回了阿斯加德。</p><p>换做别人，头被砍了就什么都没有了。但奥丁捡起了密米尔的头颅，在上面涂抹了能防腐的草药，对着它念起了古老的咒语。奇迹发生了——那颗头颅睁开了眼睛，嘴巴动了动，真的能开口说话！</p><p>从此，密米尔的头颅成了奥丁最秘密的顾问。每当奥丁遇到无法解决的问题，他就会独自来到密室，对着那颗会说话的头颅低声询问。密米尔用他渊博到没有边际的智慧，一次又一次给了奥丁答案。在所有关于世界命运的问题中，密米尔从未答错一题。有时候，真正的价值不在长相和身体，而在——你的脑袋里装了什么。</p>",
+    "cat": "no",
+    "id": "no_090",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "太阳与月亮的追逐",
+    "cover": "☀️",
+    "desc": "巨狼斯库尔追着太阳跑，另一只巨狼哈提追着月亮跑，它们追上了天地就要毁灭。",
+    "content": "<p>北欧神话里，太阳和月亮并不是高高挂在天上安然不动的。太阳女神苏尔每天驾驶着太阳马车，拼命地奔跑，因为一只巨狼斯库尔在身后穷追不舍。月神曼尼驾驶月亮马车也是一样，他被哈提追赶着。</p><p>这两只狼从世界之初就开始追逐了。它们越追越近，越追越凶。远古的预言说，当诸神的黄昏来临前，这两只狼就会追上太阳和月亮。一口吞下去——天地会陷入无尽的黑暗。</p><p>人们在地面上看到的日食，就是斯库尔追得太近了，用嘴碰了一下太阳的边缘。每当这时，村庄里的男女老少都会敲锣打鼓大声呐喊，想用声音把狼吓跑。虽然太阳神每次都逃掉了，但她的脚步越来越疲惫。</p><p>其实太阳和月亮都知道自己最终的命运——终有一天它们会被追上，被吞下去。可它们从不停止奔跑。就像北欧人自己一样：生活在严冬极夜之中，知道来年可能天灾失败，但依然年复一年地播种、出海、生存。日月的奔跑，就是北欧人对命运的最诗意的理解。</p>",
+    "cat": "no",
+    "id": "no_091",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "安格尔波达的森林",
+    "cover": "🌲",
+    "desc": "铁森林暗影幢幢，女巨人安格尔波达在这里生下了最可怕的怪物军团。",
+    "content": "<p>在巨人国约顿海姆的东边，有一片终年不见阳光的黑暗森林，叫作铁森林。森林里的树不长叶子，枝丫像铁矛一样刺向天空。铁森林的女王是女巨人安格尔波达。</p><p>安格尔波达是洛基的老相好，洛基的三个最可怕的孩子——芬里尔、耶梦加得和海拉——就是和她生的。但她的「贡献」远不止于此。在铁森林的暗影中，她还在源源不断地生育：她生出狼、生出蛇、生出各种人类想象不到的怪物。</p><p>最可怕的是，她一直在铁森林里养育狼群。巨狼芬里尔被锁住之后，铁森林里又出生了几十头巨型狼，其中就包括追逐太阳的斯库尔和追逐月亮的哈提。这些狼靠啃食尸体为生，越长越大。</p><p>诸神的黄昏那天，铁森林里的狼群将倾巢而出。安格尔波达将骑着一头恶狼走在狼群的最前面，带领她的子孙们冲向阿斯加德。这个铁森林女巨人从头到尾就是一个悲剧制造者——但她的存在也带来了北欧神话中最令人震撼的宿命感：生命毁灭的另一面，是创造。</p>",
+    "cat": "no",
+    "id": "no_092",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "布伦希尔德的沉睡",
+    "cover": "💤",
+    "desc": "瓦尔基里首领布伦希尔德被奥丁惩罚沉睡在火圈之中，只有最勇敢的英雄才能唤醒她。",
+    "content": "<p>布伦希尔德是所有瓦尔基里中最美丽、最勇敢的一个。她骑着飞马驰骋在战场上空，奥丁给了她挑选阵亡勇士进入英灵殿的至高权力。</p><p>可有一次，两个国王交兵，布伦希尔德爱上了其中那个年轻的勇士。她违背了奥丁的命令，在战场上暗中帮助了那个年轻人。奥丁发现后大怒：「你背叛了我的信任，你以为你是谁？」他降下惩罚：剥夺布伦希尔德的神格，让她变成一个凡人女子，陷入沉睡，周围燃起熊熊火焰——只有世上最勇敢的英雄才能穿过火圈把她吻醒。</p><p>布伦希尔德沉睡在一座山顶上，环绕着她的火焰日夜不熄。不知多少勇士尝试穿过火圈，都在半途中被火焰逼退。直到英雄西格鲁德的出现。他骑着他的神马斯莱普尼尔，踏过火焰来到山顶，看到了沉睡的女神。</p><p>西格鲁德轻轻吻醒了布伦希尔德。她睁开眼睛的第一句话是：「你终于来了，我等了你整整几百年。」两人的爱情轰轰烈烈，但悲剧也随之而来——西格鲁德因为中计而忘记了布伦希尔德，娶了别人。布伦希尔德悲痛之下设计杀了他，然后投火殉情。挪威作曲家瓦格纳写出了同名歌剧《尼伯龙根的指环》，其中《女武神的骑行》至今仍是最震撼人心的管弦乐曲。</p>",
+    "cat": "no",
+    "id": "no_093",
+    "cat_label": "北欧神话"
+  },
+  {
+    "title": "守株待兔",
+    "cover": "🐇",
+    "desc": "农夫捡到一只撞树而死的兔子，从此放下锄头天天守着树桩等兔子。",
+    "content": "<p>宋国有个农夫，每天在田里辛勤劳作。有一天，一只野兔飞奔过来，不偏不倚一头撞在了田边的大树桩上，折断了脖子，当场就死了。</p><p>农夫捡起兔子，高兴得合不拢嘴：「今天运气真好，白捡了一只肥兔子！」晚上一家人美美地吃了一顿兔肉。农夫躺在床上一拍大腿：「我每天这么辛苦种地，还不如守着那个树桩等兔子来得轻松！」</p><p>第二天，农夫扛着锄头但不是去地里，而是坐在大树桩旁边，眼睛一动不动地盯着田野。他想着：「再撞一只、再撞一只……」太阳落山了，连兔子的影子都没见到。第三天又来，还是没有。第四天、第五天……农夫天天守着树桩等兔子。</p><p>田里的庄稼全部枯死了，左邻右舍都来劝他：「兔子撞树是意外，哪能天天发生？」可农夫就是不听。他成了宋国最有名的笑话。这个成语提醒我们：不要把一次偶然的幸运当成必然，做事还是要老老实实付出努力才行。</p>",
+    "cat": "cy",
+    "id": "cy_094",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "对牛弹琴",
+    "cover": "🎵",
+    "desc": "音乐家对着牛弹奏了一曲高雅的曲子，可牛只顾低头吃草，理都不理。",
+    "content": "<p>古代有个著名的琴师叫公明仪，他的琴声美妙动听，凡是听过的人无不称赞。有一天他带着琴到郊外踏青，看到一群牛在草地上悠闲地吃草，风景如画。</p><p>公明仪一时兴起，在牛群前面摆好琴，弹了一首非常高雅的曲子《清角》。他弹得认真投入，琴声婉转悠扬，自以为连天上的鸟儿都会被吸引下来。可是——那群牛完全不为所动，继续低头吃草，连耳朵都没竖一下。</p><p>公明仪有点尴尬。他想了想，换了一种弹法——他用琴模仿牛虻嗡嗡叫的声音，又模仿小牛哞哞叫的声音，那些牛竟然立刻竖起耳朵，回头望着他。他才恍然大悟：原来不是牛听不懂音乐，是他没弹对它们想听的。</p><p>后来人们用「对牛弹琴」比喻对不懂道理的人讲道理，也用来嘲笑说话的人不看对象。不过反过来想——公明仪要是早点模仿牛虻叫，不就成功了吗？所以这个成语还有一层意思：跟什么人说什么话，才能沟通顺畅。</p>",
+    "cat": "cy",
+    "id": "cy_095",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "亡羊补牢",
+    "cover": "🐑",
+    "desc": "牧羊人的羊圈破了个洞，丢了羊之后才去修补，大家都说补得很及时。",
+    "content": "<p>战国时期，楚国有个牧羊人，养了一群可爱的羊。有一天早晨，他发现羊圈的围栏破了一个大窟窿，数了数羊——少了一只！邻居劝他：「赶紧把洞堵上吧！」</p><p>牧羊人叹了口气说：「羊都已经丢了，补了还有什么用？」他没动手修。第二天早上起来一数，又少了一只羊！原来那只野狼尝到了甜头，晚上又从同一个窟窿钻进来叼走了一只。</p><p>牧羊人这才急了，赶忙找来木料和麻绳，把窟窿堵得严严实实，又把整个羊圈加固了一番。邻居看了笑着说：「现在补虽说晚了点，但你觉得晚了吗？」牧羊人认真地回答：「丢了第一只没补是我的错，丢了第二只之后还不补，那就是更大的错了。」</p><p>从此以后，牧羊人的羊再也没有丢过。楚王听说了这件事，觉得这个道理很对——自己之前犯了一些错误，现在补救还来得及。于是楚王重用贤臣，楚国很快强大起来。「亡羊补牢，为时未晚」成了千古名言：犯了错误及时改正，永远不嫌晚。</p>",
+    "cat": "cy",
+    "id": "cy_096",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "班门弄斧",
+    "cover": "🪓",
+    "desc": "有人在鲁班大师的门前挥舞斧头炫耀技巧，被人笑话不知天高地厚。",
+    "content": "<p>鲁班是春秋时期最伟大的工匠，被誉为木匠的祖师爷。他的巧手能做木鸢在天上飞三天不落地，能做云梯直入云霄。人们公认他是天下第一能工巧匠。</p><p>有个年轻人学了两年的木工手艺，觉得自己已经很厉害了，到处卖弄。他听说鲁班的大名后，不但不敬佩，反而鼻孔朝天地说：「鲁班有什么了不起的，我要跟他比试比试！」于是他扛着一把斧头来到鲁班的门前。</p><p>年轻的木匠在鲁班家门口一阵猛砍猛劈，弄出一堆木屑，宣称自己的技术天下无双。围观的工匠们看着他的表演，都忍不住捂着嘴偷笑。其中一个老木匠说：「小伙子，你知道你手上那把斧头的样式，是谁发明的吗？就是鲁班啊！」</p><p>年轻人脸一红，低着头灰溜溜地走了。后来人们用「班门弄斧」来形容在行家的面前卖弄本领、不自量力。这个成语也是一句谦虚的客气话——当别人夸你的时候，你可以说「不敢不敢，简直是班门弄斧」，表示自己还要多多学习。</p>",
+    "cat": "cy",
+    "id": "cy_097",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "画蛇添足",
+    "cover": "🐍",
+    "desc": "几个人比赛画蛇，冠军画好了又添了四只脚，结果画蛇不成反成笑柄。",
+    "content": "<p>楚国有一个贵族祭祀完毕，把祭祀用的一壶酒赏给了门下的门客们。门客有好几个，酒却只有一壶，怎么分好呢？</p><p>大家商量出一个办法：「咱们比赛画蛇吧，谁先画完谁就独享这壶酒。」众人齐声叫好，立刻拿起树枝在地上画起来。没过多久，一个人就画好了一条活灵活现的蛇，伸手就去拿酒壶。</p><p>可他看了一眼别人画的蛇，觉得自己画得太快了似乎不够精彩，得意地说：「你们都还没画完，我还有时间给蛇加上四只脚。」说完他就低头在蛇肚子下面画起了脚。就在这时候，另一个人也画好了自己的蛇，一把夺过酒壶说：「蛇本来就没有脚，你画的那不是蛇，是蜥蜴！」说完仰头把那壶酒喝了个干干净净。</p><p>那个给蛇画脚的人只能眼睁睁看着美酒落入了别人肚子里。这个成语告诉我们：做事情要恰到好处，过了头反而弄巧成拙。本来已经赢了，再多此一举只会白费功夫、徒增笑料。</p>",
+    "cat": "cy",
+    "id": "cy_098",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "卧薪尝胆",
+    "cover": "🛏️",
+    "desc": "越王勾践被吴王打败后，睡在柴堆上、品尝苦胆，时刻不忘复国雪恨。",
+    "content": "<p>春秋时期，吴国和越国打仗，越王勾践兵败被俘，被带回吴国成了吴王夫差的马夫。勾践忍辱负重，亲自给夫差牵马、喂马、打扫马厩，三年都没有露出一点不满的神色。</p><p>夫差以为勾践已经彻底屈服了，就放他回了越国。勾践回到越国后，第一件事就是撤掉了宫中所有的舒适物件——他把床换成了柴草堆，每天晚上睡在扎人的柴堆上。又在房梁上挂了一只苦胆，每天起床第一件事就是尝一尝苦胆的滋味。</p><p>苦胆苦得让人想吐，但他每次都含着泪水咽下去，对自己说：「勾践，你难道忘了在吴国受过的屈辱吗？」他一边卧薪尝胆，一��暗中练兵、发展生产。他在越国实行了一系列强国政策，励精图治。</p><p>二十年后，越国强大起来，最终打败了吴国，勾践终于报了当年之仇。「卧薪尝胆」后来就成了形容人刻苦自律、发愤图强的成语。它告诉我们：失败不可怕，可怕的是在舒适中忘了当初的耻辱和目标。</p>",
+    "cat": "cy",
+    "id": "cy_099",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "盲人摸象",
+    "cover": "🐘",
+    "desc": "四个盲人摸到了大象不同的部位，都以为大象就是自己摸到的那样子。",
+    "content": "<p>古印度有个国王，为了向他的大臣们说明一个道理，牵来一头大象，又请了四个生来就没有见过光明的盲人，让他们用手摸摸大象，然后描述大象长什么样子。</p><p>第一个盲人摸到了大象的肚子，圆滚滚、硬邦邦的，他马上说：「大象嘛，就像一堵墙！」第二个盲人摸到了大象的腿，又粗又圆，他马上说：「不对不对，大象明明是一根大柱子！」</p><p>第三个盲人摸到了大象的鼻子，长长的、软软的，还会动，他大声说：「你们都错了，大象像一条大蛇！」第四个盲人摸到了大象的耳朵，薄薄的、宽宽的、扇来扇去的，他得意地宣布：「大象分明像一把大蒲扇嘛！」</p><p>四个盲人争得面红耳赤，都坚信自己才是对的。国王和大臣们在旁边哈哈大笑——他们每个人都只摸到了大象的一小部分，就以为这部分代表了全部。这个佛经故事传入中国后成了家喻户晓的成语，提醒我们：不要像盲人摸象一样，只看局部就妄下结论，要全面了解事物才能看清真相。</p>",
+    "cat": "cy",
+    "id": "cy_100",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "助纣为虐",
+    "cover": "👑",
+    "desc": "有人帮助商纣王做了更多的坏事，最后和纣王一起自取灭亡。",
+    "content": "<p>商朝末年，出了一个中国历史上有名的暴君——商纣王。他整天在宫中享乐，建造了酒池肉林，把忠臣的心剖出来看有几窍，还发明了炮烙之刑把犯人活活烫死。</p><p>纣王身边有几个特别会拍马屁的大臣，纣王想做什么坏事他们就帮忙想更坏的主意，纣王还没想到的坏事他们都提前想到了。老百姓恨得咬牙切齿，说这些人简直是「助纣为虐」——帮助纣王施行暴虐。其中费仲和尤浑是最典型的两个。</p><p>西伯侯姬昌（即后来的周文王）多次上书劝说纣王改过自新，纣王不但不听，反而把他关进了大牢。姬昌在牢里演算出了《易经》的六十四卦，后来他的儿子周武王率领诸侯起兵，推翻了商朝。</p><p>商纣王在摘星楼自焚而死，而那些助纣为虐的奸臣们，一个也没有好下场。这个成语警示我们：帮助坏人做坏事的人，看起来是在巴结和讨好，实际上是在给自己挖坑。终有一天，会跟着坏人一起跌落深渊。</p>",
+    "cat": "cy",
+    "id": "cy_101",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "破釜沉舟",
+    "cover": "⛵",
+    "desc": "项羽带兵渡河后砸破锅灶、凿沉船只，断了后路，激励将士拼死一战。",
+    "content": "<p>秦朝末年，天下大乱。楚国的将军项羽率领军队渡过漳河，要去和秦军的主力决一死战。秦军的兵力远远超过楚军，项羽的将士们难免有些害怕。</p><p>项羽看着大家的脸色，知道如果不做点什么，士气就会崩溃。渡河之后，他下了一道让所有人目瞪口呆的命令：把做饭的锅碗瓢盆全部砸碎，把渡河的船只全部凿沉！将士们面面相觑：「那我们怎么回去？」</p><p>项羽站在高处对全军大喊：「我们没有了回去的路，也没有了做饭的工具。想活下去，只有一条路——打败秦军，吃他们的粮食！」全军上下一片激昂，既然退路已断，就只能往前冲。楚军像饿虎一样扑向秦军。</p><p>那一战，楚军以一当十，把兵力远超自己的秦军打得落花流水。从此项羽声威大震，诸侯们见到他都跪着不敢抬头。「破釜沉舟」成了中国人的精神符号——一旦下定决心，就切断一切退路，一往无前往前冲。</p>",
+    "cat": "cy",
+    "id": "cy_102",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "负荆请罪",
+    "cover": "🌿",
+    "desc": "大将廉颇背着荆条向蔺相如请罪，两人从此成为生死之交。",
+    "content": "<p>战国时期，赵国有两个了不起的人物——文有蔺相如，武有廉颇。可廉颇心里很不舒服：「蔺相如不过是凭一张嘴皮子混上去的，我可是用命在战场上拼来的，凭什么他的地位比我高？」</p><p>廉颇逢人就骂蔺相如，甚至放出话说碰到蔺相如一定要给他难堪。蔺相如听说后，处处回避廉颇——在街上远远看到廉颇就绕道走，上朝时也尽量不和廉颇争先后。蔺相如的门客都觉得太窝囊了：「您何必这样怕他？」</p><p>蔺相如语重心长地说：「秦国之所以不敢攻打赵国，就是因为有我和廉将军在。如果我们两个内斗起来，国家就危险了。我躲避他不是怕他，而是为了国家大局。」这话传到了廉颇的耳朵里。</p><p>廉颇一听，惭愧极了。他脱掉上衣，背着荆条，徒步走到蔺相如的门前，跪地请罪：「我廉颇目光短浅，不知道您胸怀如此宽广！请用这荆条狠狠地抽打我吧！」蔺相如连忙扶起他，两人手挽手走进了大厅，从此结为生死之交。「负荆请罪」从此成了中国人心中诚恳认错、求得谅解的代名词。</p>",
+    "cat": "cy",
+    "id": "cy_103",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "望梅止渴",
+    "cover": "🫐",
+    "desc": "曹操的大军在炎炎烈日下行军口渴难耐，曹操说前面有一片梅林，大家都流口水不渴了。",
+    "content": "<p>三国时期，曹操带兵出征。正值盛夏，烈日当空，大地被晒得冒烟。士兵们走了大半天找不到一滴水，个个嘴唇干裂，脚步踉跄，眼看就要走不动了。</p><p>曹操骑着马，看到士兵们疲惫不堪的样子，心里十分焦急。他脑子一转，突然举起马鞭往前一指，大声喊道：「将士们，再坚持一下！前面不远处有一大片梅林，树上挂满了熟透的梅子，又酸又甜，走到那里大家就能吃个够！」</p><p>士兵们一听到「梅子」两个字，嘴里立刻开始冒酸水，喉咙也不那么干了。大家一下子来了精神，想着酸酸甜甜的��子，脚下的步伐也快了起来。他们拼命往前赶路，终于走出了干旱地带，找到了水源。</p><p>其实曹操根本不知道前面有没有梅林，他只是想用这个办法刺激大家的口腔产生唾液，暂时缓解口渴。后来人们就用「望梅止渴」比喻用空想来安慰自己。但换个角度看，这何尝不是一种智慧——有时候走着走着，路就有了。在绝境中，需要的可能只是一点点想象。</p>",
+    "cat": "cy",
+    "id": "cy_104",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "纸上谈兵",
+    "cover": "📖",
+    "desc": "赵括擅长谈论兵法，可一到战场就被打得全军覆没。",
+    "content": "<p>战国时期，赵国名将赵奢的儿子赵括从小就很聪明，把兵书背得滚瓜烂熟。每次和父亲讨论兵法，赵奢都说不过他。赵括十分得意，觉得自己是天生的大将军。</p><p>可赵奢临死前却对妻子说：「绝对不要让括儿领兵打仗，他只会纸上谈兵，上了战场一定会吃大亏的。」秦国攻打赵国时，赵国老将廉颇坚守不战。秦国派人到赵国散布谣言：「秦国人最怕赵括当将军！」</p><p>赵王信以为真，撤下了廉颇，换上了年轻气盛的赵括。赵括一到前线，把廉颇的防守策略全部推翻，纸上画了一套精妙的作战方案，然后下令全线出击。秦军统帅白起笑着说：「赵括送上门来了。」</p><p>白起佯装败退，把赵括引进了伏击圈。赵括的大军被切成两段，粮草断绝，四十万赵军全军覆没。赵括本人在乱军中被射死。这就是中国历史上最惨烈的一次「纸上谈兵」——光有书本知识远远不够，真正的本领要在实践中磨练。</p>",
+    "cat": "cy",
+    "id": "cy_105",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "井底之蛙",
+    "cover": "🐸",
+    "desc": "井底的青蛙以为天空只有井口大，直到大海龟告诉它什么是真正的广阔。",
+    "content": "<p>在一口古老的水井里，住着一只快活的青蛙。它从出生起就没有离开过这口井，每天在井水里游来游去，累了就跳到井壁的砖缝里休息，日子过得悠然自得。</p><p>有一天，一只来自东海的大海龟路过井边。青蛙骄傲地对大海龟说：「你看我多快乐！这口井就是我的王国——高兴了就在井栏杆上跳来跳去，累了就回到井壁的洞里睡觉。那些小蝌蚪小螃蟹都比不上我！快下来玩玩吧！」</p><p>海龟伸头看了看，井口小小的，水浅浅的，连它一只脚都放不下。它对青蛙说：「你见过大海吗？大海啊，千里之远不足以形容它的宽阔，千丈之高不足以形容它的深邃。住在那样广阔的天地里，才是真正的快乐啊！」</p><p>青蛙听得目瞪口呆——原来世界上还有这么大的地方！它第一次意识到，自己一直以为的「整个世界」，不过是巴掌大的一口井而已。这个成语警示我们：不要像井底之蛙一样目光短浅，要多出去看看，才知道天地有多宽广。</p>",
+    "cat": "cy",
+    "id": "cy_106",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "掩耳盗铃",
+    "cover": "🔔",
+    "desc": "有人想偷铃铛，捂住自己的耳朵以为别人也听不到，结果被人当场抓住。",
+    "content": "<p>古代有一个人看上了邻居家门口挂着的一口漂亮的铜铃。那铃铛风一吹就叮当作响，声音清脆悦耳。他动起了歪脑筋——要趁夜晚把铃铛偷走。</p><p>可是他刚伸手去摘，铃铛就叮叮当当地响了起来。他赶紧缩回手，心想：这可怎么办？铃铛一响别人就能听见呀。他绞尽脑汁，忽然一拍大腿：「有了！我捂住自己的耳朵不就行了？我听不见，别人不也听不见了吗？」</p><p>夜深了，这个人捂着自己的耳朵悄悄地摘下了铃铛。铃铛哗啦哗啦地响，声音在寂静的夜里传得老远。他捂着耳朵得意洋洋地往家走，以为自己的妙计天衣无缝。还没走到家门口，邻居们就纷纷跑出来把他团团围住了。</p><p>这个人被当场抓住，还在那儿困惑地说：「我不是已经把耳朵捂住，听不到声音了吗？你们怎么还能听到？」围观的人笑得前仰后合。这个成语讽刺那些自己欺骗自己、以为自欺就能欺人的人——捂住自己的耳朵，不代表别人的耳朵也被堵住了。</p>",
+    "cat": "cy",
+    "id": "cy_107",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "杯弓蛇影",
+    "cover": "🍷",
+    "desc": "客人看到酒杯里有蛇的影子，吓得不敢喝酒，原来是墙上弓的倒影。",
+    "content": "<p>晋朝有个人叫乐广，非常好客。一天他请一位好朋友来家里喝酒。朋友端起酒杯正要喝的时候，忽然看到酒杯里好像有一条小蛇在游动！他吓得手一抖，但碍于面子还是硬着头皮把酒喝了下去。</p><p>回到家后，这位朋友总觉得肚子里有蛇在蠕动，很快就病倒了，吃什么药都不见效。乐广听说朋友病了，前去探望。朋友支支吾吾地说：「那天在你家喝酒的时候，我把一条蛇喝进了肚子里……」</p><p>乐广觉得奇怪极了，回家后仔仔细细地检查了那天喝酒的房间。他坐在朋友当时坐的位子上，端起酒杯一看——果然有一条蛇的影子在酒里晃动！但他抬头一找，原来墙上挂着一张弓，弓的影子映在酒杯里，看起来就像一条蛇。</p><p>乐广马上把朋友请回家，让他坐在原来的位置上，指着墙上的弓说：「你肚子里的蛇，其实是这张弓的影子啊！」朋友一看，恍然大悟，心里的恐惧顿时烟消云散，病也一下子好了。「杯弓蛇影」用来形容人疑神疑鬼、自相惊扰。</p>",
+    "cat": "cy",
+    "id": "cy_108",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "杞人忧天",
+    "cover": "😰",
+    "desc": "杞国有个人整天担心天会塌下来，吃不好饭睡不着觉，被人开导后才明白是瞎操心。",
+    "content": "<p>春秋时期，杞国有一个人，整天愁眉苦脸、唉声叹气。邻居问他怎么了，他忧心忡忡地说：「我担心天会塌下来呀！你看天就在我们头顶上，万一哪天它塌了，我们不都被砸扁了吗？」</p><p>邻居一听哭笑不得：「天是堆积起来的大气，怎么会塌呢？我们每天都生活在天底下，从来没见天掉下来过。」杞人又说：「那天上的太阳、月亮和星星呢，它们不会掉下来吗？」邻居说：「那些也都是发光的气体，就算掉下来也伤不到人。」</p><p>杞人想了想，好像放心了。可没过几天，他又开始发愁：「可是地呢？地底下是空的吗？万一地陷下去了，我们不是都掉进深渊里去了？」他越想越怕，饭吃不下，觉睡不着，整个人瘦了一大圈。</p><p>邻居又好气又好笑，只好用最朴素的道理安慰他：「大地在我们脚下踩了千千万万年，从来没见它陷过。你担心的事情全是自己在吓自己呀！」后人用「杞人忧天」比喻那些不必要的、多余的担忧。有些事情根本不会发生，瞎操心只会让自己难受。</p>",
+    "cat": "cy",
+    "id": "cy_109",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "叶公好龙",
+    "cover": "🐉",
+    "desc": "叶公到处画龙雕龙说喜欢龙，可真龙来了却吓得魂飞魄散。",
+    "content": "<p>春秋时期，楚国有个贵族叫叶公，他逢人就说自己最喜欢龙。他的衣服上绣着龙，柱子上雕着龙，墙上画着龙，就连喝酒用的杯子上也刻着龙。方圆百里都知道叶公是个忠实的龙爱好者。</p><p>天上的真龙听说人间有一位这么喜欢自己的叶公，感动极了。它想：这个人如此喜爱我，我应该下凡去见见他，和他做朋友才对呀！于是真龙从云端探下头来，把龙头搭在叶公家的窗台上，龙尾巴拖在厅堂里。</p><p>叶公正在书房里画龙，忽然听到窗外一声巨响。他抬头一看——一条真正的巨龙正瞪着一双铜铃大的眼睛望着他！那龙鳞闪闪发光，龙须随风飘动，比他在画里看到的威猛一万倍。</p><p>叶公吓得脸色煞白，扔下毛笔转身就跑，跑得比兔子还快，连魂都快吓丢了。真龙失望地飞回了天上，心想：原来你喜欢的不是我，而是你自己想象中那个安全的、不会动的龙啊。后来人们用「叶公好龙」讽刺那些表面上爱好某样事物、实际上惧怕它的人。</p>",
+    "cat": "cy",
+    "id": "cy_110",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "狐假虎威",
+    "cover": "🦊",
+    "desc": "狡猾的狐狸走在老虎前面，骗森林里的动物，大家都以为是老虎要来了。",
+    "content": "<p>大老虎在森林里抓住了一只狐狸，正张着血盆大口准备享用美餐。狐狸虽然吓得两腿发抖，但脑子转得飞快，装出一副镇定的样子说：「你不能吃我！」老虎愣了：「为什么？」</p><p>狐狸一本正经地说：「我是天帝派到森林里来做百兽之王的，你吃了我就是违抗天命！不信你跟着我走一趟，看看森林里的动物是不是一见到我就逃跑。」老虎半信半疑，决定跟狐狸走一遭。</p><p>狐狸大摇大摆地走在前面，老虎紧紧跟在后面。森林里的兔子、鹿、猴子们远远看到狐狸，本来还想打个招呼，可一看到狐狸身后那只威猛的大老虎，吓得拔腿就跑。狐狸回头得意洋洋地说：「看到了吧？都怕我！」</p><p>笨老虎不知道动物们怕的不是狐狸而是自己，被狐狸耍得团团转，最后灰溜溜地放走了狐狸。这个成语用来形容借别人的势力来吓唬人——就像狐狸本身并不可怕，可怕的是它背后的老虎。同时也在提醒我们：不要被表面现象迷惑了双眼。</p>",
+    "cat": "cy",
+    "id": "cy_111",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "塞翁失马",
+    "cover": "🐴",
+    "desc": "老翁丢了马大家来安慰，他说未必是坏事；马带回野马大家来道贺，他说未必是好事。",
+    "content": "<p>北方边塞上住着一位老翁，人们都叫他塞翁。塞翁养了一匹好马。有一天，那匹马不知怎么跑去了塞外的胡地，邻居们都来安慰他：「你别太难过了，马丢了可真可惜。」</p><p>塞翁笑了笑说：「丢了马就一定是坏事吗？说不定还是一件好事呢。」大家都不理解，觉得他是在自我安慰。谁知过了几个月，那匹马不但自己跑了回来，还从塞外带回了一匹高大的胡地骏马。邻居们纷纷来道贺：「果然被你说中了，真是天大的好事！」</p><p>塞翁却皱着眉说：「谁知道这是福还是祸呢？」果然，塞翁的儿子骑着那匹新马出门，不小心从马背上摔下来摔断了腿。邻居们又来安慰，塞翁还是那般平静：「谁知道这又不是一件好事？」</p><p>没过多久，胡人大举入侵，边塞上的年轻人都被征召入伍，战死沙场十之八九。只有塞翁的儿子因为腿断了免于征召，父子俩都活了下来。这个成语告诉我们：好事可以变坏事，坏事也可以变好事——福祸相依，不必为一时的得失太过悲伤或太过得意。</p>",
+    "cat": "cy",
+    "id": "cy_112",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "一鸣惊人",
+    "cover": "🐦",
+    "desc": "楚庄王当了三年不务正业的昏君，突然振作起来一飞冲天让所有人都震惊了。",
+    "content": "<p>春秋时期，楚庄王即位三年了，可从来没处理过一件国事。他白天打猎喝酒，晚上听歌跳舞，还下了一道奇怪的命令：「谁敢进谏，杀无赦！」大臣们都急死了，但没有一个人敢开口。</p><p>大臣伍举想出了一个巧妙的办法。他去见庄王说：「大王，臣听说城外有一只大鸟，停在树上三年了，不飞也不叫——这是什么鸟啊？」庄王笑道：「三年不飞，一飞一定冲天；三年不鸣，一鸣一定惊人！」</p><p>原来楚庄王这三年不是在玩，而是在暗地里观察——哪些大臣是忠臣、哪些是奸臣，哪些国家是朋友、哪些国家是敌人，他心里全都一清二楚。第二天早朝，楚庄王一口气提拔了九个忠臣，诛杀了五个奸臣。</p><p>从此他励精图治，整顿内政，训练军队，在短短几年内就使楚国变得空前强大，成了春秋时期的霸主。成语「一鸣惊人」说的就是平时不声不响、关键时刻做出惊人成绩的人。真正有本事的人，不需要天天吹嘘自己。</p>",
+    "cat": "cy",
+    "id": "cy_113",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "朝三暮四",
+    "cover": "🐒",
+    "desc": "养猴的老人对猴子说早上给三个果子晚上给四个，猴子大怒；改成早上四个晚上三个，猴子大喜。",
+    "content": "<p>宋国有一个人养了一大群猴子，时间长了家里的粮食不够吃了，他决定减少猴子们的食物。他对猴子们宣布：「从今天开始，早上给你们三颗橡子，晚上给你们四颗，够不够？」</p><p>猴子们一听到早上只有三颗，全都勃然大怒，上蹿下跳地表示抗议。它们的爪子乱舞，吱吱怪叫，有的还挑衅地朝他扔果核。养猴人做出一副思考的样子，然后改口说：「那这样吧——早上给你们四颗橡子，晚上给你们三颗，这样总行了吧？」</p><p>猴子们一听早上有四颗果子，高兴得手舞足蹈，立刻停止了吵闹，乖乖地趴下来等投喂。它们还觉得自己争取到了很大的胜利，互相庆祝起来。养猴人偷偷笑了。</p><p>早三晚四和早四晚三——总数不都是七颗吗？一点儿没变，猴子们却被不同的说法给骗了。现在的「朝三暮四」有两个意思：一个是说有些人像猴子一样只看表面不看实质，另一个是说有些人不讲信用、反复无常。记住这个故事，你就能一眼看穿那些换汤不换药的把戏！</p>",
+    "cat": "cy",
+    "id": "cy_114",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "鹬蚌相争",
+    "cover": "🐚",
+    "desc": "鹬鸟想吃蚌肉却被蚌夹住了嘴，谁也不肯先放手，结果两个都被渔夫捉走了。",
+    "content": "<p>阳光明媚的河滩上，一只河蚌张开两片亮闪闪的壳，舒舒服服地晒着太阳。一只长腿的鹬鸟飞过来找东西吃，看到那鲜嫩的蚌肉口水直流，冲上去一口啄了下去。</p><p>河蚌反应更快，啪地一声夹住了鹬鸟的长嘴，死死不放。鹬鸟甩着头想把蚌甩掉，可怎么也甩不开。鹬鸟瓮声瓮气地说：「今天不下雨，明天不下雨，你就会变成一只死蚌干！」</p><p>河蚌从壳缝里发出得意的声音：「今天不放你，明天不放你，你就会变成一只死鹬鸟！」两个人就这样僵持在河滩上——鹬鸟拔不出嘴，河蚌不敢松开壳，谁也不肯先让步。</p><p>这时候走来了一个背着鱼篓的老渔夫，看到这有趣的一幕哈哈大笑：「两个笨蛋，争来争去，都便宜了我！」说完轻轻松松地把鹬鸟和河蚌一起捉进了鱼篓里，回家做了一锅鲜美的鹬蚌汤。这个成语告诉我们：双方争执不下、互不相让，结果只会让第三方从中得利。有时候退一步，反而能海阔天空。</p>",
+    "cat": "cy",
+    "id": "cy_115",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "悬梁刺股",
+    "cover": "📚",
+    "desc": "苏秦头悬梁、锥刺股，刻苦读书，终于成为六国宰相。",
+    "content": "<p>战国时期有一个叫苏秦的读书人，一开始他出去闯荡四处碰壁，回到家连嫂子都不给他做饭吃。苏秦受了刺激，发誓不读出大名堂来绝不出门。</p><p>可读书实在太容易犯困了。尤其是夜深人静的时候，读着读着眼皮就打架了。怎么办呢？苏秦想出了两个狠招：第一，他找来一根绳子，一头绑在房梁上，一头绑在自己的头发上。只要一点头打瞌睡，绳子就拉扯头皮，疼得他一激灵就清醒了。</p><p>第二招更狠——他准备了一根锥子放在桌边。眼皮实在撑不住的时候，他就拿起锥子往自己的大腿上刺一下，疼得血都流出来了，还怎么睡得着？就这样，苏秦靠着悬梁刺股的精神，把所有的兵书、策论都背得滚瓜烂熟。</p><p>后来苏秦再次出山，凭真本事说服了六国联合起来抵抗秦国，一个人挂六国相印，威风凛凛地回到家乡。嫂子跪在路边都不敢抬头看他。这个成语形容人用极其刻苦的方式发愤读书，也用来激励我们在学习上要对自己狠一点。</p>",
+    "cat": "cy",
+    "id": "cy_116",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "愚公移山",
+    "cover": "⛰️",
+    "desc": "年近九十的愚公率领全家挖山开路，终感动天帝将两座大山移走。",
+    "content": "<p>北山脚下住着一个老人，大家都叫他愚公。他快九十岁了，家门口正对着太行和王屋两座大山，每次出门都要绕很远的路。有一天愚公召集全家说：「咱们齐心协力把这两座山挖平，打开一条通往豫南的大路！」</p><p>全家人除了愚公的妻子有些犹豫之外，其他人都积极响应。第二天天还没亮，愚公就带着儿子、孙子们扛着锄头上了山。他们挖下来的土石，要走上大半年的路程才能倒进渤海里。邻居家一个七八岁的小孩也蹦蹦跳跳地跑来帮忙。</p><p>一个叫智叟的老头站在旁边哈哈大笑：「愚公啊愚公，你都这么大岁数了，连山的一根毫毛都拔不掉，还想移山？」愚公平静地回答：「我死了有儿子，儿子死了有孙子，子子孙孙是没有穷尽的。山又不会增高，还怕挖不平吗？」</p><p>山神听了愚公的话，半信半疑地报告了天帝。天帝被愚公这种坚持不懈的精神深深打动了，派了两个大力神夸娥氏二子，连夜把两座大山背走了。从此愚公家门前一片通畅。这个故事告诉我们：只要有恒心有毅力，再难的事情也能做成。</p>",
+    "cat": "cy",
+    "id": "cy_117",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "刻舟求剑",
+    "cover": "⚔️",
+    "desc": "楚国人坐船过江时宝剑掉进水里，他在船边刻了一个记号，等到岸了才下水去找。",
+    "content": "<p>古时候，有个楚国人坐船渡江。船行到江中心的时候，一阵风吹来，他的宝剑从腰间滑落，扑通一声掉进了滚滚江水中。船上的乘客都替他惋惜：「哎呀，可惜了一把好剑！」</p><p>这个楚国人却不慌不忙地拿出一把小刀，在船舷上宝剑掉落的位置刻了一道深深的记号。他得意地对大家说：「看，宝剑就是从这里掉下去的，记住了。」大家你看我我看你，都不知道他在想什么。</p><p>船继续往前行，到了岸边靠了岸。楚国人站起身来，顺着船舷上那道记号，扑通一声跳进江里，在水里摸来摸去寻找他的宝剑。摸了半天什么也没找到。船上的乘客终于忍不住哈哈大笑起来。</p><p>一个老人忍着笑对他说：「船已经走了这么远，你的剑可没有跟着船走啊！它还在江中心沉着呢。」楚国人这才恍然大悟。「刻舟求剑」讽刺那些不顾情况变化、死板教条的人——船在移动，剑不移动，在船上做记号又有什么用呢？世界在变，方法也得跟着变才行。</p>",
+    "cat": "cy",
+    "id": "cy_118",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "买椟还珠",
+    "cover": "💎",
+    "desc": "楚国人把珍珠装在最精美的盒子里卖，结果买主被盒子迷住了，只要盒子不要珍珠。",
+    "content": "<p>楚国有一个珠宝商人，他有一批上等的珍珠要卖到郑国去。为了让珍珠看起来更高档，他花了不少心思——用最名贵的木兰木做了小匣子，用香料熏得香喷喷的，外面还用玉石和翡翠镶嵌装饰，光彩夺目。</p><p>到了郑国的集市上，他把珠宝摆在摊位最醒目的位置。一个郑国人路过，一眼就被那个精美绝伦的木头盒子吸引了。他拿在手里翻来覆去地看，爱不释手。最后他付了一大笔钱买下了这盒珠宝。</p><p>可接下来发生的事让楚国商人目瞪口呆——那个郑国人打开盒子，把里面的珍珠倒出来还给楚国商人说：「我只要这个盒子，珍珠你自己留着吧。」然后就抱着那个空盒子高高兴兴地走了。</p><p>楚国商人哭笑不得：我费这么大功夫做盒子是为了卖珍珠呀，可你倒好，把最珍贵的东西退回来了，只要了那个装东西的盒子！这个成语批评那些没有眼光、分不清主次的人。有时候我们也会犯同样的错误——过分在意表面的形式，却忽略了真正重要的内容。</p>",
+    "cat": "cy",
+    "id": "cy_119",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "滥竽充数",
+    "cover": "🎺",
+    "desc": "南郭先生不会吹竽却混进了三百人的乐队里装模作样，后来国王要一个个单独演奏他就跑了。",
+    "content": "<p>战国时期，齐宣王非常喜欢听吹竽，而且他喜欢大排场——每次都要三百个人一起吹！于是齐宣王下令在全国招募吹竽能手，待遇非常优厚。</p><p>有个叫南郭先生的人根本不会吹竽，但他看到这个机会就动了歪脑筋。他大摇大摆地报了名，混进了三百人的吹竽大乐队里。每次演奏的时候，他就装出一副全神贯注的样子——腮帮子鼓得圆圆的，手指按得紧紧的，身体还随着节拍摇来摆去。混在三百人中间，谁也看不出他在假吹。</p><p>南郭先生就这样轻轻松松地混了好多年的好日子。可好景不长，齐宣王去世了，他的儿子齐湣王继位。新国王也喜欢听吹竽，但他不要三百人合奏，他喜欢一个一个独奏，品味每个人不同的风格。</p><p>南郭先生听到这个消息吓得连夜收拾包袱逃走了。他要是留下来，就该轮到他在国王面前独自吹竽了——那还不得当场露馅？从此，「滥竽充数」就成了对那些靠蒙混过日子、没有真才实学的人的绝妙讽刺。</p>",
+    "cat": "cy",
+    "id": "cy_120",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "东施效颦",
+    "cover": "😣",
+    "desc": "丑女东施看到美女西施皱眉的美态，也学着皱眉，结果更丑了。",
+    "content": "<p>春秋时期，越国有一个美丽的女子叫西施，她住在苎萝山下。西施有心口疼的毛病，每次疼痛发作的时候，她就会用手按住胸口、微微皱起眉头。可她实在太美了，这个皱眉的病态在她脸上显得楚楚动人。</p><p>村子里还有一个叫东施的女子，长相很普通。她看到西施皱眉的样子得到所有人的怜爱和称赞，心里很是羡慕。她想：原来皱眉才是美的秘诀啊！只要我学会了皱眉，不也能变美吗？</p><p>第二天，东施故意用手捂住胸口在村里走来走去，一边走一边使劲地皱着眉头，还故意发出痛苦的哼哼声。她心想：「这下大家一定会觉得我很美了吧！」可她不知道，西施美是因为天生丽质，皱眉只是个附属动作。</p><p>村里人看到东施那副怪模样——本来就不好看的脸再扭曲成那个样子，简直像见了鬼一样，吓得纷纷关上门窗。富人躲在门后不敢出来，穷人干脆拉着老婆孩子搬到别处去了。这个成语用来批评那些不顾自身条件、盲目模仿别人的人。</p>",
+    "cat": "cy",
+    "id": "cy_121",
+    "cat_label": "成语故事"
+  },
+  {
+    "title": "郑人买履",
+    "cover": "👟",
+    "desc": "郑国人去买鞋，忘了带尺码表，宁肯跑回家取也不肯用脚试一下鞋子。",
+    "content": "<p>有个郑国人想买一双新鞋。他先在家里用自己的脚量好了尺寸，工工整整地记在一张小竹简上，心想这样到了集市上就万无一失了。</p><p>到了集市上，他千挑万选终于看中了一双合心意的鞋。正要试穿的时候，他一摸口袋——哎呀！那张记着尺寸的竹简忘在家里了！他对卖鞋的老板说：「糟糕，我把尺码忘在家里了。」</p><p>卖鞋老板好心地说：「那有什么要紧的？您用脚试一下不就知道合不合适了吗？」这个郑国人却一本正经地摇着头：「那怎么行？我只相信我量好的尺寸，不相信自己的脚。」说完他就放下鞋子，一溜烟跑回家去取竹简。</p><p>等他气喘吁吁地拿着竹简跑回集市的时候，天已经黑了，集市早就散了。他站在空荡荡的集市上懊恼不已。有人问他：「你不是有脚吗？直接用脚试不就行了？」他固执地说：「我宁愿相信量好的尺码，也不相信自己的脚！」这个成语用来讽刺那些只信教条、不相信实际情况的教条主义者。</p>",
+    "cat": "cy",
+    "id": "cy_122",
+    "cat_label": "成语故事"
+  }
+];
 
-// ============ 故事数据库：共30个 ============
-const stories = {
+// ============ STAR BG ============
+(function(){const bg=document.getElementById('starsBg');for(let i=0;i<100;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=Math.random()*2.5+1+'px';s.style.height=s.style.width;s.style.setProperty('--dur',(Math.random()*3+2)+'s');s.style.setProperty('--delay',Math.random()*5+'s');bg.appendChild(s);}})();
 
-// === 中国神话 10个 ===
-nezha:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约20分钟 · 🔊 支持朗读',cover:'🔥',coverClass:'cn',title:'哪吒闹海',desc:'脚踩风火轮、手持乾坤圈，三太子闹翻东海龙宫！',content:`<p>在很久很久以前的商朝，有一座城市叫陈塘关，这里的总兵名叫李靖。李靖的夫人怀胎三年零六个月，生下了一个圆圆的大肉球。</p><p>李靖以为是妖怪，拔剑就砍！肉球裂开，一个白白胖胖的小男孩跳了出来，手腕上套着一个金圈，身上缠着一块红绸——这就是哪吒。</p><p>哪吒天生神力，七岁那年夏天，天气特别热。哪吒跑到东海边洗澡，他拿下身上的混天绫在水里一搅——不得了！整个东海都晃动起来，龙宫里的老龙王差点从宝座上摔下来！</p><p>龙王派巡海夜叉上去看看怎么回事。夜叉浮出水面，对着哪吒大吼大叫。哪吒最讨厌别人凶他，拿起乾坤圈一扔——"砰"的一声，夜叉被打回了海底。</p><p>龙王大怒，又派三太子敖丙上去。敖丙骑着避水兽，威风凛凛："你是谁家的小孩？敢来东海捣乱！"哪吒一看来者是龙王的儿子，也不害怕："天热洗澡，碍着谁了？"两人打了起来，哪吒力大无穷，竟然打败了三太子！</p><p>龙王悲愤交加，上天庭去告状。哪吒知道自己闯了大祸，为了不连累父母和百姓，他做出了一个勇敢的决定——用自己的生命平息了这场风波。后来，在师父太乙真人的帮助下，哪吒用莲花重生，成为了更强大的英雄。</p><p style="text-align:center;color:#FFD700;font-size:18px">✨ 勇气与担当，在哪吒身上闪闪发光 ✨</p>`},
+// ============ STATE ============
+let currentFilter = 'all';
+let currentPage = 1;
+let searchQuery = '';
+const PER_PAGE = 12;
 
-change:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约18分钟 · 🔊 支持朗读',cover:'🌙',coverClass:'cn',title:'嫦娥奔月',desc:'碧海青天夜夜心，月亮上住着一位美丽的仙女',content:`<p>很久以前，天上曾经有十个太阳，烤得大地干裂、河水断流。神箭手后羿登上昆仑山顶，拉开神弓，一口气射下了九个太阳，只留下一个温暖人间。</p><p>人们感谢后羿，称他为大英雄。王母娘娘也赏给后羿一颗不死仙丹——只要吃了它，就能长生不老，飞升成仙。</p><p>但后羿深爱妻子嫦娥，舍不得抛下她一个人成仙，就把仙丹交给嫦娥保管。</p><p>后羿有一个徒弟叫逄蒙，心术不正。他趁后羿外出打猎，闯进嫦娥的房间，逼她交出仙丹。嫦娥不想让坏人得逞，情急之下，一口吞下了仙丹。</p><p>仙丹入腹，嫦娥的身体变得比羽毛还轻，双脚离开了地面，穿过窗户，飘向了天空……她越飘越高，越飘越远，一直飞到了月亮上。</p><p>后羿回来后，发现妻子不见了，追出门外，只看到月亮上多了一个美丽的身影。从此，每年八月十五月圆之夜，后羿都会摆上嫦娥最爱吃的月饼和水果，遥望明月，思念妻子。</p><p style="text-align:center;color:#FFD700">这就是中秋节拜月、吃月饼的由来。</p>`},
+// ============ HELPERS ============
+function getCat(id) { return id.split('_')[0]; }
+function getCatLabel(cat) { return {cn:'中国神话',gr:'希腊神话',no:'北欧神话',cy:'成语故事'}[cat]||''; }
+function getTagClass(cat) { return {cn:'tag-gold',gr:'tag-blue',no:'tag-teal',cy:'tag-rose'}[cat]; }
+function getCoverClass(cat) { return cat; }
 
-houyi:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'🏹',coverClass:'cn',title:'后羿射日',desc:'天上十个太阳烤焦大地，神箭手后羿挺身而出',content:`<p>远古时代，东方天帝有十个儿子，他们就是十个太阳。每天，只有一个太阳会驾着金车从东方升起、西方落下，给人间带来光明和温暖。</p><p>可是有一天，十个太阳觉得一个人出行太无聊了，就商量着一起跑到天上去玩。这一下可不得了——十个太阳同时挂在天空，大地被烤得像火炉一样！</p><p>庄稼枯死了，河流干涸了，野兽从森林里跑出来到处伤人。老百姓苦不堪言，纷纷向天帝祈祷求救。</p><p>天帝派来神箭手后羿。后羿带着一把红色的神弓和十支白色的神箭，登上最高的昆仑山。他对准天上的太阳，拉满弓弦——"嗖"！一支箭射下一个太阳。</p><p>后羿一连射下八个太阳，正要对第九个拉弓时，人们喊道："留一个吧！没有太阳，世界会陷入永远的黑暗！"</p><p>于是，天上只剩下一个太阳，每天按时升起落下。大地恢复了生机，庄稼重新生长，河水再次流淌。后羿成为了万民敬仰的大英雄。</p>`},
+function getFilteredStories() {
+  let arr = [...STORIES];
+  if (currentFilter !== 'all') arr = arr.filter(s => s.cat === currentFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    arr = arr.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.cat_label.includes(q));
+  }
+  return arr;
+}
 
-nvwa:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约17分钟 · 🔊 支持朗读',cover:'🪨',coverClass:'cn',title:'女娲补天',desc:'天塌了一个大窟窿，女娲炼五色石补天救苍生',content:`<p>在天地刚刚形成不久的时候，水神共工和火神祝融打了一场惊天动地的大仗。共工打输了，一怒之下撞向不周山——这座山是支撑天空的巨柱之一。</p><p>"轰隆——"天柱断了，天空裂开一个大窟窿，天河的水哗哗地往下灌。大地裂开深沟，火焰从地缝里喷出来，洪水淹没了村庄，猛兽四处吃人。</p><p>人类的女神——女娲娘娘看到这一切，心疼极了。她决定要把天补好，拯救她创造的子民。</p><p>女娲走遍山川，挑选了五种颜色的石头——红、黄、蓝、白、黑，堆成一座小山。她用神火把这些石头炼了七七四十九天，炼成了闪闪发光的五色石浆。</p><p>女娲飞到天空的裂缝处，一块一块地把五色石补上去。补啊补啊，天河不再漏水了！最后还剩一块小石头，女娲随手一扔，落在了大荒山——据说，那就是后来贾宝玉出生的那块通灵宝玉呢。</p><p>天补好了，女娲又砍下一只大龟的四条腿，代替天柱撑起四极。她烧芦苇灰堵住了洪水，赶走了猛兽。人类的世界终于恢复了平静。</p>`},
-
-dayu:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约19分钟 · 🔊 支持朗读',cover:'🌊',coverClass:'cn',title:'大禹治水',desc:'三过家门而不入，大禹用十三年治好了天下洪水',content:`<p>尧帝时期，中原大地爆发了史无前例的大洪水。河水泛滥，淹没了田地村庄，百姓流离失所，只能跑到山上去住。</p><p>尧帝派鲧去治水。鲧用了九年时间到处筑堤堵水，可是洪水越堵越高，最后堤坝崩溃，灾情反而更严重了。鲧因此被治了罪。</p><p>鲧的儿子禹继承了父亲的使命。禹没有像父亲那样一味堵水，而是走遍天下，观察山川河流的走向。他发现：洪水东流，最终都汇入大海——与其堵住它们，不如给洪水挖一条路，让它们乖乖地流向大海！</p><p>大禹带着百姓们挖河开渠，风里来雨里去，手上磨出了厚厚的老茧，脚趾甲都泡掉了。他曾经三次路过自己的家门口，听见屋里传来妻子和孩子的说话声，但他咬咬牙，继续赶路——洪水还没治好，哪有时间回家呢？</p><p>就这样，大禹花了整整十三年，终于让黄河、长江和其他河流都乖乖地流进了大海。百姓回到了平原上重新耕种，中原大地恢复了生机。</p><p>舜帝被大禹的精神感动，把王位禅让给了他。大禹建立的夏朝，也是中国历史上第一个世袭王朝。</p>`},
-
-kuafu:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约14分钟 · 🔊 支持朗读',cover:'🏃',coverClass:'cn',title:'夸父追日',desc:'一个巨人为了追逐太阳，跑过千山万水，最终化作桃林',content:`<p>在北方的大荒原上，住着一个叫夸父的巨人。他身材高大，力大无穷，耳上挂着两条黄蛇，手里握着两条黄蛇，看起来威风凛凛。</p><p>有一天，夸父看着西沉的太阳，忽然起了念头："太阳跑得可真快啊！如果我追上去，把它捉住，让它永远挂在天上，晚上大家就不用摸黑走路了！"</p><p>说干就干！夸父迈开大步，朝着太阳飞奔而去。他跑过了一座又一座山，跨过了一条又一条河，大地在他脚下震动，飞鸟被他甩在身后。</p><p>可是太阳实在太热了！夸父跑到半路，口干舌燥，汗水像下雨一样滴在地上。他跑到黄河边，一口气喝干了黄河的水；又跑到渭河边，喝干了渭河。可还是不解渴！</p><p>夸父想去北方的大泽喝水，可还没到那儿，就渴得倒下了。他用尽最后力气把手杖扔了出去——手杖落地的地方，长出了一大片桃林。</p><p>这片桃林后来成了行人歇脚乘凉的好去处，树上结满了鲜甜的桃子。人们说，那是夸父留给后人的礼物——即使追不到太阳，他的心愿仍然化作了甘甜。</p>`},
-
-pangu:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'🥚',coverClass:'cn',title:'盘古开天辟地',desc:'巨大的盘古从混沌中醒来，劈开了天与地',content:`<p>很久很久以前，没有天，没有地，没有光亮，没有声音——整个世界就像一个巨大无比的鸡蛋，里面一片混沌。在这个"鸡蛋"里，睡着一位巨人——盘古。</p><p>盘古睡了整整一万八千年。终于有一天，他醒了。眼前什么也看不见，浑身被闷得难受极了。盘古一怒之下，抡起一把巨斧——"咔嚓！"</p><p>只听得一声巨响，混沌被劈成了两半！轻而清的东西缓缓上升，变成了天；重而浊的东西慢慢下沉，变成了地。</p><p>盘古怕天地再合拢，就头顶天、脚踏地，站在天地之间。他每天长高一丈，天就升高一丈，地就加厚一丈。就这样又过了一万八千年，天变得极高，地变得极厚，盘古也变成了顶天立地的巨人。</p><p>盘古太累了，终于倒下了。他呼出的最后一口气变成了风和云；他的左眼变成了太阳，右眼变成了月亮；他的身体变成了高山，血液变成了江河，头发变成了星星……</p><p>盘古用他的整个身体，创造出了我们这个世界。</p>`},
-
-baishe:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约22分钟 · 🔊 支持朗读',cover:'🐍',coverClass:'cn',title:'白蛇传',desc:'西湖断桥边，白娘子与许仙的千年之恋',content:`<p>清明时节，杭州西湖边下着蒙蒙细雨。断桥之上，一个书生撑着油纸伞——他叫许仙，是个善良的药铺伙计。这时，两位美丽的女子也在桥边避雨，一位穿白衣，一位穿青衣。</p><p>许仙把自己的伞借给了白衣女子。白衣女子抬头看了他一眼，微微一笑——这一笑，让许仙的心砰砰直跳。他哪里知道，这位白衣女子其实是一条修炼了千年的白蛇，名叫白素贞；青衣的是她的妹妹小青，是一条青蛇。</p><p>白素贞千年修行，只为来人间报答许仙前世的一个恩情。他们相爱了，结为夫妻，在镇江开了一家药铺——"保和堂"。白娘子医术高明，悬壶济世，救治了无数穷苦百姓。</p><p>可是金山寺的法海和尚看穿了白娘子的身份。他认为人妖不能相恋，用计把许仙骗到金山寺关了起来。白娘子为救丈夫，与小青一起水漫金山，引发了一场惊天动地的大战。</p><p>最终，白娘子被压在雷峰塔下。但她的真情感动了天地，多年后，小青修炼成功，劈开雷峰塔，救出了白娘子。雷峰塔倒，西湖水干——白蛇与许仙，终于团圆。</p>`},
-
-niulang:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'🌟',coverClass:'cn',title:'牛郎织女',desc:'银河两岸，牛郎织女每年七夕鹊桥相会',content:`<p>天上有七位仙女，最小的叫织女，她负责在天上织出美丽的云彩。地上有个放牛的少年叫牛郎，他勤劳善良，和一头老黄牛相依为命。</p><p>老黄牛其实是一头神牛。它告诉牛郎：七仙女要到山下的湖里洗澡，你拿走最小的那件仙衣，织女就会成为你的妻子。牛郎照做了，织女果然留在了人间，和他结成了夫妻。</p><p>他们男耕女织，日子十分幸福，还生了一儿一女。可是好景不长——王母娘娘发现织女私自下凡，勃然大怒，派天兵天将把织女抓回了天庭。</p><p>牛郎急了，用扁担挑起两个孩子就去追赶。眼看快要追上了，王母娘娘拔下头上的金簪，在他们之间一划——一道宽阔的银河顿时出现，把牛郎和织女分隔两岸。</p><p>织女在天上哭，牛郎在地上哭，两个孩子喊着妈妈。喜鹊们被感动了，每年七月初七，千万只喜鹊飞上银河，用身体搭成一座鹊桥，让牛郎织女在桥上相会。</p><p style="text-align:center;color:#FFD700">这就是七夕节的由来。据说那天躲在葡萄架下，还能听到牛郎织女说悄悄话呢！</p>`},
-
-zhongkui:{tag:'中国神话',tagClass:'tag-gold',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'⚔️',coverClass:'cn',title:'钟馗捉鬼',desc:'相貌丑陋却心地正义，钟馗是鬼怪最怕的神',content:`<p>唐朝时有个读书人叫钟馗，才华横溢，满腹经纶。他进京赶考，文章写得极好，被考官评为第一名。</p><p>可是皇帝在金殿面试时，看到钟馗长得又黑又丑，心里就不高兴了。虽然欣赏他的才华，却因为相貌而拒绝点他为状元。钟馗悲愤之下，一头撞向柱子……</p><p>钟馗死后到了阴间，阎王爷敬佩他的才华和骨气，封他为"驱魔大神"，赐他一把斩鬼剑，专门捉拿人间作恶的鬼怪。</p><p>有一次，唐玄宗生病了，梦见一个小鬼在殿上捣乱。正着急时，一个穿着绿袍、满脸胡须、面目威严的大汉跳了出来，一把抓住小鬼，三口两口把它吃掉了！</p><p>唐玄宗问："你是谁？"大汉回答："臣是钟馗，愿为陛下除尽天下妖孽！"唐玄宗醒来后，病就好了。他叫来画师吴道子，把梦中的钟馗画了下来。</p><p>从此，钟馗成了捉鬼之神。每年过年，家家户户都会贴钟馗的画像，保佑全家平安。</p>`},
-
-// === 希腊神话 10个 ===
-athena:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约25分钟 · 🔊 支持朗读',cover:'🏛️',coverClass:'gr',title:'雅典娜的智慧之盾',desc:'智慧女神发现盾牌上的古老预言，踏上冒险之旅',content:`<p>在奥林匹斯山巅，金色的阳光穿透云层，照耀着众神的宫殿。智慧女神雅典娜站在她的神殿前，手中握着那面闪闪发光的盾牌——埃癸斯。</p><p>这面盾牌是宙斯送给她的礼物，上面镶嵌着美杜莎的头颅。但今天，雅典娜发现了一件奇怪的事情——盾牌的边缘，出现了一行她从没见过的文字，那是古老的预言。</p><p>"当星辰排列成三角形，被遗忘的智慧将在第七个满月之夜苏醒……"</p><p>雅典娜皱起眉头。她决定去人间寻找答案。她化作一个老妇人来到了雅典城，遇到了一个聪明的小女孩。小女孩虽然看不见女神，但她的话语却帮助雅典娜解开了谜题——原来，真正的智慧不是力量，而是分享。</p><p>雅典娜回到了奥林匹斯，她明白了：盾牌上的预言说的是，众神应该把智慧分享给人类，而不是独自珍藏。她教会了雅典人纺织、数学和法律。</p>`},
-
-heracles:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约30分钟 · 🔊 支持朗读',cover:'💪',coverClass:'gr',title:'大力神赫拉克勒斯',desc:'完成十二项不可能的任务，希腊最伟大的英雄',content:`<p>赫拉克勒斯是宙斯和凡人女子阿尔克墨涅的儿子。他还在摇篮里的时候，天后赫拉派了两条毒蛇来害他——可是小赫拉克勒斯笑嘻嘻地用两只小手捏死了毒蛇！大家这才知道：这孩子不是凡人。</p><p>赫拉克勒斯长大后力大无穷。但赫拉让他发了疯，在疯狂中做了一件令自己悔恨终生的事。为了赎罪，他必须为迈锡尼国王完成十二项不可能完成的任务。</p><p>第一项：杀死刀枪不入的尼米亚猛狮。赫拉克勒斯发现狮子皮毛太硬，箭射不穿，于是他徒手勒死了狮子，并用狮子自己的爪子剥下了狮皮，做成铠甲。</p><p>第二项：杀死九头蛇许德拉。每砍掉一个头，又长出两个！赫拉克勒斯灵机一动，叫侄子用火烧伤口，终于将蛇头全部消灭。</p><p>他一件件地完成任务——捕捉金角鹿、活捉大野猪、清扫奥格阿斯的牛棚、赶走怪鸟、驯服疯牛、夺取吃人马、偷取亚马逊女王的腰带、牵回巨人的牛群、摘取金苹果、带回地狱三头犬……十二年后，他终于完成了全部挑战，获得了自由和荣耀。</p>`},
-
-pandora:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'📦',coverClass:'gr',title:'潘多拉的魔盒',desc:'众神送给她一个盒子，上面写着"千万不要打开"',content:`<p>普罗米修斯从天上偷火给人类之后，宙斯非常生气。他想惩罚人类，于是想出了一个精妙的计划。</p><p>宙斯命令火神打造了一个美丽的女子，取名潘多拉，意思是"拥有一切礼物的女人"。每一位神都送给她一份礼物：阿佛洛狄忒给了她美貌，雅典娜给了她华丽的衣服，赫尔墨斯给了她伶俐的口才……</p><p>最后，宙斯递给她一个精美的盒子，上面刻着一行字："永远不要打开。"</p><p>潘多拉被送到了人间，嫁给了普罗米修斯的弟弟。日子一天天过去，潘多拉每天看着那个盒子，越来越好奇：到底是什么东西，为什么不能打开？</p><p>终于有一天，她再也忍不住了。她揭开了盖子——刹那间，从盒子里飞出了疾病、痛苦、嫉妒、仇恨、谎言……所有不好的东西都涌向了人间！</p><p>潘多拉吓得赶紧盖上盒子，但已经来不及了。不过，盒子里还剩下最后一样东西——希望。无论人类经历多少苦难，希望永远留在心中，给人们继续前行的力量。</p>`},
-
-apollo:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约17分钟 · 🔊 支持朗读',cover:'☀️',coverClass:'gr',title:'阿波罗的太阳马车',desc:'小法厄同驾着父亲的太阳车，差点烧毁了整个世界',content:`<p>太阳神阿波罗每天驾着一辆由四匹火焰神马拉着的金色马车，从东方出发，飞驰过天空，给世界带来光明。</p><p>阿波罗有一个儿子叫法厄同。有一���，法厄同终于鼓起勇气对父亲说："爸爸，我真的是你的儿子吗？大家都笑话我，说我是吹牛的。让我驾一次太阳马车吧，这样所有人都会相信了！"</p><p>阿波罗吓了一跳："不行！这些马脾气烈得很，连宙斯都驾驭不了它们，你还太小了！"</p><p>可是法厄同不停地恳求，阿波罗拗不过儿子，只好答应了。他给儿子涂上防晒的神油，仔细叮嘱路线。法厄同兴奋地跳上马车，抓起缰绳——</p><p>四匹神马立刻发现驾车的人换了一个，开始疯狂地奔跑！法厄同根本拉不住缰绳，太阳车一会儿飞得太高，把星星撞得七零八落；一会儿飞得太低，把大地烤成了沙漠、把非洲人的皮肤晒成了黑色！</p><p>宙斯眼看世界要被烧毁了，不得不扔出一道闪电，把法厄同从车上击落下来，掉进了一条河里。从此，阿波罗再也不敢让别人碰他的太阳车了。</p>`},
-
-medusa:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'🐍',coverClass:'gr',title:'美杜莎的诅咒',desc:'美丽的少女被变成了蛇发女妖，谁看她一眼就会变成石头',content:`<p>美杜莎曾经是雅典娜神庙里最美丽的女祭司。她有一头瀑布般的长发，比雅典娜本人还要美丽——这让女神心里有些不高兴。</p><p>海神波塞冬在神庙里做了不敬之事，雅典娜非常愤怒。但她不敢惩罚波塞冬——因为他是自己的叔叔。于是雅典娜把所有的怒气都撒在了美杜莎身上。</p><p>"既然你那么美，"雅典娜冷冷地说，"那就让你美到没人敢看你。"</p><p>她挥手施法。美杜莎柔顺的长发变成了一条条嘶嘶吐信的毒蛇，她的眼睛变得能发出可怕的光芒——任何人只要和她对视，瞬间就会变成石像。</p><p>美杜莎悲痛欲绝，她不再是那个人见人爱的少女了。她逃到了最偏远的荒岛上，独自生活。那些来挑战她的勇士们，一个接一个地在她的目光下化成了石像，成了岛上恐怖的雕像林。</p><p>直到有一天，一个年轻的英雄——珀尔修斯，带着女神赐予的神器来挑战她。他用盾牌当镜子，不去看美杜莎本人，靠着反射的影子找到了她的位置，一剑斩下了她的头颅。</p><p>美杜莎死后，从她的脖子里飞出了一匹飞马——珀伽索斯，成为了天空中最美的星座之一。</p>`},
-
-theseus:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约18分钟 · 🔊 支持朗读',cover:'🧶',coverClass:'gr',title:'忒修斯与迷宫',desc:'一个线团帮他在迷宫中找到出路，战胜了牛头怪',content:`<p>克里特岛上住着一只可怕的怪物——米诺陶，它长着牛头人身，吃人无数。米诺斯国王为它建造了一座巨大的迷宫，任何人走进去就再也出不来。</p><p>雅典城因为得罪了米诺斯，被迫每九年献上七对童男童女，送进迷宫给米诺陶当食物。这一次，雅典王子忒修斯再也忍不住了，他主动要求加入献祭队伍："我要亲手杀死这只怪物！"</p><p>忒修斯来到了克里特。米诺斯国王的女儿阿里阿德涅被这位英俊勇敢的王���打动了，悄悄找到他："我可以帮你，但你要答应我，打败怪物后带我回雅典。"</p><p>阿里阿德涅给了忒修斯一把魔剑和一个线团。"把这个线团的一端系在迷宫入口，边走边放线。杀了怪物后，顺着线就能走出来。"</p><p>忒修斯走进黑暗的迷宫。他听到了怪物的咆哮，闻到了血腥的气味，但他没有后退。在迷宫最深处，他和米诺陶展开了殊死搏斗——最终，魔剑刺穿了怪物的心脏！</p><p>靠着线团，忒修斯走出了迷宫。他带着伙伴们，乘船返回了雅典——从此，他成了雅典最伟大的英雄。</p>`},
-
-icarus:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约14分钟 · 🔊 支持朗读',cover:'🕊️',coverClass:'gr',title:'伊卡洛斯的翅膀',desc:'用蜡做成的翅膀飞向太阳，少年用生命追逐梦想',content:`<p>在克里特岛上，住着一位天才工匠代达罗斯和他的儿子伊卡洛斯。米诺斯国王把他们软禁在岛上，不让他们离开。</p><p>代达罗斯望着飞翔的海鸥，突然有了灵感。他用羽毛和蜡做成了两对巨大的翅膀，一对给自己，一对给儿子。"我们可以飞出克里特，但要记住——不要飞得太低，海浪会把羽毛打湿；也不要飞得太高，太阳会把蜡融化。"</p><p>伊卡洛斯兴奋地点了点头。他们把翅膀绑好，从高高的悬崖上一跃——真的飞起来了！海风在耳边呼啸，白云从身边飘过，这是人类第一次飞上天空！</p><p>可是年轻的伊卡洛斯太兴奋了。他忘记了父亲的警告，越飞越高，越飞越高，他想摸一摸那温暖的太阳。"再高一点，再高一点！"</p><p>太阳越来越近，蜡开始融化了。啪嗒——一滴蜡珠掉下来，接着又一滴。伊卡洛斯的翅膀散了架，他从高空坠落，消失在了蔚蓝的大海中。</p><p>代达罗斯哭着找到了儿子的身体，埋葬在一座小岛上。那片海域从此被叫做"伊卡洛斯海"。</p>`},
-
-orpheus:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约19分钟 · 🔊 支持朗读',cover:'🎵',coverClass:'gr',title:'俄耳甫斯寻妻',desc:'用歌声打动冥王，下地狱拯救爱妻的感人故事',content:`<p>俄耳甫斯是太阳神阿波罗的儿子，也是全希腊最伟大的音乐家。他的琴声能让石头流泪、让猛兽臣服。他的妻子欧律狄刻，是全希腊最美的女子。</p><p>可是在他们的婚礼那天，欧律狄刻在草地上散步时，不小心踩到了一条毒蛇，被咬了一口。她就这么死了，去了地下的冥界。</p><p>俄耳甫斯悲痛欲绝。他做了一个没有人做过的事——他带着七弦琴，走进了通往冥界的洞穴。在冥河畔，他用琴声打动了船夫卡戎；在地狱门前，他用歌声驯服了三头犬刻耳柏洛斯。</p><p>最后，他来到冥王哈迪斯和冥后珀耳塞福涅面前，弹奏了一首悲伤至极的曲子。冥后听着听着，流下了眼泪——这是数百年来她第一次被人间的真情打动。</p><p>冥王也被感动了。他答应让欧律狄刻回到人间，但有一个条件：在走出冥界之前，俄耳甫斯绝不能回头看妻子，否则她将永远消失。</p><p>俄耳甫斯高兴极了，他走在前面，欧律狄刻跟在后面。快要到达洞口的时候，俄耳甫斯心里升起了一个可怕的念头："她真的在我身后吗？"</p><p>他忍不住回了一下头——只一瞬间，欧律狄刻就像雾一样消散了。这一次，是永远的离别。</p>`},
-
-persephone:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'🌺',coverClass:'gr',title:'珀耳塞福涅的石榴',desc:'春之女神被冥王拐走，六颗石榴籽改变了四季',content:`<p>珀耳塞福涅是丰收女神得墨忒耳的独生女儿，也是春天的化身。她走到哪里，鲜花就开到哪里，微风就吹到哪里。</p><p>冥王哈迪斯在阴暗的地下王国里感到非常孤独。有一天他驾着黑马车来到地面，看到了正在采花的珀耳塞福涅——他立刻爱上了这个像阳光一样的女孩。趁她不注意，冥王一把将她抓到马车上，带回了冥界。</p><p>得墨忒耳发现女儿不见了，发疯般四处寻找。她无心工作，庄稼枯萎了，花朵凋谢了，整个世界进入了寒冷的冬天。人类在饥荒中哭泣。</p><p>宙斯看不下去了，命令哈迪斯放了珀耳塞福涅。但哈迪斯在放她走之前，给了她六颗石榴籽吃——在冥界吃下东西的人，就永远属于冥界了。</p><p>最终，众神达成了一个协议：珀耳塞福涅每年有六个月回到地面上陪伴母亲，另外六个月回到冥界当冥后。当她回来时，得墨忒耳高兴地让大地花开——这就是春天和夏天。当她回到冥界时，得墨忒耳伤心地让万物凋��——这就是秋天和冬天。</p>`},
-
-artemis:{tag:'希腊神话',tagClass:'tag-blue',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'🏹',coverClass:'gr',title:'月亮女神阿耳忒弥斯',desc:'背着银弓的狩猎女神，守护森林和所有小动物',content:`<p>阿耳忒弥斯是宙斯的女儿、阿波罗的双胞胎姐姐。她刚出生就帮妈妈接生了弟弟阿波罗，所以她也成为了接生与孩子的守护神。</p><p>小时候，宙斯问她想要什么礼物。小阿耳忒弥斯说："我要一把银弓和银箭，我要永远住在森林里，和鹿、熊、小鸟们做朋友。我不要结婚，我要自由自在地奔跑！"宙斯笑着答应了。</p><p>阿耳忒弥斯长大后，成为了最厉害的狩猎女神。每到夜晚，她驾着银色的月光马车飞过天际，身后跟着一群仙女护卫。她用银箭保护森林里的动物，惩罚那些滥杀无辜的猎人。</p><p>有一次，一个猎人阿克泰翁不小心偷看到了她在湖中洗澡。阿耳忒弥斯为了惩罚他，把他变成了一头鹿，他自己的猎犬认不出主人，扑上去就是一阵追逐。</p><p>虽然她有时很严厉，但阿耳忒弥斯对小朋友特别温柔。她会悄悄守护生病的孩子，帮迷路的小动物找到回家的路。</p>`},
-
-// === 北欧神话 10个 ===
-thor:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约22分钟 · 🔊 支持朗读',cover:'⚡',coverClass:'no',title:'雷神索尔的神锤',desc:'神锤妙尔尼尔被盗，索尔穿婚纱智取霜巨人',content:`<p>清晨，阿斯加德被一声惊天动地的怒吼震醒了。"我的锤子！！！"雷神索尔站在寝宫门口，双眼冒火——他的宝贝神锤妙尔尼尔不见了！</p><p>捣蛋鬼洛基变成了飞鸟，飞遍九界去打听消息。他带回了坏消息：霜巨人首领索列姆偷走了锤子，把它藏在约顿海姆最深的地洞里。索列姆的条件是——让女神弗蕾亚嫁给他，否则永远不还锤子。</p><p>"什么？！"索尔暴跳如雷，但弗蕾亚更生气："我才不嫁给那个丑八怪！"</p><p>洛基眼珠一转，露出狡黠的笑容："我倒有个主意……索尔，你穿上弗蕾亚的婚纱，假装是新娘，我扮成你的侍女，咱们一起去约顿海姆。等巨人把锤子拿出来当聘礼的时候——"</p><p>索尔瞪大了眼："你要我穿婚纱？！我又不是小姑娘！"但在洛基的连哄带骗下，雷神还是套上了大大的婚纱，戴上了厚厚的面纱。</p><p>到了霜巨人的大厅，索列姆看到"新娘"狼吞虎咽地吃掉了一整头牛、八条三文鱼和三大桶蜜酒，有点怀疑。洛基赶紧解释："弗蕾亚太激动了，已经八天没吃饭啦。"</p><p>索列姆满意地叫手下："把妙尔尼尔拿来！"当锤子被放到"新娘"膝上时，索尔一把扯掉面纱——轰隆！电闪雷鸣之中，雷神抡起锤子打得霜巨人落花流水！</p>`},
-
-odin:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约18分钟 · 🔊 支持朗读',cover:'👁️',coverClass:'no',title:'众神之王奥丁',desc:'用一只眼睛换取无上智慧，九界最伟大的王者',content:`<p>在九界的最高处，有一座宏伟的金宫，那是众神之王奥丁的宫殿。奥丁肩头站着两只神鸦——思想与记忆，它们每天飞遍九界，带回天下所有的消息。</p><p>但奥丁并不满足。他想知道的不只是"发生了什么"，而是"为什么会发生"——他想获得真正的智慧。他听说在世界树尤克特拉希尔的根部，有一口智慧之泉，由巨人密米尔守护。喝一口泉水就能通晓一切。</p><p>奥丁毫不犹豫地出发了。他穿过迷雾之森，来到了世界树的根部。密米尔巨人坐在泉水边："我知道你为什么来。要喝泉水，必须献出你的一只眼睛。"</p><p>奥丁沉默了。然后，他毫不犹豫地取下了自己的右眼，沉入泉水深处。他舀起一捧泉水喝下——刹那���，他看到了过去的一切，也看到了未来将要发生的诸神黄昏。</p><p>从此，奥丁用一只眼睛看现在，用智慧看穿了过去与未来。他成了九界最伟大的君主，但那份预知末日降临的孤独，只有他自己默默承受。</p>`},
-
-yggdrasil:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'🌳',coverClass:'no',title:'世界树的秘密',desc:'一棵连接九界的巨树，树上住着神秘的生物',content:`<p>在宇宙的中心，耸立着一棵无比巨大的梣树，名叫尤克特拉希尔。它的树冠顶着天穹，树根伸入三个不同的世界，树身连接着整个九界。</p><p>在这棵树上，住着很多神奇的生物。树顶上有一只巨大的雄鹰，它的双眼能看到九界最遥远的角落。树根处盘踞着一条毒龙尼德霍格，它不停地啃咬着树根，想要毁灭世界。</p><p>一只叫拉塔托斯克的小松鼠，每天在树冠和树根之间跑来跑去。它传的话总是被添油加醋，所以树顶的雄鹰和树根的毒龙整天吵来吵去——虽然它们从来没见过面！</p><p>每天清晨，命运三女神——过去、现在和未来——会来到树下，用泉水浇灌树根，让世界树永远保持翠绿。她们还用树皮上的符号刻下每个人的命运。</p><p>在世界树的某个枝丫上，挂着一个……那是众神之王奥丁。他曾在这里倒挂了九天九夜，不吃不喝，只为了领悟宇宙的秘密——卢恩文字。</p>`},
-
-fenrir:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约17分钟 · 🔊 支持朗读',cover:'🐺',coverClass:'no',title:'芬里尔巨狼',desc:'洛基的狼儿子越长越大，大到能吞下太阳',content:`<p>洛基有三个孩子：一条大蛇、一个半人半尸的女儿，还有一只小狼崽。本来没什么好担心的——多可爱的小狼啊。</p><p>可是这只叫芬里尔的小狼越长越大，越长越大！众神开始不安了：预言说这只狼会在诸神黄昏中吞掉奥丁！</p><p>他们决定用最坚固的锁链绑住芬里尔。第一根锁链，芬里尔轻轻一挣就断了。第二根锁链，它打了个喷嚏就崩碎了。众神慌了，只好找矮人工匠帮忙。</p><p>矮人用六种不存在的东西——猫的脚步声、女人的胡须、山的根、熊的筋、鱼的呼吸、鸟的唾液——做成了一根细细的丝带。这根丝带柔软如丝绸，却没有任何东西能挣断它。</p><p>众神邀请芬里尔试试这根"玩具丝带"。巨狼起了疑心："除非你们中有人把手放进我嘴里做担保！"战神提尔勇敢地把右手伸进了狼嘴里。当芬里尔发现挣不脱时，咔嚓一口咬断了提尔的手。</p><p>芬里尔被绑住了，但预言说：在诸神黄昏的那一天，它将挣脱束缚，吞噬太阳与月亮。</p>`},
-
-loki:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'🎭',coverClass:'no',title:'洛基的恶作剧',desc:'诡计之火洛基剪掉了女神希芙的金发，惹来大麻烦',content:`<p>洛基是阿斯加德最让人头疼的神。他聪明、狡猾、爱捣蛋，但又特别有趣——所以众神虽然经常被他气疯，还是让他留在阿斯加德。</p><p>有一次，他趁雷神索尔的妻子希芙睡觉时，偷偷剪掉了她那一头美丽的金发！希芙醒来后哭着去找索尔。索尔暴怒，一把抓住洛基："如果天黑之前希芙的头发没有长回来，我就把你的骨头一根根捏碎！"</p><p>洛基吓坏了，赶紧去找矮人工匠。矮人们为希芙打造了一顶比真发还美的金发，又做了几件神器：一艘可以折叠放进口袋的魔法船、一把百发百中的神矛。</p><p>洛基得意洋洋地把这些东西带回阿斯加德，还自己吹嘘："整个九界就找不到比这些更好的宝物了！"一个矮人听见不爽了，和他打赌。洛基一时冲动，赌上了自己的人头！</p><p>结果矮人造出了雷神之锤和更多神器，洛基输了。当矮人拿着刀来砍头时，洛基狡辩说："你可以砍我的头——但脖子是我的，不可以碰！"矮人气得把他的嘴缝了起来。</p>`},
-
-heimdall:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'🌈',coverClass:'no',title:'彩虹桥的守卫',desc:'海姆达尔日日夜夜守在彩虹桥头，守护阿斯加德',content:`<p>阿斯加德和人间靠一条彩虹桥连接。桥头站着一个高大的神——海姆达尔。他的盔甲银光闪闪，身旁放着一只巨大的号角。</p><p>海姆达尔被称为"白色的神"。他有九位母亲（是九位海浪女神），生来就有非凡的感官——他的眼睛能看到一百里外的一只苍蝇，他的耳朵能听到地底下青草生长的声音，他甚至不需要睡觉！</p><p>海姆达尔的使命只有一个：守护阿斯加德，防止任何人未经允许穿过彩虹桥。他不分白天黑夜地站在桥头，任何风吹草动都逃不过他的眼睛和耳朵。</p><p>他的号角叫"加拉尔"，声音大到九界都能听见。预言说：当诸神黄昏来临时，海姆达尔会吹响这只号角，那巨大的号声将召唤所有神灵投入最后的战斗。</p><p>海姆达尔和洛基是天生的对头——一个是最忠诚的守卫者，一个是最狡猾的捣蛋鬼。在诸神黄昏的战场上，他们注定将同归于尽。</p>`},
-
-brynhildr:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约18分钟 · 🔊 支持朗读',cover:'🛡️',coverClass:'no',title:'女武神布伦希尔德',desc:'奥丁最宠爱的女武神，因违背命令被罚沉睡在火焰中',content:`<p>奥丁拥有一群美丽而勇猛的女武神，她们骑着飞马驰骋在战场上，挑选最英勇战死的战士们，带他们去英灵殿——在那里，英雄们每天比武，晚上举杯畅饮，等待诸神黄昏。</p><p>布伦希尔德是奥丁最宠爱的女武神。她的剑术无人能敌，她的容貌能让阳光都黯然失色。</p><p>有一天，两个国王要决战。奥丁命令布伦希尔德帮助老国王获胜。但布伦希尔德看到年轻的国王更勇敢、更善良，违背了奥丁的命令，让年轻人赢了。</p><p>奥丁震怒。他把布伦希尔德变成了凡人，让她沉睡在一座山顶上，四周环绕着永不熄灭的魔法火焰。奥丁说："只有最勇敢的男人，才能穿过火焰，将你唤醒。"</p><p>不知过了多少年，英雄齐格弗里德骑着马冲过了火焰，看到了沉睡的布伦希尔德。她的美丽让他屏住了呼吸。他轻轻摘下她的头盔——女武神睁开了眼睛。</p>`},
-
-baldur:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约16分钟 · 🔊 支持朗读',cover:'💫',coverClass:'no',title:'巴德尔之梦',desc:'光明之神梦见自己死去，一切万物都发誓不伤害他——除了槲寄生',content:`<p>巴德尔是奥丁和女神弗丽嘉的儿子，也是阿斯加德最受欢迎的神。他长得英俊，性格温柔，走到哪里都像带着阳光。</p><p>可是有一天，巴德尔做了一个可怕的梦——他被一支箭射死了。他醒来后闷闷不乐，把梦告诉了母亲。弗丽嘉心急如焚，她走遍了九界，让所有东西发誓不伤害巴德尔：石头、铁、水、火、动物、疾病……所有的一切都发了誓。</p><p>从此，巴德尔变成了刀枪不入的神。宴会上的游戏就是往他身上扔东西——刀剑碰到他的皮肤就弹开了，长矛像碰到石头一样折断。大家都觉得很有趣。</p><p>可是洛基发现了秘密——弗丽嘉漏掉了一样东西。那棵小小的槲寄生太年轻、太柔弱了，看起来没有任何伤害力，弗丽嘉没有让它发誓。</p><p>洛基做了一个槲寄生箭头，骗瞎了眼的黑暗之神霍德尔射了出去。箭正中巴德尔的心脏……阳光般的光明之神就这样倒下了。</p><p>他的死，是诸神黄昏的最早预兆。</p>`},
-
-frey:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约15分钟 · 🔊 支持朗读',cover:'🐗',coverClass:'no',title:'弗雷与黄金野猪',desc:'丰收之神为爱献出自己的神剑，骑着金野猪守护大地',content:`<p>弗雷是华纳神族的王子，管理着大地的丰收与阳光。他有一把会自己战斗的魔法神剑，还有一头黄金鬃毛的野猪坐骑，跑起来比马还快！</p><p>有一天，弗雷偷偷坐上了奥丁的王座。这个王座能看到九界的任何角落。他往北一看——看到了一个美得让他无法呼吸的女巨人葛尔德。就那么一眼，他陷入了深深的单相思，茶不思饭不想。</p><p>他的仆人史基尼尔不忍心看他消沉，骑着狼去约顿海姆帮他求婚。葛尔德一开始说"不嫁"，史基尼尔亮出那把会战斗的神剑说："你不答应，我就把剑插进你们家门口！"葛尔德终于答应了。</p><p>弗雷高兴极了，把神剑送给了史基尼尔当谢礼。可是预言说：诸神黄昏时弗雷会因为没有神剑而战死。弗雷笑着说："能和心爱的人在一起直到那一天，我心甘情愿。"</p>`},
-
-ragnarok:{tag:'北欧神话',tagClass:'tag-teal',meta:'📖 约20分钟 · 🔊 支持朗读',cover:'🔥',coverClass:'no',title:'诸神黄昏的预言',desc:'预言中的末日大战：众神、巨人、怪物将同归于尽',content:`<p>在北欧神话中，有一个最令人敬畏的故事——诸神黄昏。这不是结局，而是一个预言。奥丁已经看到了那一天，但他决定微笑着走向它。</p><p>那个冬天将持续三年，太阳失去热度，天空降下血雨。芬里尔巨狼将挣脱锁链，大蛇耶梦加得从海底翻腾而出，洛基从囚禁他的洞穴中逃出——他将率领死者之船，满载敌人向阿斯加德进发。</p><p>海姆达尔站在彩虹桥上，用尽全身力气吹响了加拉尔号角。所有阿斯加德的神都拿起了武器，英灵殿的战士们穿上盔甲，在号角声中冲向战场。</p><p>奥丁骑着八足神马对阵芬里尔巨狼；索尔挥舞妙尔尼尔迎战大蛇耶梦加得；弗雷没有神剑，用鹿角和巨人搏斗；海姆达尔与洛基互相刺穿了对方……</p><p>大战之后，大地沉入海洋，一切化为灰烬。但新的世界将从废墟中升起，一对幸存的人类将从世界树的枝叶间走出来。巴德尔将重返新世界，新的太阳将照耀大地。</p><p style="text-align:center;color:#FFD700;font-size:18px">🌟 旧的诸神逝去了，但希望永存 🌟</p>`}
-};
-
-// ============ 生成故事卡片 ============
-function renderStoryCards(filter='all') {
+// ============ RENDER ============
+function renderStoryCards() {
+  const all = getFilteredStories();
   const grid = document.getElementById('storyGrid');
+  const empty = document.getElementById('searchEmpty');
+  const countEl = document.getElementById('storyCount');
+
+  // Update total count
+  const totalInFilter = currentFilter==='all' ? STORIES.length : STORIES.filter(s=>s.cat===currentFilter).length;
+  countEl.textContent = searchQuery ? `（找到${all.length}个故事）` : `（共${totalInFilter}个故事）`;
+
+  if (all.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const totalPages = Math.ceil(all.length / PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageItems = all.slice(start, start + PER_PAGE);
+
   grid.innerHTML = '';
-  const keys = Object.keys(stories);
-  for (const key of keys) {
-    const s = stories[key];
-    const cat = s.tagClass === 'tag-gold' ? 'cn' : s.tagClass === 'tag-blue' ? 'gr' : 'no';
-    if (filter !== 'all' && cat !== filter) continue;
+  for (const s of pageItems) {
     const card = document.createElement('div');
-    card.className = 'story-card';
-    card.dataset.cat = cat;
-    card.innerHTML = `<div class="story-cover ${s.coverClass}">${s.cover}</div>
+    card.className = `story-card ${s.cat}`;
+    card.innerHTML = `<div class="story-cover ${s.cat}">${s.cover}</div>
       <div class="story-info">
-        <div class="tag ${s.tagClass}">${s.tag}</div>
+        <div class="tag ${getTagClass(s.cat)}">${s.cat_label}</div>
         <h4>${s.title}</h4>
         <p>${s.desc}</p>
       </div>`;
-    card.addEventListener('click', () => openStory(key));
+    card.addEventListener('click', () => openStory(s.id));
     grid.appendChild(card);
   }
-}
-renderStoryCards();
 
-// ============ 分类筛选 ============
+  // Pagination
+  const pagEl = document.getElementById('pagination');
+  if (totalPages <= 1) { pagEl.innerHTML = ''; return; }
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>◀</button>`;
+  html += `<span class="page-info">第 ${currentPage} / ${totalPages} 页</span>`;
+  for (let i = 1; i <= totalPages; i++) {
+    if (totalPages > 7 && i > 3 && i < totalPages - 1 && i !== currentPage && Math.abs(i - currentPage) > 1) {
+      if (i === 4) html += '<span style="color:#7B8BA0;padding:0 4px">...</span>';
+      continue;
+    }
+    html += `<button class="page-btn${i===currentPage?' active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage>=totalPages?'disabled':''}>▶</button>`;
+  pagEl.innerHTML = html;
+  document.getElementById('stories').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function goPage(p) {
+  const all = getFilteredStories();
+  const maxP = Math.ceil(all.length / PER_PAGE);
+  if (p < 1 || p > maxP) return;
+  currentPage = p;
+  renderStoryCards();
+}
+
+// ============ FILTER & SEARCH ============
 function filterStories(cat) {
-  renderStoryCards(cat);
-  document.querySelectorAll('.filter-item').forEach(b => {
-    b.classList.toggle('active', b.textContent.trim() === (cat==='all'?'全部':cat==='cn'?'中国':cat==='gr'?'希腊':'北欧'));
-  });
-  document.querySelectorAll('.nav-item').forEach(b => {
-    b.classList.toggle('active', b.dataset.cat === cat || (cat==='all' && b.dataset.cat==='all'));
-  });
-  document.getElementById('stories').scrollIntoView({behavior:'smooth'});
+  currentFilter = cat;
+  currentPage = 1;
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+
+  document.querySelectorAll('.filter-item').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.filter-item.${cat}`)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.nav-item.${cat}`)?.classList.add('active');
+
+  renderStoryCards();
 }
 
-// ============ 导航切换 ============
+function doSearch() {
+  searchQuery = document.getElementById('searchInput').value.trim();
+  currentPage = 1;
+  if (!searchQuery) {
+    document.querySelectorAll('.filter-item').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.filter-item.${currentFilter}`)?.classList.add('active');
+  } else {
+    document.querySelectorAll('.filter-item').forEach(b => b.classList.remove('active'));
+  }
+  renderStoryCards();
+}
+
+// Nav clicks
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', function(){ filterStories(this.dataset.cat); });
 });
 
-// ============ 🎙️ 神经网络 TTS 朗读引擎 v3.0 ============
-// 智能语音选择器：自动挑选最佳中文女声（优先微软Azure Neural / Edge Neural）
-// 朗读参数优化：语速1.3 + 音调1.1 = 清脆甜美的女孩声音
+function randomStory() {
+  const all = getFilteredStories().length > 0 ? getFilteredStories() : [...STORIES];
+  if (all.length === 0) return;
+  const s = all[Math.floor(Math.random() * all.length)];
+  openStory(s.id);
+}
 
-let ttsUtterance = null;
-let ttsPaused = false;
-let ttsSentences = [];     // 分句数组
-let ttsSentenceIdx = 0;    // 当前句子索引
-let ttsSpeed = 1.3;        // 默认语速（快而清晰）
-let ttsPitch = 1.10;       // 音调稍高，听起来更甜美年轻
-let ttsVolume = 1.0;       // 音量
-let ttsBestVoice = null;   // 最佳语音
-let ttsVoicesReady = false;
-let ttsEngineLabel = '浏览器语音引擎'; // 显示的引擎名称
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 
-// ---- 语音加载与智能选择 ----
+// ============ TTS ============
+let ttsUtterance = null, ttsPaused = false, ttsSentences = [], ttsSentenceIdx = 0;
+let ttsSpeed = 1.3, ttsPitch = 1.1, ttsVolume = 1.0;
+let ttsBestVoice = null, ttsVoicesReady = false;
+let ttsCurrentStoryKey = null, ttsState = 'stopped';
+
 function loadVoices() {
   return new Promise((resolve) => {
     const voices = window.speechSynthesis.getVoices();
-    if (voices && voices.length > 0) {
-      selectBestVoice(voices);
-      resolve();
-    } else {
-      window.speechSynthesis.onvoiceschanged = () => {
-        const v = window.speechSynthesis.getVoices();
-        selectBestVoice(v);
-        window.speechSynthesis.onvoiceschanged = null;
-        resolve();
-      };
-      // 3秒超时回退
-      setTimeout(() => {
-        if (!ttsVoicesReady) { selectBestVoice(window.speechSynthesis.getVoices()); resolve(); }
-      }, 3000);
-    }
+    if (voices && voices.length > 0) { selectBestVoice(voices); resolve(); return; }
+    window.speechSynthesis.onvoiceschanged = () => {
+      selectBestVoice(window.speechSynthesis.getVoices());
+      window.speechSynthesis.onvoiceschanged = null; resolve();
+    };
+    setTimeout(() => { if(!ttsVoicesReady){selectBestVoice(window.speechSynthesis.getVoices());resolve();} }, 3000);
   });
 }
 
 function selectBestVoice(voices) {
   const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
   if (zhVoices.length === 0) { ttsBestVoice = null; ttsVoicesReady = true; return; }
-
-  // 🥇 第一优先：微软 Azure Neural 女声（Edge 浏览器可用）—— 最接近"清脆甜美女孩声"
-  const neuralOrder = [
-    'XiaoxiaoNeural',    // ★ 微软Azure：活泼少女声，清脆甜美 (Edge)
-    'XiaoyiNeural',      // ★ 微软Azure：温柔知性女声 (Edge)
-    'XiaochenNeural',    //   微软Azure：自然女声 (Edge)
-    'XiaohanNeural',     //   微软Azure：甜美少女 (Edge)
-    'YunxiNeural',       //   微软Azure：活泼男声（fallback）
-    'Xiaoxiao',          //   微软 Online：少女声
-    'Xiaoyi',            //   微软 Online：女声
-    'YunyangNeural',     //   微软Azure：专业播报男声
-  ];
-
-  // 按优先级查找
+  const neuralOrder = ['XiaoxiaoNeural','XiaoyiNeural','XiaochenNeural','XiaohanNeural','Xiaoxiao','Xiaoyi','YunxiNeural'];
   for (const name of neuralOrder) {
     const found = zhVoices.find(v => v.name.includes(name));
     if (found) { ttsBestVoice = found; break; }
   }
-
-  // 🥈 第二优先：Google 中文女声（Chrome 可用）
   if (!ttsBestVoice) {
-    ttsBestVoice = zhVoices.find(v => v.name.includes('Female') || v.name.includes('female') || v.name.includes('女'));
+    ttsBestVoice = zhVoices.find(v => v.name.includes('Female')||v.name.includes('female')||v.name.includes('女'));
   }
-
-  // 🥉 第三优先：任意高质量中文语音
-  if (!ttsBestVoice) {
-    ttsBestVoice = zhVoices.find(v =>
-      v.name.includes('Google') || v.name.includes('Microsoft') ||
-      v.name.includes('Natural') || v.name.includes('Premium') || v.name.includes('Wavenet')
-    );
-  }
-
-  // 🏅 第四优先：任意中文语音
-  if (!ttsBestVoice) {
-    ttsBestVoice = zhVoices.find(v => v.localService === false) || zhVoices[0];
-  }
-
-  // 设置引擎标签
-  if (ttsBestVoice) {
-    if (ttsBestVoice.name.includes('Neural')) {
-      ttsEngineLabel = '微软 Azure 神经网络语音引擎';
-    } else if (ttsBestVoice.name.includes('Google') || ttsBestVoice.name.includes('Wavenet')) {
-      ttsEngineLabel = 'Google 神经网络语音引擎';
-    } else if (ttsBestVoice.name.includes('Xiaoxiao') || ttsBestVoice.name.includes('Xiaoyi')) {
-      ttsEngineLabel = '微软在线语音引擎';
-    } else {
-      ttsEngineLabel = '系统语音引擎';
-    }
-  }
+  if (!ttsBestVoice) ttsBestVoice = zhVoices.find(v => v.localService===false) || zhVoices[0];
   ttsVoicesReady = true;
-  console.log('🎙️ 已选择语音:', ttsBestVoice?.name, '| 引擎:', ttsEngineLabel);
+  console.log('Voice:', ttsBestVoice?.name);
 }
-
-// 页面加载时预加载语音
 loadVoices();
 
-// ---- 智能分句：按标点拆分，确保自然节奏 ----
 function splitSentences(text) {
-  // 先按句末标点分割
   const raw = text.split(/(?<=[。！？!?\n])/g);
   const result = [];
   for (let s of raw) {
-    s = s.trim();
-    if (!s) continue;
-    // 如果句子太长(>180字)，按逗号二次分割
-    if (s.length > 180) {
-      const sub = s.split(/(?<=[，；：,;:])/g);
-      for (let ss of sub) {
-        ss = ss.trim();
-        if (ss) result.push(ss);
-      }
-    } else {
-      result.push(s);
-    }
+    s = s.trim(); if (!s) continue;
+    if (s.length > 150) {
+      for (const ss of s.split(/(?<=[，；：,;:])/g)) { const t = ss.trim(); if(t) result.push(t); }
+    } else { result.push(s); }
   }
   return result;
 }
 
-// ---- 文本转纯文本 ----
-function getStoryPlainText(key) {
+function getStoryPlainText(story) {
   const tmp = document.createElement('div');
-  tmp.innerHTML = stories[key].content;
+  tmp.innerHTML = story.content || story.desc;
   return tmp.textContent.trim();
 }
 
-// ---- 开始朗读 ----
-function startTTS(key) {
+function startTTS(story) {
   stopTTS();
-  ttsSentences = splitSentences(getStoryPlainText(key));
-  ttsSentenceIdx = 0;
-  ttsPaused = false;
-
+  ttsCurrentStoryKey = story.id;
+  ttsSentences = splitSentences(getStoryPlainText(story));
+  ttsSentenceIdx = 0; ttsPaused = false;
   if (ttsSentences.length === 0) return;
-
-  // 确保语音已加载
-  if (!ttsVoicesReady) {
-    loadVoices().then(() => speakNextSentence());
-  } else {
-    speakNextSentence();
-  }
+  if (!ttsVoicesReady) { loadVoices().then(() => speakNextSentence()); }
+  else { speakNextSentence(); }
   updateTTSBar('playing');
 }
 
-// ---- 朗读下一句 ----
 function speakNextSentence() {
   if (ttsPaused) return;
-  if (ttsSentenceIdx >= ttsSentences.length) {
-    stopTTS();
-    return;
-  }
-
-  const sentence = ttsSentences[ttsSentenceIdx];
-  ttsSentenceIdx++;
-
+  if (ttsSentenceIdx >= ttsSentences.length) { stopTTS(); return; }
+  const sentence = ttsSentences[ttsSentenceIdx++];
   ttsUtterance = new SpeechSynthesisUtterance(sentence);
-  ttsUtterance.lang = 'zh-CN';
-  ttsUtterance.rate = ttsSpeed;
-  ttsUtterance.pitch = ttsPitch;
-  ttsUtterance.volume = ttsVolume;
-
-  if (ttsBestVoice) {
-    ttsUtterance.voice = ttsBestVoice;
-  }
-
-  // 朗读结束回调
-  ttsUtterance.onend = () => {
-    if (!ttsPaused) {
-      // 句间自然停顿：逗号结尾50ms，句号结尾120ms，段末200ms
-      const lastChar = sentence.slice(-1);
-      let pause = 100;
-      if (lastChar === '，' || lastChar === '；' || lastChar === ',') pause = 50;
-      if (lastChar === '\n' || sentence.endsWith('</p>')) pause = 200;
-      setTimeout(() => speakNextSentence(), pause);
-    }
-  };
-
-  // 错误处理
-  ttsUtterance.onerror = (e) => {
-    if (e.error !== 'canceled' && e.error !== 'interrupted') {
-      console.warn('朗读错误:', e.error);
-      setTimeout(() => { if (!ttsPaused) speakNextSentence(); }, 200);
-    }
-  };
-
-  // 朗读边界事件（用于高亮当前句子）
-  ttsUtterance.onboundary = (e) => {
-    if (e.name === 'sentence') {
-      highlightCurrentSentence(ttsSentenceIdx - 1);
-    }
-  };
-
+  ttsUtterance.lang = 'zh-CN'; ttsUtterance.rate = ttsSpeed; ttsUtterance.pitch = ttsPitch; ttsUtterance.volume = ttsVolume;
+  if (ttsBestVoice) ttsUtterance.voice = ttsBestVoice;
+  ttsUtterance.onend = () => { if(!ttsPaused){ const c=sentence.slice(-1); let pause=80; if(c==='，'||c==='；')pause=40; if(c==='\n')pause=150; setTimeout(()=>speakNextSentence(),pause); } };
+  ttsUtterance.onerror = (e) => { if(e.error!=='canceled'&&e.error!=='interrupted'){setTimeout(()=>{if(!ttsPaused)speakNextSentence();},200);} };
   window.speechSynthesis.speak(ttsUtterance);
-
-  // 高亮当前句子
-  highlightCurrentSentence(ttsSentenceIdx - 1);
-
-  // 更新进度
   updateProgress();
 }
 
-// ---- 高亮当前句子 ----
-function highlightCurrentSentence(idx) {
-  const body = document.querySelector('.modal-body');
-  if (!body) return;
-  const allText = body.querySelectorAll('p');
-  // 简单高亮：给整个 modal-body 加个指示
-  if (idx >= 0 && idx < ttsSentences.length) {
-    const progressPct = Math.round((idx / ttsSentences.length) * 100);
-    const progBar = document.getElementById('ttsProgressFill');
-    if (progBar) progBar.style.width = progressPct + '%';
-  }
-}
-
 function updateProgress() {
+  const progBar = document.getElementById('ttsProgressFill');
   const progText = document.getElementById('ttsProgressText');
-  if (progText && ttsSentences.length > 0) {
-    progText.textContent = `第 ${ttsSentenceIdx}/${ttsSentences.length} 句`;
-  }
+  if (progBar && ttsSentences.length > 0) progBar.style.width = Math.round((ttsSentenceIdx/ttsSentences.length)*100)+'%';
+  if (progText) progText.textContent = ttsSentences.length>0 ? `第${ttsSentenceIdx}/${ttsSentences.length}句` : '';
 }
 
-// ---- 暂停 ----
 function togglePauseResume() {
   if (ttsState === 'playing') {
-    // 正在朗读 → 暂停
-    ttsPaused = true;
-    window.speechSynthesis.cancel();
-    updateTTSBar('paused');
-    // 更新按钮文字
-    document.querySelectorAll('.tts-toggle').forEach(b => { b.textContent = '▶️ 继续'; b.className = 'tts-btn tts-resume tts-toggle'; });
+    ttsPaused = true; window.speechSynthesis.cancel(); updateTTSBar('paused');
+    document.querySelectorAll('.tts-toggle').forEach(b=>{b.textContent='▶️ 继续';b.className='tts-btn tts-resume tts-toggle';});
   } else if (ttsState === 'paused') {
-    // 已暂停 → 继续
-    ttsPaused = false;
-    speakNextSentence();
-    updateTTSBar('playing');
-    document.querySelectorAll('.tts-toggle').forEach(b => { b.textContent = '⏸️ 暂停'; b.className = 'tts-btn tts-pause tts-toggle'; });
+    ttsPaused = false; speakNextSentence(); updateTTSBar('playing');
+    document.querySelectorAll('.tts-toggle').forEach(b=>{b.textContent='⏸️ 暂停';b.className='tts-btn tts-pause tts-toggle';});
   }
 }
 
-// ---- 向后兼容 ----
-function pauseTTS() { togglePauseResume(); }
-function resumeTTS() { togglePauseResume(); }
-
-// ---- 停止 ----
 function stopTTS() {
-  ttsPaused = false;
-  ttsSentenceIdx = 0;
-  ttsSentences = [];
-  window.speechSynthesis.cancel();
-  ttsUtterance = null;
-  updateTTSBar('stopped');
-  // 重置进度条
-  const progBar = document.getElementById('ttsProgressFill');
-  if (progBar) progBar.style.width = '0%';
-  const progText = document.getElementById('ttsProgressText');
-  if (progText) progText.textContent = '';
+  ttsPaused = false; ttsSentenceIdx = 0; ttsSentences = [];
+  window.speechSynthesis.cancel(); ttsUtterance = null; updateTTSBar('stopped');
+  const pb=document.getElementById('ttsProgressFill'); if(pb)pb.style.width='0%';
+  const pt=document.getElementById('ttsProgressText'); if(pt)pt.textContent='';
 }
 
-// ---- 设置语速 ----
-function setTTSSpeed(speed) {
-  ttsSpeed = speed;
-  document.querySelectorAll('.tts-speed button').forEach(b => {
-    b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
-  });
-  // 如果正在朗读，等当前句结束后自动应用新语速（不需要中断）
-  console.log('🎙️ 语速已设置为:', speed, '倍');
-}
+function setTTSSpeed(speed) { ttsSpeed = speed; document.querySelectorAll('.tts-speed button').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.speed)===speed)); }
+function setTTSPitch(pitch) { ttsPitch = pitch; document.querySelectorAll('.tts-pitch button').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.pitch)===pitch)); }
 
-// ---- 设置音调 ----
-function setTTSPitch(pitch) {
-  ttsPitch = pitch;
-  document.querySelectorAll('.tts-pitch button').forEach(b => {
-    b.classList.toggle('active', parseFloat(b.dataset.pitch) === pitch);
-  });
-}
-
-// ---- UI 状态更新 ----
-let ttsState = 'stopped';
 function updateTTSBar(state) {
   ttsState = state;
-  const bar = document.getElementById('ttsBar');
-  if (!bar) return;
-  const statusEl = bar.querySelector('.tts-status-text');
-  const dotEl = bar.querySelector('.tts-dot-pulse');
-  const engineEl = bar.querySelector('.tts-engine-label');
-
+  const statusEl = document.querySelectorAll('.tts-status-text');
+  const dotEl = document.querySelectorAll('.tts-dot-pulse');
   if (state === 'playing') {
-    if (statusEl) statusEl.textContent = '🔊 正在朗读...';
-    if (dotEl) dotEl.style.display = 'inline-block';
-    if (engineEl) engineEl.textContent = ttsEngineLabel;
-    // 更新所有 toggle 按钮
-    document.querySelectorAll('.tts-toggle').forEach(b => {
-      b.textContent = '⏸️ 暂停'; b.className = 'tts-btn tts-pause tts-toggle';
-    });
+    statusEl.forEach(e=>e.textContent='🔊 正在朗读...');
+    dotEl.forEach(e=>e.style.display='inline-block');
   } else if (state === 'paused') {
-    if (statusEl) statusEl.textContent = '⏸️ 已暂停（点击继续）';
-    if (dotEl) dotEl.style.display = 'none';
-    document.querySelectorAll('.tts-toggle').forEach(b => {
-      b.textContent = '▶️ 继续'; b.className = 'tts-btn tts-resume tts-toggle';
-    });
+    statusEl.forEach(e=>e.textContent='⏸️ 已暂停');
+    dotEl.forEach(e=>e.style.display='none');
   } else {
-    if (statusEl) statusEl.textContent = '🎧 点击开始朗读';
-    if (dotEl) dotEl.style.display = 'none';
-    const progBar = document.getElementById('ttsProgressFill');
-    if (progBar) progBar.style.width = '0%';
-    const progText = document.getElementById('ttsProgressText');
-    if (progText) progText.textContent = '';
-    document.querySelectorAll('.tts-toggle').forEach(b => {
-      b.textContent = '⏸️ 暂停'; b.className = 'tts-btn tts-pause tts-toggle';
-    });
+    statusEl.forEach(e=>e.textContent='🎧 点击开始');
+    dotEl.forEach(e=>e.style.display='none');
   }
 }
 
-// ============ 打开故事弹窗 ============
-function openStory(key) {
+// ============ MODAL ============
+function openStory(id) {
   stopTTS();
-  const s = stories[key];
-  const coverBg = s.coverClass === 'gr' ? 'linear-gradient(135deg,rgba(38,76,153,0.4),rgba(76,140,242,0.2))' :
-                  s.coverClass === 'cn' ? 'linear-gradient(135deg,rgba(200,50,50,0.4),rgba(230,150,25,0.2))' :
-                  'linear-gradient(135deg,rgba(25,128,128,0.4),rgba(76,200,204,0.2))';
+  const s = STORIES.find(x => x.id === id);
+  if (!s) return;
+
+  const coverBg = s.cat==='gr'?'linear-gradient(135deg,rgba(38,76,153,0.4),rgba(76,140,242,0.2))':
+                  s.cat==='no'?'linear-gradient(135deg,rgba(25,128,128,0.4),rgba(76,200,204,0.2))':
+                  s.cat==='cy'?'linear-gradient(135deg,rgba(200,60,100,0.4),rgba(255,150,180,0.2))':
+                  'linear-gradient(135deg,rgba(200,50,50,0.4),rgba(230,150,25,0.2))';
 
   document.getElementById('modalContent').innerHTML = `
-    <div class="tag ${s.tagClass}" style="margin-bottom:12px">${s.tag}</div>
+    <div class="tag ${getTagClass(s.cat)}" style="margin-bottom:10px">${s.cat_label}</div>
     <h2>${s.title}</h2>
-    <div class="modal-meta">${s.meta}</div>
-
-    <!-- 🎙️ 朗读控制栏 -->
-    <div id="ttsBar" class="tts-bar">
-      <button class="tts-btn tts-play" onclick="startTTS('${key}')">🔊 朗读故事</button>
+    <div class="modal-meta">📖 故事 · 🔊 支持朗读</div>
+    <div class="tts-bar">
+      <button class="tts-btn tts-play" onclick="startTTS(STORIES.find(function(x){return x.id==='${id}'}))">🔊 朗读故事</button>
       <button class="tts-btn tts-pause tts-toggle" onclick="togglePauseResume()">⏸️ 暂停</button>
       <button class="tts-btn tts-stop" onclick="stopTTS()">⏹️ 停止</button>
-      <span style="color:#9B9BB5;font-size:12px;margin:0 4px">语速</span>
+      <span style="color:#9B9BB5;font-size:12px;margin:0 2px">语速</span>
       <div class="tts-speed">
         <button data-speed="1.1" onclick="setTTSSpeed(1.1)">1.1</button>
         <button data-speed="1.3" class="active" onclick="setTTSSpeed(1.3)">1.3</button>
         <button data-speed="1.5" onclick="setTTSSpeed(1.5)">1.5</button>
       </div>
-      <span style="color:#9B9BB5;font-size:12px;margin:0 4px">音调</span>
+      <span style="color:#9B9BB5;font-size:12px;margin:0 2px">音调</span>
       <div class="tts-speed tts-pitch">
         <button data-pitch="1.00" onclick="setTTSPitch(1.00)">标准</button>
         <button data-pitch="1.10" class="active" onclick="setTTSPitch(1.10)">甜美</button>
         <button data-pitch="1.20" onclick="setTTSPitch(1.20)">清脆</button>
       </div>
-      <span class="tts-status" style="margin-left:auto">
-        <span class="tts-dot-pulse" style="display:none"></span>
-        <span class="tts-status-text">🎧 点击开始朗读</span>
-        <span class="tts-engine-label" style="display:block;font-size:11px;color:#FFD700;margin-top:2px"></span>
-      </span>
+      <span class="tts-status" style="margin-left:auto"><span class="tts-dot-pulse" style="display:none"></span><span class="tts-status-text">🎧 点击开始</span></span>
     </div>
-
-    <!-- 朗读进度条 -->
     <div class="tts-progress-wrap">
       <div class="tts-progress-bar"><div class="tts-progress-fill" id="ttsProgressFill"></div></div>
       <span class="tts-progress-text" id="ttsProgressText"></span>
     </div>
-
-    <div class="modal-cover-placeholder" style="background:${coverBg}"><span style="font-size:80px">${s.cover}</span></div>
+    <div class="modal-cover-placeholder" style="background:${coverBg}"><span style="font-size:72px">${s.cover}</span></div>
     <div class="modal-body">${s.content}</div>
-
-    <!-- 底部朗读控制 -->
-    <div class="tts-bar" style="margin-top:24px">
-      <button class="tts-btn tts-play" onclick="startTTS('${key}')">🔊 从头朗读</button>
+    <div class="tts-bar" style="margin-top:20px">
+      <button class="tts-btn tts-play" onclick="startTTS(STORIES.find(function(x){return x.id==='${id}'}))">🔊 从头朗读</button>
       <button class="tts-btn tts-pause tts-toggle" onclick="togglePauseResume()">⏸️ 暂停</button>
       <button class="tts-btn tts-stop" onclick="stopTTS()">⏹️ 停止</button>
-      <span class="tts-status" style="margin-left:auto">
-        <span class="tts-dot-pulse" style="display:none"></span>
-        <span class="tts-status-text">🎧 点击开始朗读</span>
-      </span>
-    </div>
-  `;
+      <span class="tts-status" style="margin-left:auto"><span class="tts-dot-pulse" style="display:none"></span><span class="tts-status-text">🎧 点击开始</span></span>
+    </div>`;
 
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -774,24 +1664,14 @@ function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
-document.getElementById('modalOverlay').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
-document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeModal(); });
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-// ============ 滚动渐显 ============
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){ entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; }
-  });
-}, {threshold:0.1});
-setTimeout(()=>{
-  document.querySelectorAll('.cat-card,.story-card,.cal-card,.featured-card').forEach(el=>{
-    el.style.opacity='0'; el.style.transform='translateY(30px)'; el.style.transition='opacity 0.6s ease,transform 0.6s ease'; observer.observe(el);
-  });
-},200);
-
-console.log('🌟 神话星空 v2.0 - 30个故事 · 全部支持朗读！');
+// init
+filterStories('all');
+console.log('神话星空 v4.0 - 122个故事，四大板块！');
 </script>
+
+<!-- STORIES WILL BE INSERTED HERE -->
 </body>
 </html>
