@@ -293,9 +293,15 @@ body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#0A0A14;
 
 <script>
 // ============ VERSION MANAGEMENT ============
-const VERSION = { major:5, minor:2, date:'2026-08-06', label:'v5.2', codename:'时光档案馆' };
+const VERSION = { major:5, minor:3, date:'2026-08-06', label:'v5.3', codename:'时光档案馆' };
 const VERSION_HISTORY = [
-  { ver:'v5.2', date:'2026-08-06', title:'童声朗读', latest:true, changes:[
+  { ver:'v5.3', date:'2026-08-06', title:'活泼童声', latest:true, changes:[
+    'TTS朗读切换为 XiaoyiNeural（卡通小说专用活泼女声）',
+    '语速放慢 10%（1.3→1.2），朗读更清晰自然',
+    '默认音调保持 1.5，模拟 10 岁女孩清脆音色',
+    '即将上线：MP3 音频预生成，不再依赖浏览器实时合成'
+  ]},
+  { ver:'v5.2', date:'2026-08-06', title:'童声朗读', changes:[
     'TTS朗读切换为 XiaoxiaoNeural 温暖女声',
     '默认音调提升至 1.5，模拟甜甜的童声效果',
     '音调按钮改为「标准/童声/清脆」，童声默认选中'
@@ -1583,9 +1589,10 @@ function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 
 // ============ TTS ============
 let ttsUtterance = null, ttsPaused = false, ttsSentences = [], ttsSentenceIdx = 0;
-let ttsSpeed = 1.3, ttsPitch = 1.5, ttsVolume = 1.0; // XiaoxiaoNeural 温暖女声 + 高音调模拟童声
+let ttsSpeed = 1.2, ttsPitch = 1.5, ttsVolume = 1.0; // XiaoyiNeural 活泼女声 + 高音调模拟10岁女孩清脆音色
 let ttsBestVoice = null, ttsVoicesReady = false;
 let ttsCurrentStoryKey = null, ttsState = 'stopped';
+let mp3Player = null, mp3Available = false; // MP3 预生成音频
 
 function loadVoices() {
   return new Promise((resolve) => {
@@ -1605,7 +1612,7 @@ function loadVoices() {
 function selectBestVoice(voices) {
   const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
   if (zhVoices.length === 0) { ttsBestVoice = null; ttsVoicesReady = true; return; }
-  const neuralOrder = ['XiaoxiaoNeural','XiaoyiNeural','XiaochenNeural','XiaohanNeural','Xiaoxiao','Xiaoyi','YunxiNeural'];
+  const neuralOrder = ['XiaoyiNeural','XiaoxiaoNeural','XiaochenNeural','XiaohanNeural','Xiaoyi','Xiaoxiao','YunxiNeural'];
   for (const name of neuralOrder) {
     const found = zhVoices.find(v => v.name.includes(name));
     if (found) { ttsBestVoice = found; break; }
@@ -1638,6 +1645,15 @@ function getStoryPlainText(story) {
 }
 
 function startTTS(story) {
+  // 优先使用预生成 MP3
+  if (mp3Available && mp3Player) {
+    mp3Player.currentTime = 0;
+    mp3Player.play();
+    ttsState = 'playing';
+    updateTTSBar('playing');
+    return;
+  }
+  // 回退到浏览器 TTS
   stopTTS();
   ttsCurrentStoryKey = story.id;
   ttsSentences = splitSentences(getStoryPlainText(story));
@@ -1671,6 +1687,20 @@ function updateProgress() {
 }
 
 function togglePauseResume() {
+  // MP3 模式
+  if (mp3Available && mp3Player) {
+    if (ttsState === 'playing') {
+      mp3Player.pause();
+      updateTTSBar('paused');
+      document.querySelectorAll('.tts-toggle').forEach(b=>{b.textContent='▶️ 继续';b.className='tts-btn tts-resume tts-toggle';});
+    } else if (ttsState === 'paused') {
+      mp3Player.play();
+      updateTTSBar('playing');
+      document.querySelectorAll('.tts-toggle').forEach(b=>{b.textContent='⏸️ 暂停';b.className='tts-btn tts-pause tts-toggle';});
+    }
+    return;
+  }
+  // 浏览器 TTS 模式
   if (ttsState === 'playing') {
     ttsPaused = true; try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch(e) {} 
     try { updateTTSBar('paused'); } catch(e) {}
@@ -1682,6 +1712,11 @@ function togglePauseResume() {
 }
 
 function stopTTS() {
+  // 停止 MP3（如果正在播放）
+  if (mp3Player && !mp3Player.paused) {
+    mp3Player.pause();
+    mp3Player.currentTime = 0;
+  }
   ttsPaused = false; ttsSentenceIdx = 0; ttsSentences = [];
   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch(e) {}
   ttsUtterance = null;
@@ -1757,6 +1792,35 @@ function openStory(id) {
       <button class="tts-btn tts-stop" onclick="stopTTS()">⏹️ 停止</button>
       <span class="tts-status" style="margin-left:auto"><span class="tts-dot-pulse" style="display:none"></span><span class="tts-status-text">🎧 点击开始</span></span>
     </div>`;
+
+  // ===== MP3 预生成音频检测 =====
+  mp3Available = false;
+  if (mp3Player) { mp3Player.pause(); mp3Player = null; }
+  const mp3Path = 'audio/' + id + '.mp3';
+  const audio = new Audio();
+  audio.preload = 'metadata';
+  audio.src = mp3Path;
+  audio.oncanplaythrough = function() {
+    mp3Available = true;
+    mp3Player = audio;
+    const st = document.querySelector('.tts-status-text');
+    if (st) st.textContent = '🎵 预生成音频就绪';
+  };
+  audio.ontimeupdate = function() {
+    // 更新 MP3 播放进度条
+    if (!audio.duration) return;
+    const pb = document.getElementById('ttsProgressFill');
+    if (pb) pb.style.width = Math.round((audio.currentTime / audio.duration) * 100) + '%';
+    const pt = document.getElementById('ttsProgressText');
+    if (pt) {
+      const cur = Math.floor(audio.currentTime);
+      const dur = Math.floor(audio.duration);
+      pt.textContent = `${Math.floor(cur/60)}:${String(cur%60).padStart(2,'0')} / ${Math.floor(dur/60)}:${String(dur%60).padStart(2,'0')}`;
+    }
+  };
+  audio.onended = function() { stopTTS(); };
+  audio.onerror = function() { /* MP3 不存在，回退浏览器 TTS */ };
+  audio.load(); // 触发检测
 
   const mo = document.getElementById('modalOverlay');
   const mod = document.getElementById('modal');
